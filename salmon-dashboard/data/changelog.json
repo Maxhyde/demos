@@ -1,17 +1,8 @@
 [
  {
   "run_date": "2026-09-20",
-  "generated_at": "2026-09-20T14:59:35+00:00",
+  "generated_at": "2026-09-20T15:02:13+00:00",
   "items": [
-   {
-    "category": "system",
-    "title": "Baseline established",
-    "detail": "First run: all figures below are the current published values. Week-over-week deltas start next run.",
-    "severity": "info",
-    "company": false,
-    "value": null,
-    "delta_pct": null
-   },
    {
     "category": "export",
     "title": "New week 2026 W37: fresh salmon 70.18 NOK/kg",

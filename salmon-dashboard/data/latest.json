@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-20T14:59:35+00:00",
+ "generated_at": "2026-09-20T15:02:13+00:00",
  "run_date": "2026-09-20",
  "company": "Mowi",
  "production_areas": {
@@ -63,8 +63,8 @@
    "table_url": "https://www.ssb.no/en/statbank/table/03024",
    "frequency": "Weekly, Wednesdays 08:00 (covers the previous week)",
    "status": "ok",
-   "fetched_at": "2026-09-20T14:59:35+00:00",
-   "seconds": 1.3,
+   "fetched_at": "2026-09-20T15:02:13+00:00",
+   "seconds": 1.7,
    "critical": true
   },
   "ssb_markets": {
@@ -73,8 +73,8 @@
    "url": "https://www.ssb.no/en/utenriksokonomi/utenrikshandel/statistikk/utenrikshandel-med-varer",
    "frequency": "Monthly, around the 15th (previous month)",
    "status": "ok",
-   "fetched_at": "2026-09-20T14:59:35+00:00",
-   "seconds": 5.5,
+   "fetched_at": "2026-09-20T15:02:13+00:00",
+   "seconds": 5.1,
    "critical": false
   },
   "ssb_annual": {
@@ -83,8 +83,8 @@
    "url": "https://www.ssb.no/en/jord-skog-jakt-og-fiskeri/fiske-og-fangst/statistikk/akvakultur",
    "frequency": "Annual (preliminary in June, final in October)",
    "status": "ok",
-   "fetched_at": "2026-09-20T14:59:35+00:00",
-   "seconds": 2.3,
+   "fetched_at": "2026-09-20T15:02:13+00:00",
+   "seconds": 43.6,
    "critical": false
   },
   "fdir_biomass": {
@@ -93,8 +93,8 @@
    "url": "https://www.fiskeridir.no/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-produksjonsomrade",
    "frequency": "Monthly, around the 20th (previous month)",
    "status": "ok",
-   "fetched_at": "2026-09-20T14:59:35+00:00",
-   "seconds": 3.2,
+   "fetched_at": "2026-09-20T15:02:13+00:00",
+   "seconds": 3.5,
    "critical": false
   },
   "fdir_register": {
@@ -103,8 +103,8 @@
    "url": "https://www.fiskeridir.no/Akvakultur/Registre-og-skjema/Akvakulturregisteret",
    "frequency": "Continuously updated",
    "status": "ok",
-   "fetched_at": "2026-09-20T14:59:35+00:00",
-   "seconds": 1.3,
+   "fetched_at": "2026-09-20T15:02:13+00:00",
+   "seconds": 2.1,
    "critical": false
   },
   "fdir_escapes": {
@@ -113,8 +113,8 @@
    "url": "https://www.fiskeridir.no/Akvakultur/Tall-og-analyse/Roemmingsstatistikk",
    "frequency": "Continuously updated as incidents are reported",
    "status": "ok",
-   "fetched_at": "2026-09-20T14:59:35+00:00",
-   "seconds": 0.7,
+   "fetched_at": "2026-09-20T15:02:13+00:00",
+   "seconds": 0.9,
    "critical": false
   },
   "barentswatch_lice": {
@@ -132,8 +132,8 @@
    "url": "https://www.norges-bank.no/en/topics/Statistics/exchange_rates/",
    "frequency": "Daily (business days)",
    "status": "ok",
-   "fetched_at": "2026-09-20T14:59:35+00:00",
-   "seconds": 0.5,
+   "fetched_at": "2026-09-20T15:02:13+00:00",
+   "seconds": 0.6,
    "critical": false
   },
   "traffic_lights": {
@@ -4878,115 +4878,41 @@
   "country_count": 71
  },
  "annual_sales": {
-  "table": "07326",
-  "title": "07326: Aquaculture. Sales of slaughtered fish for food, by region, fish species, contents and year",
+  "table": "08808",
+  "title": "08808: Holdings, by region, other activity, contents and year",
   "selection": {
    "Region": [
     "0"
    ],
-   "Fiskeslag": [
-    "80"
+   "NaringTillegg": [
+    "99"
    ]
   },
   "labels": {
-   "tonnes": "Fish for food (tonnes)",
-   "mnok": "Fish for food (NOK 1 000)"
+   "agricultural_holdings": "Agricultural holdings"
   },
   "series": [
    {
-    "year": "2005",
-    "tonnes": 586357.0,
-    "mnok": 12178.9,
-    "nok_kg": 20.77
-   },
-   {
-    "year": "2006",
-    "tonnes": 629766.0,
-    "mnok": 15575.6,
-    "nok_kg": 24.73
-   },
-   {
-    "year": "2007",
-    "tonnes": 744125.0,
-    "mnok": 15496.3,
-    "nok_kg": 20.82
-   },
-   {
-    "year": "2008",
-    "tonnes": 737254.0,
-    "mnok": 15225.3,
-    "nok_kg": 20.65
-   },
-   {
-    "year": "2009",
-    "tonnes": 862305.0,
-    "mnok": 20177.9,
-    "nok_kg": 23.4
+    "year": "1999",
+    "agricultural_holdings": 29097.0
    },
    {
     "year": "2010",
-    "tonnes": 939536.0,
-    "mnok": 28512.0,
-    "nok_kg": 30.35
+    "agricultural_holdings": 26610.0
    },
    {
-    "year": "2011",
-    "tonnes": 1064868.0,
-    "mnok": 26924.3,
-    "nok_kg": 25.28
-   },
-   {
-    "year": "2012",
-    "tonnes": 1232094.0,
-    "mnok": 27954.7,
-    "nok_kg": 22.69
-   },
-   {
-    "year": "2013",
-    "tonnes": 1168324.0,
-    "mnok": 37921.5,
-    "nok_kg": 32.46
-   },
-   {
-    "year": "2014",
-    "tonnes": 1258356.0,
-    "mnok": 41822.5,
-    "nok_kg": 33.24
-   },
-   {
-    "year": "2015",
-    "tonnes": 1303346.0,
-    "mnok": 44438.5,
-    "nok_kg": 34.1
-   },
-   {
-    "year": "2016",
-    "tonnes": 1233619.0,
-    "mnok": 60121.5,
-    "nok_kg": 48.74
-   },
-   {
-    "year": "2017",
-    "tonnes": 1236354.0,
-    "mnok": 61635.0,
-    "nok_kg": 49.85
-   },
-   {
-    "year": "2018",
-    "tonnes": 1282003.0,
-    "mnok": 64511.3,
-    "nok_kg": 50.32
-   },
-   {
-    "year": "2019",
-    "tonnes": 1364044.0,
-    "mnok": 67990.0,
-    "nok_kg": 49.84
+    "year": "2020",
+    "agricultural_holdings": 21780.0
    }
   ],
   "candidates": [
    "07326",
-   "Akvakultur04"
+   "07327",
+   "13152",
+   "12841",
+   "07307",
+   "12447",
+   "08808"
   ]
  },
  "biomass": {
@@ -27148,5 +27074,5 @@
    }
   ]
  },
- "change_count": 12
+ "change_count": 11
 }
