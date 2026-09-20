@@ -377,11 +377,49 @@ def fetch_ssb_export_markets() -> dict:
     raise RuntimeError("; ".join(errors) or "no trade table worked")
 
 
+def ssb_search(query: str) -> list[dict]:
+    try:
+        j = get_json(SSB_BASE, params={"query": query})
+    except Exception as e:  # noqa: BLE001
+        log(f"  SSB search failed for {query!r}: {e}")
+        return []
+    if isinstance(j, dict):
+        j = j.get("tables") or j.get("results") or []
+    out = []
+    for it in j:
+        if isinstance(it, dict) and it.get("id"):
+            out.append({"id": str(it["id"]), "title": str(it.get("title") or it.get("text") or "")})
+    return out
+
+
 def fetch_ssb_annual_sales() -> dict:
-    table = CONFIG["ssb"]["annual_sales_table"]
-    meta = ssb_metadata(table)
+    this_year = NOW.year
+    candidates = [CONFIG["ssb"]["annual_sales_table"]]
+    for hit in ssb_search("slaughtered fish"):
+        tl = hit["title"].lower()
+        if "slaughter" in tl and ("sale" in tl or "sold" in tl) and hit["id"] not in candidates:
+            candidates.append(hit["id"])
+    log(f"  candidate tables: {candidates}")
+    best, best_meta, best_year = None, None, -1
+    for table in candidates[:6]:
+        try:
+            meta = ssb_metadata(table)
+        except Exception as e:  # noqa: BLE001
+            log(f"  {table}: metadata failed: {e}")
+            continue
+        vars_ = {v["code"]: v for v in meta["variables"]}
+        tid = vars_.get("Tid")
+        if not tid or not re.match(r"^\d{4}$", str(tid["values"][-1])):
+            continue
+        last_year = int(tid["values"][-1])
+        has_salmon = any("salmon" in t.lower() or "laks" in t.lower() for v in vars_.values() for t in v["valueTexts"])
+        log(f"  {table}: {meta.get('title')}; last year {last_year}; salmon={has_salmon}")
+        if has_salmon and last_year > best_year:
+            best, best_meta, best_year = table, meta, last_year
+    if not best:
+        raise RuntimeError(f"no annual sales table with salmon found among {candidates}")
+    table, meta = best, best_meta
     vars_ = {v["code"]: v for v in meta["variables"]}
-    log(f"  SSB {table}: {meta.get('title')}; variables: " + ", ".join(f"{c}({v['text']},{len(v['values'])})" for c, v in vars_.items()))
     selections = {}
     for c, v in vars_.items():
         if c in ("Tid", "ContentsCode"):
@@ -391,10 +429,9 @@ def fetch_ssb_annual_sales() -> dict:
         if sal:
             selections[c] = sal[:1]
             continue
-        # any other dimension (e.g. region): take the national total only
         tot = [val for val, t in pairs if any(w in t.lower() for w in ("whole country", "the whole", "norway", "total", "hele landet", "i alt"))]
         selections[c] = tot[:1] if tot else [v["values"][0]]
-    log(f"  selections: {selections}")
+    log(f"  using {table} selections: {selections}")
     ds = ssb_query(table, meta, selections, top_time=15)
     recs = jsonstat_records(ds)
     out: dict[str, dict] = {}
@@ -417,7 +454,7 @@ def fetch_ssb_annual_sales() -> dict:
     for row in series:
         if row.get("tonnes") and row.get("mnok"):
             row["nok_kg"] = round(row["mnok"] * 1e6 / (row["tonnes"] * 1000), 2)
-    return {"table": table, "title": meta.get("title"), "selection": selections, "labels": labels, "series": series}
+    return {"table": table, "title": meta.get("title"), "selection": selections, "labels": labels, "series": series, "candidates": candidates}
 
 
 # --------------------------------------------------------------------------- Fiskeridirektoratet biomass (Excel)
@@ -732,7 +769,8 @@ def fetch_fdir_register() -> dict:
                     "localities": len(company_sea), "localities_sole": sum(1 for r in company_sea if r["company_sole"]),
                     "localities_any_type": len(company_all), "active": sum(1 for r in company_sea if str(r["status"] or "").upper() == "AKTIV"),
                     "capacity_t": round(sum(r["capacity_t"] or 0 for r in company_sea), 0),
-                    "licences": len({l for r in company_sea for l in r["licences"]}),
+                    "licences_sole_sites": len({l for r in company_sea if r["company_sole"] for l in r["licences"]}),
+                    "licence_numbers_any_site": len({l for r in company_sea for l in r["licences"]}),
                     "by_area": [a for a in areas if a["company_localities"]],
                     "localities_list": company_localities},
         "_localities": compact,
@@ -807,7 +845,7 @@ def fetch_fdir_escapes() -> dict:
 
     years = sorted({str(i["date"])[:4] for i in incidents if i["date"]})
     return {"service": svc_url, "layers": layers_used, "total_reports": len(incidents), "first_year": years[0] if years else None,
-            "recent": recent[:400], "company_recent": [i for i in recent if i["is_company"]],
+            "recent": recent[:300], "company_recent": [i for i in recent if i["is_company"]],
             "by_year": {y: year_stats(y) for y in years[-6:]}}
 
 
@@ -1010,19 +1048,19 @@ def compute_changes(latest: dict, previous: dict | None) -> list[dict]:
     if reg.get("company"):
         c, pc = reg["company"], preg.get("company") or {}
         if not previous:
-            add("company", f"{c['name']}: {c['localities']} sea food-fish localities, {c['licences']} licences in the register",
+            add("company", f"{c['name']}: {c['localities']} sea food-fish localities in the register ({c['localities_sole']} held by Mowi alone)",
                 f"Locality capacity {c['capacity_t']:,.0f} t; entities: " + ", ".join(e['holder'] for e in c['entities']), "info", company=True)
         else:
             cur_l = {str(x["locality_no"]): x for x in c.get("localities_list", [])}
             old_l = {str(x["locality_no"]): x for x in pc.get("localities_list", [])}
             for k in sorted(set(cur_l) - set(old_l)):
                 x = cur_l[k]
-                add("company", f"New {c['name']} locality in register: {x['locality_name']} ({k})", f"PO{x['production_area']} {x.get('municipality') or ''}; capacity {x.get('capacity_t') or 0:,.0f} t", "notable", company=True)
+                add("company", f"New {c['name']} locality in register: {x['locality_name']} ({k})", f"PO{x.get('production_area') or '?'} {x.get('municipality') or ''}; capacity {x.get('capacity_t') or 0:,.0f} t", "notable", company=True)
             for k in sorted(set(old_l) - set(cur_l)):
                 x = old_l[k]
-                add("company", f"{c['name']} locality removed from register: {x['locality_name']} ({k})", f"PO{x['production_area']}", "notable", company=True)
-            if c.get("licences") != pc.get("licences"):
-                add("company", f"{c['name']} licence count {pc.get('licences')} → {c.get('licences')}", "", "notable", company=True)
+                add("company", f"{c['name']} locality removed from register: {x['locality_name']} ({k})", f"PO{x.get('production_area') or '?'} {x.get('municipality') or ''}", "notable", company=True)
+            if pc.get("licences_sole_sites") is not None and c.get("licences_sole_sites") != pc.get("licences_sole_sites"):
+                add("company", f"{c['name']} licence numbers at Mowi-only sites {pc.get('licences_sole_sites')} → {c.get('licences_sole_sites')}", "", "notable", company=True)
             if c.get("capacity_t") != pc.get("capacity_t") and pc.get("capacity_t"):
                 add("company", f"{c['name']} locality capacity {pc['capacity_t']:,.0f} → {c['capacity_t']:,.0f} t", "", "info", company=True,
                     delta_pct=pct(c["capacity_t"], pc["capacity_t"]))

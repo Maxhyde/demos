@@ -15600,7 +15600,6 @@
    "localities_any_type": 198,
    "active": 158,
    "capacity_t": 700989.0,
-   "licences": 297,
    "by_area": [
     {
      "production_area": "1",
@@ -21228,7 +21227,9 @@
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/36417"
     }
-   ]
+   ],
+   "licences_sole_sites": 211,
+   "licence_numbers_any_site": 297
   }
  },
  "escapes": {
@@ -27143,5 +27144,5 @@
    }
   ]
  },
- "change_count": 25
+ "change_count": 12
 }

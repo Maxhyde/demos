@@ -1,0 +1,882 @@
+<meta charset="utf-8">
+<title>Norwegian Salmon Monitor</title>
+<meta name="description" content="Weekly monitor of the Norwegian government's salmon farming data, with Mowi highlighted.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  color-scheme: light;
+  --plane: #f9f9f7;
+  --surface: #fcfcfb;
+  --surface-2: #f1f0ec;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --muted: #898781;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --border: rgba(11, 11, 11, 0.10);
+  --border-strong: rgba(11, 11, 11, 0.18);
+  --accent: #2a78d6;
+  --accent-soft: rgba(42, 120, 214, 0.12);
+  --s1: #2a78d6;
+  --s2: #eb6834;
+  --s3: #1baf7a;
+  --deemph: #c3c2b7;
+  --deemph-2: #dad9d2;
+  --good: #0ca30c;
+  --good-text: #006300;
+  --warning: #fab219;
+  --serious: #ec835a;
+  --critical: #d03b3b;
+  --critical-text: #b32c2c;
+  --seq-100: #cde2fb; --seq-200: #9ec5f4; --seq-300: #6da7ec; --seq-400: #3987e5; --seq-500: #256abf; --seq-600: #184f95; --seq-700: #0d366b;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --radius: 4px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --plane: #0d0d0d; --surface: #1a1a19; --surface-2: #232321;
+    --ink: #ffffff; --ink-2: #c3c2b7; --muted: #898781; --grid: #2c2c2a; --axis: #383835;
+    --border: rgba(255, 255, 255, 0.10); --border-strong: rgba(255, 255, 255, 0.2);
+    --accent: #3987e5; --accent-soft: rgba(57, 135, 229, 0.18);
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --deemph: #52514e; --deemph-2: #383835;
+    --good-text: #0ca30c; --critical-text: #e66767;
+    --seq-100: #0d366b; --seq-200: #184f95; --seq-300: #256abf; --seq-400: #3987e5; --seq-500: #5598e7; --seq-600: #86b6ef; --seq-700: #b7d3f6;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --plane: #0d0d0d; --surface: #1a1a19; --surface-2: #232321;
+  --ink: #ffffff; --ink-2: #c3c2b7; --muted: #898781; --grid: #2c2c2a; --axis: #383835;
+  --border: rgba(255, 255, 255, 0.10); --border-strong: rgba(255, 255, 255, 0.2);
+  --accent: #3987e5; --accent-soft: rgba(57, 135, 229, 0.18);
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --deemph: #52514e; --deemph-2: #383835;
+  --good-text: #0ca30c; --critical-text: #e66767;
+  --seq-100: #0d366b; --seq-200: #184f95; --seq-300: #256abf; --seq-400: #3987e5; --seq-500: #5598e7; --seq-600: #86b6ef; --seq-700: #b7d3f6;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--plane); color: var(--ink); font-family: var(--sans); font-size: 14px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+button { font: inherit; color: inherit; }
+h1, h2, h3 { margin: 0; font-weight: 600; text-wrap: balance; letter-spacing: -0.01em; }
+h1 { font-size: 22px; line-height: 1.2; }
+h2 { font-size: 18px; }
+h3 { font-size: 14px; }
+.page { max-width: 1180px; margin: 0 auto; padding-block: 0 72px; padding-inline: clamp(16px, 4vw, 40px); }
+.masthead { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--plane) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); margin-inline: calc(-1 * clamp(16px, 4vw, 40px)); padding: 12px clamp(16px, 4vw, 40px); display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; }
+.masthead .sub { color: var(--ink-2); }
+.masthead .status { margin-left: auto; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 12.5px; color: var(--ink-2); }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border-strong); font-size: 12px; line-height: 1.5; white-space: nowrap; }
+.pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex: none; }
+.pill.ok .dot { background: var(--good); }
+.pill.warn .dot { background: var(--warning); }
+.pill.bad .dot { background: var(--critical); }
+.eyebrow { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+section { margin-top: 40px; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; margin-bottom: 14px; padding-top: 14px; border-top: 1px solid var(--border-strong); }
+.sec-head p { margin: 0; color: var(--ink-2); max-width: 70ch; }
+.sec-head .right { margin-left: auto; color: var(--muted); font-size: 12.5px; }
+.lede { margin: 18px 0 0; color: var(--ink-2); max-width: 72ch; }
+/* change feed */
+.feed { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 4px 0; }
+.feed-head { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; padding: 10px 16px 8px; border-bottom: 1px solid var(--border); }
+.feed-head .meta { color: var(--muted); font-size: 12.5px; margin-left: auto; }
+.chips { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+.chip { border: 1px solid var(--border-strong); background: transparent; border-radius: 999px; padding: 3px 10px; font-size: 12.5px; cursor: pointer; color: var(--ink-2); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--plane); border-color: var(--ink); }
+.item { display: grid; grid-template-columns: 4px 1fr; gap: 0 14px; padding: 10px 16px 10px 12px; border-bottom: 1px solid var(--border); }
+.item:last-child { border-bottom: 0; }
+.item .stripe { border-radius: 2px; background: var(--deemph-2); }
+.item.notable .stripe { background: var(--serious); }
+.item.alert .stripe { background: var(--critical); }
+.item .top { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
+.item .title { font-weight: 500; }
+.item .detail { color: var(--ink-2); margin-top: 2px; max-width: 90ch; }
+.tag { font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.tag.mowi { color: var(--accent); }
+.empty { padding: 16px; color: var(--muted); }
+/* KPI tiles */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.tile { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px 10px; display: grid; grid-template-rows: auto auto auto 1fr; gap: 2px; min-width: 0; }
+.tile .label { color: var(--ink-2); font-size: 12.5px; }
+.tile .value { font-size: 26px; font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; }
+.tile .value small { font-size: 13px; font-weight: 500; color: var(--ink-2); margin-left: 4px; letter-spacing: 0; }
+.tile .delta { font-size: 12.5px; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 2px 10px; }
+.tile .period { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.up { color: var(--good-text); } .down { color: var(--critical-text); } .flat { color: var(--ink-2); }
+.tile svg.spark { width: 100%; height: 34px; margin-top: 6px; display: block; overflow: visible; }
+.tile.muted-tile .value { color: var(--muted); font-size: 18px; }
+/* figures */
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 22px 32px; }
+figure { margin: 0; min-width: 0; }
+figure .fig-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 6px; }
+figure .fig-head h3 { font-size: 14.5px; }
+figure .unit { color: var(--muted); font-size: 12.5px; }
+figure .fig-head .tools { margin-left: auto; display: inline-flex; gap: 6px; }
+.tbtn { border: 1px solid var(--border-strong); background: transparent; border-radius: 4px; padding: 2px 8px; font-size: 12px; color: var(--ink-2); cursor: pointer; }
+.tbtn[aria-pressed="true"] { background: var(--surface-2); color: var(--ink); }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 12.5px; color: var(--ink-2); margin: 2px 0 6px; }
+.legend .key { display: inline-flex; align-items: center; gap: 6px; }
+.legend .swatch { width: 14px; height: 3px; border-radius: 2px; background: var(--s1); }
+.legend .swatch.rect { height: 10px; width: 10px; border-radius: 2px; }
+.chart { position: relative; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--sans); }
+.chart .tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 4px; padding: 6px 9px; font-size: 12.5px; box-shadow: 0 4px 16px rgba(0,0,0,0.12); min-width: 140px; z-index: 5; opacity: 0; transition: opacity .08s; }
+.chart .tip.on { opacity: 1; }
+.tip .th { color: var(--muted); font-size: 11.5px; margin-bottom: 3px; }
+.tip .row { display: flex; align-items: center; gap: 7px; justify-content: space-between; }
+.tip .row .k { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); }
+.tip .row .k i { display: inline-block; width: 10px; height: 3px; border-radius: 2px; }
+.tip .row b { font-weight: 600; font-variant-numeric: tabular-nums; }
+.axis text { fill: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+.axis line, .axis path { stroke: var(--axis); }
+.gridline { stroke: var(--grid); stroke-width: 1; }
+.ending-label { fill: var(--ink-2); font-size: 11.5px; }
+.chart-note { color: var(--muted); font-size: 12px; margin-top: 6px; max-width: 70ch; }
+figcaption { color: var(--muted); font-size: 12px; margin-top: 6px; max-width: 80ch; }
+/* tables */
+.tablewrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; white-space: nowrap; }
+th { color: var(--ink-2); font-weight: 500; font-size: 12px; background: var(--surface-2); position: sticky; top: 0; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+td.wrap { white-space: normal; min-width: 220px; max-width: 380px; }
+tr.mowi td { background: var(--accent-soft); }
+tr.has-sub td { border-bottom: 0; padding-bottom: 2px; }
+td.subcell { color: var(--ink-2); font-size: 12.5px; padding-top: 0; max-width: none; white-space: normal; }
+tr:last-child td { border-bottom: 0; }
+.mono { font-family: var(--mono); font-size: 12px; }
+.datatable { margin-top: 8px; }
+.datatable[hidden] { display: none; }
+/* traffic lights */
+.coast { display: grid; grid-template-columns: repeat(13, minmax(0, 1fr)); gap: 4px; }
+.po { border-radius: 4px; padding: 6px 4px 6px; text-align: center; min-width: 0; border: 1px solid var(--border); background: var(--surface); position: relative; }
+.po .light { height: 8px; border-radius: 4px; margin-bottom: 6px; }
+.po.green .light { background: var(--good); } .po.yellow .light { background: var(--warning); } .po.red .light { background: var(--critical); }
+.po .n { font-weight: 600; font-size: 13px; }
+.po .nm { font-size: 10.5px; color: var(--ink-2); line-height: 1.25; white-space: normal; }
+.po .m { font-size: 11px; color: var(--accent); margin-top: 4px; font-weight: 500; }
+.po .m.none { color: var(--muted); font-weight: 400; }
+@media (max-width: 720px) { .coast { grid-template-columns: repeat(7, minmax(0, 1fr)); } }
+.tl-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; font-size: 12.5px; color: var(--ink-2); }
+.tl-legend .key { display: inline-flex; gap: 6px; align-items: center; }
+.tl-legend .sw { width: 12px; height: 12px; border-radius: 3px; }
+/* map */
+.mapwrap { display: grid; grid-template-columns: minmax(0, 360px) 1fr; gap: 20px 32px; align-items: start; }
+@media (max-width: 860px) { .mapwrap { grid-template-columns: 1fr; } }
+.map svg { width: 100%; height: auto; display: block; }
+.map .site { fill: var(--deemph); }
+.map .site.mowi { fill: var(--s1); stroke: var(--surface); stroke-width: 1.2; }
+.notice { border: 1px solid var(--border-strong); border-left: 3px solid var(--warning); border-radius: 6px; padding: 12px 16px; background: var(--surface); color: var(--ink-2); max-width: 78ch; }
+.notice code { font-family: var(--mono); font-size: 12px; background: var(--surface-2); padding: 1px 5px; border-radius: 3px; color: var(--ink); }
+details { margin-top: 10px; }
+summary { cursor: pointer; color: var(--ink-2); font-size: 13px; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 22px 32px; }
+.stack { display: grid; gap: 10px; }
+.foot { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--border-strong); color: var(--muted); font-size: 12.5px; max-width: 80ch; }
+.foot p { margin: 6px 0; }
+.stat-inline { display: flex; flex-wrap: wrap; gap: 6px 26px; margin: 8px 0 16px; }
+.stat-inline div b { font-size: 20px; font-weight: 600; letter-spacing: -0.01em; display: block; line-height: 1.1; }
+.stat-inline div span { color: var(--ink-2); font-size: 12.5px; }
+.loading { color: var(--muted); padding: 40px 0; }
+@media (prefers-reduced-motion: reduce) { .chart .tip { transition: none; } }
+</style>
+
+<div class="page">
+  <header class="masthead">
+    <h1>Norwegian Salmon Monitor</h1>
+    <span class="sub">Government data on salmon farming, with Mowi highlighted</span>
+    <div class="status" id="status"><span class="pill"><span class="dot"></span>Loading data</span></div>
+  </header>
+
+  <p class="lede" id="lede"></p>
+
+  <section id="sec-changes">
+    <div class="sec-head"><h2>What changed</h2><p>Every new figure, revision and event since the previous weekly run. Mowi-related items are tagged.</p><span class="right" id="changes-meta"></span></div>
+    <div class="feed" id="feed"><div class="loading">Loading…</div></div>
+    <details id="changelog-wrap" hidden><summary>Earlier weeks</summary><div id="changelog" class="stack" style="margin-top:10px"></div></details>
+  </section>
+
+  <section id="sec-kpi">
+    <div class="sec-head"><h2>Headline figures</h2><p>Latest published values with the change against the previous period and the same period last year.</p></div>
+    <div class="kpis" id="kpis"></div>
+  </section>
+
+  <section id="sec-market">
+    <div class="sec-head"><h2>Export market</h2><p>Statistics Norway publishes the weekly export price and volume of farmed salmon every Wednesday. Prices are average export values per kilo, not spot quotes.</p></div>
+    <div class="grid2" id="market-charts"></div>
+  </section>
+
+  <section id="sec-bio">
+    <div class="sec-head"><h2>Biology and production</h2><p>Monthly biomass reports that every farmer files with Fiskeridirektoratet: standing stock, harvest, mortality, feed and smolt release, by production area. Salmon only.</p><span class="right" id="bio-meta"></span></div>
+    <div class="grid2" id="bio-charts"></div>
+  </section>
+
+  <section id="sec-lice">
+    <div class="sec-head"><h2>Sea lice and fish health</h2><p>Weekly lice counts per locality reported to Mattilsynet and published through BarentsWatch. The limit is 0.5 adult female lice per fish, 0.2 during the spring smolt migration.</p><span class="right" id="lice-meta"></span></div>
+    <div id="lice-body"></div>
+  </section>
+
+  <section id="sec-mowi">
+    <div class="sec-head"><h2>Mowi in the register</h2><p>Sea food-fish localities for salmon and trout where a Mowi company holds a licence, from Fiskeridirektoratet's aquaculture register. Shared localities count for every holder.</p></div>
+    <div class="stat-inline" id="mowi-stats"></div>
+    <div class="mapwrap">
+      <div class="map" id="map"></div>
+      <div class="stack" id="mowi-tables"></div>
+    </div>
+  </section>
+
+  <section id="sec-tl">
+    <div class="sec-head"><h2>Traffic light system</h2><p>Production areas from the Swedish border (PO1) to east Finnmark (PO13), coloured by the ministry's latest decision. Green areas are offered 6% growth, red areas lose 6% of capacity.</p><span class="right" id="tl-meta"></span></div>
+    <div class="coast" id="coast"></div>
+    <div class="tl-legend" id="tl-legend"></div>
+  </section>
+
+  <section id="sec-escapes">
+    <div class="sec-head"><h2>Escape reports</h2><p>Every suspected or confirmed escape that farmers report to Fiskeridirektoratet. A first report ("Del 1") often has only an estimated range; the follow-up ("Del 2") confirms numbers and recapture.</p><span class="right" id="esc-meta"></span></div>
+    <div class="stat-inline" id="esc-stats"></div>
+    <div id="escapes"></div>
+  </section>
+
+  <section id="sec-annual">
+    <div class="sec-head"><h2>Year in context</h2><p>Annual totals for the whole Norwegian salmon industry.</p></div>
+    <div id="annual"></div>
+  </section>
+
+  <section id="sec-sources">
+    <div class="sec-head"><h2>Sources and refresh status</h2><p>Each dataset, its publisher and cadence, and whether the last weekly run fetched it successfully.</p></div>
+    <div id="sources"></div>
+  </section>
+
+  <footer class="foot" id="foot"></footer>
+</div>
+
+<script>
+(function () {
+'use strict';
+// ------------------------------------------------------------------ config
+const DATA_BASES = ['./data/', 'https://raw.githubusercontent.com/Maxhyde/demos/claude/charming-fermi-dkpsie/salmon-dashboard/data/'];
+const REPO_URL = 'https://github.com/Maxhyde/demos';
+const CSS = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+// ------------------------------------------------------------------ DOM helpers
+function h(tag, attrs, ...children) {
+  const el = document.createElement(tag);
+  if (attrs) for (const [k, v] of Object.entries(attrs)) {
+    if (v == null || v === false) continue;
+    if (k === 'class') el.className = v;
+    else if (k === 'text') el.textContent = v;
+    else if (k === 'html') el.innerHTML = v; // only used with literal markup, never data
+    else if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
+    else if (k === 'dataset') Object.assign(el.dataset, v);
+    else el.setAttribute(k, v === true ? '' : v);
+  }
+  for (const c of children.flat()) if (c != null && c !== false) el.append(c.nodeType ? c : document.createTextNode(String(c)));
+  return el;
+}
+const SVGNS = 'http://www.w3.org/2000/svg';
+function s(tag, attrs, ...children) {
+  const el = document.createElementNS(SVGNS, tag);
+  if (attrs) for (const [k, v] of Object.entries(attrs)) { if (v != null && v !== false) { if (k === 'text') el.textContent = v; else el.setAttribute(k, v); } }
+  for (const c of children.flat()) if (c != null) el.append(c);
+  return el;
+}
+function clear(el) { while (el.firstChild) el.removeChild(el.firstChild); return el; }
+
+// ------------------------------------------------------------------ formatting
+const fmt = {
+  num(n, d = 0) { if (n == null || !isFinite(n)) return '–'; return Number(n).toLocaleString('en-GB', { minimumFractionDigits: d, maximumFractionDigits: d }); },
+  compact(n, d = 1) {
+    if (n == null || !isFinite(n)) return '–';
+    if (n === 0) return '0';
+    const a = Math.abs(n);
+    if (a >= 1e9) return (n / 1e9).toFixed(d) + 'bn';
+    if (a >= 1e6) return (n / 1e6).toFixed(d) + 'M';
+    if (a >= 1e4) return (n / 1e3).toFixed(a >= 1e5 ? 0 : d) + 'k';
+    return fmt.num(n, a < 10 ? 2 : 0);
+  },
+  pct(p, d = 1) { if (p == null || !isFinite(p)) return '–'; return (p > 0 ? '+' : p < 0 ? '−' : '') + Math.abs(p).toFixed(d) + '%'; },
+  date(iso) { if (!iso) return '–'; const d = new Date(String(iso).slice(0, 10) + 'T00:00:00Z'); return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }); },
+  dateShort(iso) { if (!iso) return '–'; const d = new Date(String(iso).slice(0, 10) + 'T00:00:00Z'); return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' }); },
+  datetime(iso) { if (!iso) return '–'; const d = new Date(iso); return d.toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'UTC' }) + ' UTC'; },
+  month(ym) { if (!ym) return '–'; const m = String(ym).match(/(\d{4})[-M]?(\d{2})/); if (!m) return ym; return new Date(Date.UTC(+m[1], +m[2] - 1, 1)).toLocaleDateString('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' }); },
+  monthShort(mo) { return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][mo - 1] || ''; },
+  week(row) { if (!row) return '–'; const start = row.week_start ? fmt.dateShort(row.week_start) : ''; return `Week ${row.week_no} ${row.year}` + (start ? ` · from ${start}` : ''); },
+};
+function pctChange(a, b) { if (a == null || b == null || b === 0) return null; return (a - b) / b * 100; }
+function deltaSpan(p, { upGood = true, neutral = false, suffix = '' } = {}) {
+  if (p == null || !isFinite(p)) return h('span', { class: 'flat', text: '– ' + suffix });
+  const dir = p > 0.05 ? 'up' : p < -0.05 ? 'down' : 'flat';
+  const good = dir === 'flat' ? 'flat' : neutral ? 'flat' : ((dir === 'up') === upGood ? 'up' : 'down');
+  const arrow = dir === 'up' ? '▲' : dir === 'down' ? '▼' : '●';
+  return h('span', { class: good }, `${arrow} ${fmt.pct(p)}${suffix ? ' ' + suffix : ''}`);
+}
+function niceTicks(min, max, count = 5) {
+  if (!(max > min)) { max = min + 1; }
+  const span = max - min, raw = span / count, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const norm = raw / mag; const step = (norm >= 5 ? 10 : norm >= 2 ? 5 : norm >= 1 ? 2 : 1) * mag;
+  const lo = Math.floor(min / step) * step, hi = Math.ceil(max / step) * step;
+  const ticks = []; for (let v = lo; v <= hi + step / 2; v += step) ticks.push(+v.toFixed(10));
+  return { ticks, lo, hi, step };
+}
+
+// ------------------------------------------------------------------ charts (plain SVG)
+const charts = [];
+function registerChart(el, render) { charts.push({ el, render }); }
+function flushCharts() { charts.forEach(c => { clear(c.el); c.render(); }); }
+let resizeTimer; window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => charts.forEach(c => { clear(c.el); c.render(); }), 160); });
+
+function tooltip(chartEl) {
+  const tip = h('div', { class: 'tip', role: 'status' }); chartEl.append(tip);
+  return {
+    show(x, y, title, rows) {
+      clear(tip); tip.append(h('div', { class: 'th', text: title }));
+      for (const r of rows) tip.append(h('div', { class: 'row' }, h('span', { class: 'k' }, r.color ? h('i', { style: `background:${r.color}` }) : null, r.name), h('b', { text: r.value })));
+      tip.classList.add('on');
+      const W = chartEl.clientWidth, tw = tip.offsetWidth || 160;
+      tip.style.left = Math.max(0, Math.min(W - tw, x + 14 > W - tw ? x - tw - 14 : x + 14)) + 'px';
+      tip.style.top = Math.max(0, y - 10) + 'px';
+    },
+    hide() { tip.classList.remove('on'); },
+  };
+}
+
+function lineChart(el, cfg) {
+  const W = Math.max(280, el.clientWidth || 600), H = cfg.height || 250;
+  const m = { t: 14, r: cfg.endLabels ? 74 : 18, b: 30, l: 46 };
+  const n = cfg.labels.length;
+  const all = cfg.series.flatMap(sr => sr.values.filter(v => v != null));
+  if (!all.length) { el.append(h('div', { class: 'empty', text: 'No data' })); return; }
+  let ymin = cfg.yMin0 ? 0 : Math.min(...all), ymax = Math.max(...all);
+  if (cfg.yMin0 === false) { const pad = (ymax - ymin) * 0.08; ymin -= pad; ymax += pad; }
+  const yt = niceTicks(ymin, ymax, 5); ymin = cfg.yMin0 ? 0 : yt.lo; ymax = yt.hi;
+  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const X = i => m.l + (n <= 1 ? iw / 2 : i / (n - 1) * iw), Y = v => m.t + ih - (v - ymin) / (ymax - ymin) * ih;
+  const svg = s('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, tabindex: 0, role: 'img', 'aria-label': cfg.aria || '' });
+  const g = s('g', { class: 'axis' });
+  for (const t of yt.ticks) { if (t < ymin - 1e-9 || t > ymax + 1e-9) continue; svg.append(s('line', { class: 'gridline', x1: m.l, x2: W - m.r, y1: Y(t), y2: Y(t) })); g.append(s('text', { x: m.l - 8, y: Y(t) + 3.5, 'text-anchor': 'end', text: cfg.yFormat ? cfg.yFormat(t) : fmt.compact(t) })); }
+  const xt = cfg.xTicks ? cfg.xTicks : Array.from({ length: n }, (_, i) => i).filter(i => i % Math.ceil(n / 8) === 0);
+  for (const i of xt) g.append(s('text', { x: X(i), y: H - 8, 'text-anchor': 'middle', text: cfg.xFormat ? cfg.xFormat(i) : cfg.labels[i] }));
+  svg.append(s('line', { x1: m.l, x2: W - m.r, y1: m.t + ih, y2: m.t + ih, stroke: CSS('--axis') }));
+  svg.append(g);
+  const surface = CSS('--surface') || '#fcfcfb';
+  cfg.series.forEach(sr => {
+    let d = '', open = false;
+    sr.values.forEach((v, i) => { if (v == null) { open = false; return; } d += (open ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1); open = true; });
+    if (sr.area) { let lastI = -1, firstI = -1; sr.values.forEach((v, i) => { if (v != null) { if (firstI < 0) firstI = i; lastI = i; } }); if (firstI >= 0) svg.append(s('path', { d: d + `L${X(lastI)} ${Y(ymin)}L${X(firstI)} ${Y(ymin)}Z`, fill: sr.color, opacity: 0.1 })); }
+    svg.append(s('path', { d, fill: 'none', stroke: sr.color, 'stroke-width': sr.width || 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', 'stroke-dasharray': sr.dash || null }));
+    let li = -1; sr.values.forEach((v, i) => { if (v != null) li = i; });
+    if (li >= 0) {
+      svg.append(s('circle', { cx: X(li), cy: Y(sr.values[li]), r: 4, fill: sr.color, stroke: surface, 'stroke-width': 2 }));
+      if (cfg.endLabels && sr.endLabel !== false) svg.append(s('text', { class: 'ending-label', x: X(li) + 9, y: Y(sr.values[li]) + 4, text: (cfg.endFormat || cfg.yFormat || fmt.compact)(sr.values[li]) }));
+    }
+  });
+  // hover layer
+  const cross = s('line', { x1: 0, x2: 0, y1: m.t, y2: m.t + ih, stroke: CSS('--axis'), 'stroke-width': 1, opacity: 0 });
+  const dots = cfg.series.map(sr => s('circle', { r: 4.5, fill: sr.color, stroke: surface, 'stroke-width': 2, opacity: 0 }));
+  svg.append(cross, ...dots);
+  const tip = tooltip(el); let active = -1;
+  const setActive = (i) => {
+    active = i; if (i < 0) { cross.setAttribute('opacity', 0); dots.forEach(d => d.setAttribute('opacity', 0)); tip.hide(); return; }
+    cross.setAttribute('x1', X(i)); cross.setAttribute('x2', X(i)); cross.setAttribute('opacity', 1);
+    const rows = [];
+    cfg.series.forEach((sr, k) => { const v = sr.values[i]; if (v == null) { dots[k].setAttribute('opacity', 0); return; } dots[k].setAttribute('cx', X(i)); dots[k].setAttribute('cy', Y(v)); dots[k].setAttribute('opacity', 1); rows.push({ name: sr.name, color: sr.color, value: (sr.format || cfg.tipFormat || cfg.yFormat || (x => fmt.num(x, 1)))(v) }); });
+    const rect = svg.getBoundingClientRect(), scale = rect.width / W;
+    tip.show(X(i) * scale, m.t * scale, cfg.tipTitle ? cfg.tipTitle(i) : cfg.labels[i], rows.length ? rows : [{ name: 'No value', value: '–' }]);
+  };
+  const overlay = s('rect', { x: m.l, y: m.t, width: iw, height: ih, fill: 'transparent' });
+  overlay.addEventListener('pointermove', (e) => { const rect = svg.getBoundingClientRect(); const px = (e.clientX - rect.left) / rect.width * W; const i = Math.round((px - m.l) / iw * (n - 1)); setActive(Math.max(0, Math.min(n - 1, i))); });
+  overlay.addEventListener('pointerleave', () => setActive(-1));
+  svg.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { setActive(Math.min(n - 1, (active < 0 ? n - 1 : active + 1))); e.preventDefault(); } else if (e.key === 'ArrowLeft') { setActive(Math.max(0, (active < 0 ? n - 1 : active - 1))); e.preventDefault(); } else if (e.key === 'Escape') setActive(-1); });
+  svg.addEventListener('blur', () => setActive(-1));
+  svg.append(overlay);
+  el.append(svg);
+}
+
+function barChart(el, cfg) {
+  // vertical grouped columns: categories × series
+  const W = Math.max(280, el.clientWidth || 600), H = cfg.height || 250;
+  const m = { t: 14, r: 12, b: 30, l: 46 };
+  const n = cfg.categories.length, k = cfg.series.length;
+  const all = cfg.series.flatMap(sr => sr.values.filter(v => v != null));
+  if (!all.length) { el.append(h('div', { class: 'empty', text: 'No data' })); return; }
+  const yt = niceTicks(Math.min(0, ...all), Math.max(0, ...all), 5); const ymin = yt.lo, ymax = yt.hi;
+  const iw = W - m.l - m.r, ih = H - m.t - m.b, band = iw / n;
+  const barW = Math.min(24, Math.max(4, (band * 0.7 - (k - 1) * 2) / k));
+  const Y = v => m.t + ih - (v - ymin) / (ymax - ymin) * ih;
+  const svg = s('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'img', 'aria-label': cfg.aria || '' });
+  const g = s('g', { class: 'axis' });
+  for (const t of yt.ticks) { svg.append(s('line', { class: 'gridline', x1: m.l, x2: W - m.r, y1: Y(t), y2: Y(t) })); g.append(s('text', { x: m.l - 8, y: Y(t) + 3.5, 'text-anchor': 'end', text: (cfg.yFormat || fmt.compact)(t) })); }
+  const every = Math.ceil(n / 12);
+  cfg.categories.forEach((c, i) => { if (i % every === 0) g.append(s('text', { x: m.l + band * (i + 0.5), y: H - 8, 'text-anchor': 'middle', text: c })); });
+  svg.append(g);
+  const tip = tooltip(el);
+  cfg.categories.forEach((c, i) => {
+    const groupW = k * barW + (k - 1) * 2, x0 = m.l + band * (i + 0.5) - groupW / 2;
+    const hit = s('rect', { x: m.l + band * i, y: m.t, width: band, height: ih, fill: 'transparent' });
+    cfg.series.forEach((sr, j) => {
+      const v = sr.values[i]; if (v == null) return;
+      const y = Y(Math.max(0, v)), hgt = Math.abs(Y(v) - Y(0)); const x = x0 + j * (barW + 2); const r = Math.min(4, barW / 2, hgt);
+      const d = v >= 0 ? `M${x} ${y + hgt}V${y + r}Q${x} ${y} ${x + r} ${y}H${x + barW - r}Q${x + barW} ${y} ${x + barW} ${y + r}V${y + hgt}Z` : `M${x} ${y}V${y + hgt - r}Q${x} ${y + hgt} ${x + r} ${y + hgt}H${x + barW - r}Q${x + barW} ${y + hgt} ${x + barW} ${y + hgt - r}V${y}Z`;
+      svg.append(s('path', { d, fill: sr.color, class: 'bar' }));
+    });
+    const show = () => { const rect = svg.getBoundingClientRect(), scale = rect.width / W; tip.show((m.l + band * (i + 0.5)) * scale, m.t * scale, cfg.tipTitle ? cfg.tipTitle(i) : c, cfg.series.map(sr => ({ name: sr.name, color: sr.color, value: (cfg.tipFormat || cfg.yFormat || (x => fmt.num(x, 0)))(sr.values[i]) }))); };
+    hit.addEventListener('pointermove', show); hit.addEventListener('pointerleave', () => tip.hide());
+    svg.append(hit);
+  });
+  svg.append(s('line', { x1: m.l, x2: W - m.r, y1: Y(0), y2: Y(0), stroke: CSS('--axis') }));
+  el.append(svg);
+}
+
+function hbarChart(el, cfg) {
+  // horizontal single-series bars with value label at the tip
+  const W = Math.max(280, el.clientWidth || 600), rowH = 26, labelW = Math.min(215, Math.max(90, W * 0.31));
+  const rows = cfg.rows; const H = rows.length * rowH + 8;
+  const vals = rows.map(r => r.value).filter(v => v != null);
+  if (!vals.length) { el.append(h('div', { class: 'empty', text: 'No data' })); return; }
+  const max = Math.max(...vals, 0); const noteW = cfg.noteWidth || 120; const iw = W - labelW - noteW - 70;
+  const svg = s('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'img', 'aria-label': cfg.aria || '' });
+  const tip = tooltip(el);
+  rows.forEach((r, i) => {
+    const y = 4 + i * rowH, bh = 16; const w = r.value == null ? 0 : Math.max(2, r.value / max * iw);
+    svg.append(s('text', { x: labelW - 8, y: y + 12.5, 'text-anchor': 'end', class: 'ending-label', text: r.label.length > 30 ? r.label.slice(0, 29) + '…' : r.label }));
+    const x = labelW, rr = Math.min(4, w / 2);
+    svg.append(s('path', { d: `M${x} ${y}H${x + w - rr}Q${x + w} ${y} ${x + w} ${y + rr}V${y + bh - rr}Q${x + w} ${y + bh} ${x + w - rr} ${y + bh}H${x}Z`, fill: r.color || cfg.color || CSS('--s1') }));
+    svg.append(s('text', { x: x + w + 6, y: y + 12.5, class: 'ending-label', style: 'font-weight:600', text: (cfg.format || fmt.compact)(r.value) }));
+    if (r.note) svg.append(s('text', { x: W - 4, y: y + 12.5, 'text-anchor': 'end', class: 'axis', style: `fill:${r.noteColor || 'var(--muted)'};font-size:11.5px`, text: r.note }));
+    const hit = s('rect', { x: 0, y, width: W, height: rowH, fill: 'transparent' });
+    hit.addEventListener('pointermove', () => { const rect = svg.getBoundingClientRect(), sc = rect.width / W; tip.show((x + w) * sc, y * sc, r.label, (r.tip || [{ name: cfg.valueName || 'Value', value: (cfg.format || fmt.compact)(r.value) }])); });
+    hit.addEventListener('pointerleave', () => tip.hide());
+    svg.append(hit);
+  });
+  el.append(svg);
+}
+
+function heatmap(el, cfg) {
+  const W = Math.max(280, el.clientWidth || 600), labelW = 150, top = 22; const cols = cfg.cols.length, rows = cfg.rows.length;
+  const cw = (W - labelW) / cols, ch = 22; const H = top + rows * ch + 4;
+  const vals = cfg.values.flat().filter(v => v != null); const vmax = cfg.max || Math.max(0.6, ...vals);
+  const ramp = ['--seq-100', '--seq-200', '--seq-300', '--seq-400', '--seq-500', '--seq-600', '--seq-700'].map(CSS);
+  const svg = s('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'img', 'aria-label': cfg.aria || '' });
+  const g = s('g', { class: 'axis' });
+  cfg.cols.forEach((c, j) => { if (j % Math.ceil(cols / Math.floor((W - labelW) / 44)) === 0) g.append(s('text', { x: labelW + cw * (j + 0.5), y: 14, 'text-anchor': 'middle', text: c })); });
+  cfg.rows.forEach((r, i) => g.append(s('text', { x: labelW - 8, y: top + ch * i + 15, 'text-anchor': 'end', text: r, style: 'fill:var(--ink-2);font-size:12px' })));
+  svg.append(g);
+  const tip = tooltip(el); const isDark = matchMedia('(prefers-color-scheme: dark)').matches && document.documentElement.dataset.theme !== 'light' || document.documentElement.dataset.theme === 'dark';
+  cfg.rows.forEach((r, i) => cfg.cols.forEach((c, j) => {
+    const v = cfg.values[i][j]; const x = labelW + cw * j + 1, y = top + ch * i + 1;
+    let fill = CSS('--surface-2'), textFill = CSS('--muted');
+    if (v != null) { const idx = Math.min(6, Math.floor(Math.sqrt(Math.min(1, v / vmax)) * 7)); fill = ramp[idx]; textFill = (isDark ? idx >= 4 : idx <= 2) ? CSS('--ink') : '#fff'; }
+    const cell = s('rect', { x, y, width: cw - 2, height: ch - 2, rx: 2, fill });
+    svg.append(cell);
+    if (v != null && cw >= 34) svg.append(s('text', { x: x + (cw - 2) / 2, y: y + 14, 'text-anchor': 'middle', style: `fill:${textFill};font-size:10.5px;font-variant-numeric:tabular-nums`, text: v.toFixed(2) }));
+    const hit = s('rect', { x, y, width: cw - 2, height: ch - 2, fill: 'transparent' });
+    hit.addEventListener('pointermove', () => { const rect = svg.getBoundingClientRect(), sc = rect.width / W; hit.setAttribute('stroke', CSS('--ink')); tip.show((x + cw) * sc, y * sc, `${r} · ${c}`, cfg.tipRows ? cfg.tipRows(i, j) : [{ name: cfg.valueName || 'Value', value: v == null ? 'no reports' : v.toFixed(2) }]); });
+    hit.addEventListener('pointerleave', () => { hit.removeAttribute('stroke'); tip.hide(); });
+    svg.append(hit);
+  }));
+  el.append(svg);
+}
+
+function sparkline(values, color, { height = 34 } = {}) {
+  const W = 200, H = height; const vals = values.filter(v => v != null);
+  const svg = s('svg', { class: 'spark', viewBox: `0 0 ${W} ${H}`, preserveAspectRatio: 'none', 'aria-hidden': 'true' });
+  if (vals.length < 2) return svg;
+  const min = Math.min(...vals), max = Math.max(...vals), n = values.length;
+  const X = i => 3 + i / (n - 1) * (W - 8), Y = v => 4 + (max === min ? 0.5 : (max - v) / (max - min)) * (H - 10);
+  let d = '', open = false; values.forEach((v, i) => { if (v == null) { open = false; return; } d += (open ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1); open = true; });
+  svg.append(s('path', { d, fill: 'none', stroke: color, 'stroke-width': 1.6, 'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round' }));
+  let li = -1; values.forEach((v, i) => { if (v != null) li = i; });
+  svg.append(s('circle', { cx: X(li), cy: Y(values[li]), r: 3, fill: color, stroke: CSS('--surface'), 'stroke-width': 1.5 }));
+  return svg;
+}
+
+function figure(parent, cfg) {
+  const fig = h('figure');
+  const head = h('div', { class: 'fig-head' }, h('h3', { text: cfg.title }), cfg.unit ? h('span', { class: 'unit', text: cfg.unit }) : null);
+  fig.append(head);
+  if (cfg.legend && cfg.legend.length > 1) fig.append(h('div', { class: 'legend' }, cfg.legend.map(l => h('span', { class: 'key' }, h('span', { class: 'swatch' + (l.type === 'rect' ? ' rect' : ''), style: `background:${l.color}` }), l.name))));
+  const chart = h('div', { class: 'chart' }); fig.append(chart);
+  if (cfg.note) fig.append(h('figcaption', { text: cfg.note }));
+  if (cfg.table) {
+    const tbl = h('div', { class: 'datatable tablewrap', hidden: true }); tbl.append(buildTable(cfg.table.columns, cfg.table.rows));
+    const btn = h('button', { class: 'tbtn', type: 'button', 'aria-pressed': 'false', text: 'Table' });
+    btn.addEventListener('click', () => { const on = tbl.hidden; tbl.hidden = !on; btn.setAttribute('aria-pressed', String(on)); });
+    head.append(h('span', { class: 'tools' }, btn)); fig.append(tbl);
+  }
+  parent.append(fig);
+  registerChart(chart, () => cfg.render(chart));
+  return fig;
+}
+function buildTable(columns, rows, { rowClass, subRow } = {}) {
+  const table = h('table');
+  table.append(h('thead', null, h('tr', null, columns.map(c => h('th', { class: c.num ? 'num' : null, text: c.label })))));
+  const tb = h('tbody');
+  for (const r of rows) {
+    const cls = rowClass ? rowClass(r) : null; const sub = subRow ? subRow(r) : null;
+    tb.append(h('tr', { class: [cls, sub ? 'has-sub' : null].filter(Boolean).join(' ') || null }, columns.map(c => { const v = c.get(r); return h('td', { class: [c.num ? 'num' : '', c.wrap ? 'wrap' : '', c.mono ? 'mono' : ''].join(' ').trim() || null }, v == null ? '–' : (v.nodeType ? v : String(v))); })));
+    if (sub) tb.append(h('tr', { class: ['sub', cls].filter(Boolean).join(' ') }, h('td', { colspan: columns.length, class: 'wrap subcell', text: sub })));
+  }
+  table.append(tb);
+  return table;
+}
+
+// ------------------------------------------------------------------ data access
+async function loadJSON(name) {
+  for (const base of DATA_BASES) {
+    try { const r = await fetch(base + name, { cache: 'no-store' }); if (r.ok) return await r.json(); } catch (e) { /* try next */ }
+  }
+  return null;
+}
+const PO_NAMES = {};
+function poName(pa) { return PO_NAMES[String(pa)] || ''; }
+function poLabel(pa) { return pa && pa !== 'other' ? `PO${pa}` : 'Other'; }
+const CAT_LABEL = { export: 'Export', markets: 'Markets', biomass: 'Biomass', company: 'Mowi', industry: 'Industry', escapes: 'Escapes', lice: 'Lice', fx: 'FX', regulation: 'Regulation', system: 'Pipeline' };
+function tlClass(colour) { return colour === 'green' ? 'green' : colour === 'red' ? 'red' : 'yellow'; }
+function tlChip(colour) { return h('span', { class: 'pill', style: 'padding:1px 7px' }, h('span', { class: 'dot', style: `background:${colour === 'green' ? 'var(--good)' : colour === 'red' ? 'var(--critical)' : 'var(--warning)'}` }), colour || '–'); }
+
+// ------------------------------------------------------------------ renderers
+function renderStatus(latest) {
+  const st = clear(document.getElementById('status'));
+  const srcs = Object.values(latest.sources || {}); const ok = srcs.filter(x => x.status === 'ok').length; const errs = srcs.filter(x => x.status === 'error');
+  const ageDays = (Date.now() - new Date(latest.generated_at).getTime()) / 864e5;
+  st.append(h('span', { text: `Data refreshed ${fmt.datetime(latest.generated_at)}` }));
+  st.append(h('span', { class: 'pill ' + (errs.length ? 'warn' : 'ok') }, h('span', { class: 'dot' }), `${ok} of ${srcs.length} sources OK`));
+  if (ageDays > 9) st.append(h('span', { class: 'pill bad' }, h('span', { class: 'dot' }), `Data is ${Math.floor(ageDays)} days old · check the weekly job`));
+  try {
+    const seen = localStorage.getItem('nsm:lastSeen');
+    if (seen && seen !== latest.generated_at) st.append(h('span', { class: 'pill ok' }, h('span', { class: 'dot' }), `New since your last visit (${fmt.date(seen)})`));
+    localStorage.setItem('nsm:lastSeen', latest.generated_at);
+  } catch (e) { /* storage unavailable */ }
+  const gen = new Date(latest.generated_at); const next = new Date(gen); next.setUTCDate(gen.getUTCDate() + ((3 - gen.getUTCDay() + 7) % 7 || 7)); next.setUTCHours(8, 30, 0, 0);
+  const we = latest.weekly_export || {}; const last = (we.series || []).slice(-1)[0];
+  document.getElementById('lede').textContent = last
+    ? `Latest published week is ${fmt.week(last)}. The next automatic refresh is scheduled for Wednesday ${fmt.date(next.toISOString())}, after Statistics Norway releases the new weekly export figures at 08:00 Oslo time.`
+    : `The next automatic refresh is scheduled for Wednesday ${fmt.date(next.toISOString())}.`;
+}
+
+function renderChanges(changes, changelog, latest) {
+  const feed = clear(document.getElementById('feed'));
+  const items = (changes && changes.items) || [];
+  document.getElementById('changes-meta').textContent = changes && changes.compared_to ? `Compared with the run on ${fmt.date(changes.compared_to)}` : 'First run: baseline values';
+  const head = h('div', { class: 'feed-head' });
+  const chips = h('div', { class: 'chips' }); let filter = 'all';
+  const list = h('div');
+  const draw = () => {
+    clear(list);
+    const shown = items.filter(it => filter === 'all' || (filter === 'mowi' && it.company) || (filter === 'alerts' && it.severity !== 'info'));
+    if (!shown.length) list.append(h('div', { class: 'empty', text: 'Nothing in this view.' }));
+    for (const it of shown) {
+      list.append(h('div', { class: 'item ' + (it.severity || 'info') }, h('span', { class: 'stripe' }), h('div', null,
+        h('div', { class: 'top' }, h('span', { class: 'tag', text: CAT_LABEL[it.category] || it.category }), it.company ? h('span', { class: 'tag mowi', text: 'Mowi' }) : null, h('span', { class: 'title', text: it.title })),
+        it.detail ? h('div', { class: 'detail', text: it.detail }) : null)));
+    }
+  };
+  for (const [key, label] of [['all', `All (${items.length})`], ['mowi', `Mowi (${items.filter(i => i.company).length})`], ['alerts', `Notable (${items.filter(i => i.severity !== 'info').length})`]]) {
+    const b = h('button', { class: 'chip', type: 'button', 'aria-pressed': String(key === filter), text: label });
+    b.addEventListener('click', () => { filter = key; chips.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', 'false')); b.setAttribute('aria-pressed', 'true'); draw(); });
+    chips.append(b);
+  }
+  head.append(chips, h('span', { class: 'meta', text: `Run ${fmt.date(latest.run_date)} · ${items.length} items` }));
+  feed.append(head, list); draw();
+  const cl = (changelog || []).filter(c => c.run_date !== latest.run_date).slice().reverse();
+  if (cl.length) {
+    const wrap = document.getElementById('changelog-wrap'); wrap.hidden = false; const box = clear(document.getElementById('changelog'));
+    for (const run of cl.slice(0, 12)) box.append(h('div', { class: 'feed' }, h('div', { class: 'feed-head' }, h('b', { text: fmt.date(run.run_date) }), h('span', { class: 'meta', text: `${(run.items || []).length} items` })), (run.items || []).slice(0, 8).map(it => h('div', { class: 'item ' + it.severity }, h('span', { class: 'stripe' }), h('div', null, h('div', { class: 'top' }, h('span', { class: 'tag', text: CAT_LABEL[it.category] || it.category }), h('span', { class: 'title', text: it.title })))))));
+  }
+}
+
+function tile(label, valueText, unit, deltas, period, spark, extraClass) {
+  const t = h('div', { class: 'tile' + (extraClass ? ' ' + extraClass : '') }, h('div', { class: 'label', text: label }), h('div', { class: 'value' }, valueText, unit ? h('small', { text: unit }) : null), h('div', { class: 'delta' }, deltas), h('div', { class: 'period', text: period || '' }));
+  if (spark) t.append(spark);
+  return t;
+}
+function renderKPIs(latest) {
+  const box = clear(document.getElementById('kpis'));
+  const we = latest.weekly_export || {}; const ser = we.series || []; const last = ser[ser.length - 1], prev = ser[ser.length - 2];
+  const blue = CSS('--s1');
+  if (last) {
+    box.append(tile('Fresh salmon export price', fmt.num(last.fresh_nok_kg, 2), 'NOK/kg',
+      [deltaSpan(pctChange(last.fresh_nok_kg, prev && prev.fresh_nok_kg), { suffix: 'w/w' }), deltaSpan(last.fresh_nok_kg_yoy_pct, { suffix: 'y/y' })], fmt.week(last), sparkline(ser.slice(-26).map(r => r.fresh_nok_kg), blue)));
+    box.append(tile('Fresh salmon exported', fmt.num(last.fresh_tonnes), 't',
+      [deltaSpan(pctChange(last.fresh_tonnes, prev && prev.fresh_tonnes), { neutral: true, suffix: 'w/w' }), deltaSpan(last.fresh_tonnes_yoy_pct, { neutral: true, suffix: 'y/y' })], fmt.week(last), sparkline(ser.slice(-26).map(r => r.fresh_tonnes), blue)));
+    const prevVal = prev && prev.fresh_value_mnok;
+    box.append(tile('Fresh export value', fmt.num(last.fresh_value_mnok), 'MNOK',
+      [deltaSpan(pctChange(last.fresh_value_mnok, prevVal), { suffix: 'w/w' })], `${fmt.week(last)} · volume × price`, sparkline(ser.slice(-26).map(r => r.fresh_value_mnok), blue)));
+  }
+  const fx = latest.fx || {};
+  if (fx.latest) {
+    const w = fx.weekly || []; const d = w.length > 1 ? pctChange(w[w.length - 1].eurnok, w[w.length - 2].eurnok) : null;
+    box.append(tile('EUR / NOK', fmt.num(fx.latest.eurnok, 3), '', [deltaSpan(d, { neutral: true, suffix: 'w/w (weekly avg)' })], `Norges Bank, ${fmt.date(fx.latest.date)}`, sparkline(w.slice(-26).map(r => r.eurnok), blue)));
+  }
+  const bm = latest.biomass || {}; const nat = bm.national || []; const nl = bm.national_latest;
+  if (nl && nl.month) {
+    box.append(tile('Standing biomass, salmon', fmt.compact(nl.biomass_t, 0), 't', [deltaSpan(nl.biomass_t_yoy_pct, { neutral: true, suffix: 'y/y' })], `End of ${fmt.month(nl.month)} · ${fmt.num(nl.fish_mill, 0)} million fish`, sparkline(nat.slice(-24).map(r => r.biomass_t), blue)));
+    box.append(tile('Harvested in month', fmt.compact(nl.harvest_t, 0), 't WFE', [deltaSpan(nl.harvest_t_yoy_pct, { neutral: true, suffix: 'y/y' })], `${fmt.month(nl.month)} · round weight equivalent`, sparkline(nat.slice(-24).map(r => r.harvest_t), blue)));
+    const prevY = nat.find(r => r.month === `${nl.year - 1}-${String(nl.month_no).padStart(2, '0')}`);
+    box.append(tile('Fish dead in month', fmt.num(nl.dead_mill, 1), 'million', [deltaSpan(pctChange(nl.dead_mill, prevY && prevY.dead_mill), { upGood: false, suffix: 'y/y' }), h('span', { class: 'flat', text: `${fmt.num(nl.mortality_pct, 2)}% of stock` })], `${fmt.month(nl.month)} · registered mortality`, sparkline(nat.slice(-24).map(r => r.mortality_pct), blue)));
+  }
+  const lice = latest.lice || {};
+  if (lice.weekly && lice.weekly.length) {
+    const w = lice.weekly[lice.weekly.length - 1], pw = lice.weekly[lice.weekly.length - 2];
+    box.append(tile('Adult female lice per fish', fmt.num(w.national.avg_adult_female_lice, 2), 'nat. avg', [deltaSpan(pctChange(w.national.avg_adult_female_lice, pw && pw.national.avg_adult_female_lice), { upGood: false, suffix: 'w/w' }), h('span', { class: (w.company.over_limit ? 'down' : 'flat'), text: `Mowi ${fmt.num(w.company.avg_adult_female_lice, 2)}, ${w.company.over_limit} sites over limit` })], `Week ${w.week_no} ${w.year} · ${w.national.over_limit} of ${w.national.reporting} reporting sites over limit`, sparkline(lice.weekly.slice(-26).map(r => r.national.avg_adult_female_lice), blue)));
+  } else {
+    box.append(tile('Sea lice', 'Not configured', '', [h('a', { href: '#sec-lice', text: 'Add BarentsWatch credentials →' })], 'Weekly lice data needs a free BarentsWatch API client', null, 'muted-tile'));
+  }
+  const esc = latest.escapes || {};
+  if (esc.recent) {
+    const year = String(new Date(latest.generated_at).getUTCFullYear()); const doy = latest.generated_at.slice(4, 10);
+    const thisY = esc.recent.filter(i => String(i.date || '').startsWith(year) && /laks/i.test(i.species || ''));
+    const lastY = esc.recent.filter(i => String(i.date || '').startsWith(String(+year - 1)) && String(i.date).slice(4, 10) <= doy && /laks/i.test(i.species || ''));
+    const fish = thisY.reduce((a, i) => a + (i.escaped_fish || 0), 0);
+    box.append(tile('Salmon escape reports', String(thisY.length), 'YTD', [deltaSpan(pctChange(thisY.length, lastY.length), { upGood: false, suffix: `vs ${lastY.length} same period ${+year - 1}` }), h('span', { class: thisY.some(i => i.is_company) ? 'down' : 'flat', text: `Mowi ${thisY.filter(i => i.is_company).length} reports` })], `${fmt.num(fish)} fish confirmed escaped in ${year} so far`, null));
+  }
+  const reg = latest.register || {};
+  if (reg.company) {
+    const c = reg.company, ind = reg.industry_sea_foodfish || {};
+    box.append(tile('Mowi sea localities', String(c.localities), 'sites', [h('span', { class: 'flat', text: `${fmt.compact(c.capacity_t, 0)} t capacity · ${fmt.num(c.capacity_t / (ind.capacity_t || 1) * 100, 1)}% of industry` })], `${c.localities_sole} exclusively Mowi · ${c.licences_sole_sites} licence numbers at those sites`, null));
+  }
+}
+
+function renderMarket(latest) {
+  const box = clear(document.getElementById('market-charts'));
+  const we = latest.weekly_export || {}; const ser = we.series || [];
+  if (!ser.length) { box.append(h('div', { class: 'notice', text: 'Weekly export data is not available in this run.' })); return; }
+  const blue = CSS('--s1'), orange = CSS('--s2'), grey = CSS('--deemph');
+  const last104 = ser.slice(-104);
+  const monthTicks = last104.map((r, i) => ({ r, i })).filter(({ r, i }) => { const prev = last104[i - 1]; return prev && r.week_start && prev.week_start && r.week_start.slice(5, 7) !== prev.week_start.slice(5, 7) && ['01', '04', '07', '10'].includes(r.week_start.slice(5, 7)); }).map(x => x.i);
+  figure(box, {
+    title: 'Export price, farmed salmon', unit: 'NOK per kg, weekly average · last 2 years',
+    legend: [{ name: 'Fresh or chilled', color: blue }, { name: 'Frozen', color: orange }],
+    render: (el) => lineChart(el, { labels: last104.map(r => r.week), series: [{ name: 'Fresh', color: blue, values: last104.map(r => r.fresh_nok_kg) }, { name: 'Frozen', color: orange, values: last104.map(r => r.frozen_nok_kg), endLabel: false }],
+      yMin0: false, endLabels: true, yFormat: v => fmt.num(v, 0), endFormat: v => fmt.num(v, 2), tipFormat: v => fmt.num(v, 2) + ' NOK/kg', xTicks: monthTicks, xFormat: i => fmt.month(last104[i].week_start.slice(0, 7)), tipTitle: i => fmt.week(last104[i]), aria: 'Weekly export price of fresh and frozen farmed salmon' }),
+    note: 'Source: Statistics Norway table 03024. Frozen volumes are small, so the frozen price swings more.',
+    table: { columns: [{ label: 'Week', get: r => r.week, mono: true }, { label: 'From', get: r => fmt.date(r.week_start) }, { label: 'Fresh NOK/kg', num: true, get: r => fmt.num(r.fresh_nok_kg, 2) }, { label: 'Fresh t', num: true, get: r => fmt.num(r.fresh_tonnes) }, { label: 'Fresh y/y price', num: true, get: r => fmt.pct(r.fresh_nok_kg_yoy_pct) }, { label: 'Frozen NOK/kg', num: true, get: r => fmt.num(r.frozen_nok_kg, 2) }, { label: 'Frozen t', num: true, get: r => fmt.num(r.frozen_tonnes) }], rows: last104.slice().reverse() },
+  });
+  const years = [...new Set(ser.map(r => r.year))].sort(); const y0 = years[years.length - 1], y1 = y0 - 1;
+  const byWeek = (y) => { const arr = Array(53).fill(null); ser.filter(r => r.year === y).forEach(r => { arr[r.week_no - 1] = r.fresh_tonnes; }); return arr.slice(0, 52); };
+  const cur = byWeek(y0), prv = byWeek(y1);
+  figure(box, {
+    title: 'Weekly export volume, fresh salmon', unit: 'tonnes per week · this year against last year',
+    legend: [{ name: String(y0), color: blue }, { name: String(y1), color: grey }],
+    render: (el) => lineChart(el, { labels: Array.from({ length: 52 }, (_, i) => 'W' + (i + 1)), series: [{ name: String(y1), color: grey, values: prv, endLabel: false }, { name: String(y0), color: blue, values: cur, area: true }], yMin0: true, endLabels: true, yFormat: v => fmt.compact(v, 0), endFormat: v => fmt.compact(v, 1), tipFormat: v => fmt.num(v) + ' t', xTicks: [0, 8, 17, 25, 34, 43, 51], aria: 'Weekly fresh salmon export volume, this year versus last year' }),
+    note: 'Weeks are ISO weeks. The last point of the current year is the newest published week.',
+    table: { columns: [{ label: 'Week', get: (r) => 'W' + r.w }, { label: `${y0} t`, num: true, get: r => fmt.num(r.a) }, { label: `${y1} t`, num: true, get: r => fmt.num(r.b) }, { label: 'y/y', num: true, get: r => fmt.pct(pctChange(r.a, r.b)) }], rows: cur.map((a, i) => ({ w: i + 1, a, b: prv[i] })).filter(r => r.a != null || r.b != null) },
+  });
+  const em = latest.export_markets || {};
+  if (em.by_country_latest && em.by_country_latest.length) {
+    const rows = em.by_country_latest.slice(0, 12);
+    figure(box, {
+      title: `Export markets, ${fmt.month(em.latest_month)}`, unit: 'MNOK · fresh and frozen whole farmed Atlantic salmon',
+      render: (el) => hbarChart(el, { rows: rows.map(r => ({ label: r.country, value: r.mnok, note: r.mnok_yoy_pct == null ? '' : `${fmt.pct(r.mnok_yoy_pct, 0)} y/y`, noteColor: r.mnok_yoy_pct > 0 ? 'var(--good-text)' : r.mnok_yoy_pct < 0 ? 'var(--critical-text)' : 'var(--muted)', tip: [{ name: 'Value', value: fmt.num(r.mnok) + ' MNOK' }, { name: 'Volume', value: fmt.num(r.tonnes) + ' t' }, { name: 'Avg price', value: fmt.num(r.nok_kg, 2) + ' NOK/kg' }, { name: 'Volume y/y', value: fmt.pct(r.tonnes_yoy_pct) }] })), format: v => fmt.num(v, 0), valueName: 'MNOK', aria: 'Top export markets by value' }),
+      note: `Source: Statistics Norway external trade, HS ${[...new Set(Object.keys(em.hs_codes || {}).map(c => c.slice(0, 8)))].join(', ')}. ${em.country_count || 0} destination countries in the month.`,
+      table: { columns: [{ label: 'Country', get: r => r.country }, { label: 'MNOK', num: true, get: r => fmt.num(r.mnok) }, { label: 'Tonnes', num: true, get: r => fmt.num(r.tonnes) }, { label: 'NOK/kg', num: true, get: r => fmt.num(r.nok_kg, 2) }, { label: 'Volume y/y', num: true, get: r => fmt.pct(r.tonnes_yoy_pct) }, { label: 'Value y/y', num: true, get: r => fmt.pct(r.mnok_yoy_pct) }], rows: em.by_country_latest },
+    });
+    const mt = (em.monthly_total || []).slice(-24);
+    figure(box, {
+      title: 'Monthly export volume, all destinations', unit: 'tonnes · fresh and frozen',
+      legend: [{ name: 'Fresh', color: blue, type: 'rect' }, { name: 'Frozen', color: orange, type: 'rect' }],
+      render: (el) => barChart(el, { categories: mt.map(r => fmt.month(r.month).slice(0, 3)), series: [{ name: 'Fresh', color: blue, values: mt.map(r => r.fresh_tonnes) }, { name: 'Frozen', color: orange, values: mt.map(r => r.frozen_tonnes) }], yFormat: v => fmt.compact(v, 0), tipFormat: v => fmt.num(v) + ' t', tipTitle: i => fmt.month(mt[i].month), aria: 'Monthly salmon export volume' }),
+      table: { columns: [{ label: 'Month', get: r => fmt.month(r.month) }, { label: 'Fresh t', num: true, get: r => fmt.num(r.fresh_tonnes) }, { label: 'Frozen t', num: true, get: r => fmt.num(r.frozen_tonnes) }, { label: 'Total MNOK', num: true, get: r => fmt.num(r.total_mnok) }, { label: 'Fresh NOK/kg', num: true, get: r => fmt.num(r.fresh_nok_kg, 2) }], rows: mt.slice().reverse() },
+    });
+  } else {
+    const src = (latest.sources || {}).ssb_markets || {};
+    box.append(h('div', { class: 'notice' }, h('b', { text: 'Export markets by country: ' }), src.status === 'error' ? `the monthly external-trade query failed in the last run (${src.error || 'unknown error'}). The weekly series above is unaffected.` : 'not available yet.'));
+  }
+}
+
+function renderBio(latest) {
+  const box = clear(document.getElementById('bio-charts'));
+  const bm = latest.biomass || {}; const nat = bm.national || [];
+  document.getElementById('bio-meta').textContent = bm.as_of ? `Reported data as of ${fmt.date(bm.as_of)} · latest month ${fmt.month(bm.latest_month)}` : '';
+  if (!nat.length) { box.append(h('div', { class: 'notice', text: 'Biomass statistics are not available in this run.' })); return; }
+  const blue = CSS('--s1'), grey = CSS('--deemph'), grey2 = CSS('--deemph-2');
+  const y0 = nat[nat.length - 1].year, y1 = y0 - 1, y2 = y0 - 2;
+  const byMonth = (y, key) => { const a = Array(12).fill(null); nat.filter(r => r.year === y).forEach(r => { a[r.month_no - 1] = r[key]; }); return a; };
+  const months = Array.from({ length: 12 }, (_, i) => fmt.monthShort(i + 1));
+  const bioTable = { columns: [{ label: 'Month', get: r => fmt.month(r.month) }, { label: 'Biomass t', num: true, get: r => fmt.num(r.biomass_t) }, { label: 'Fish (mill.)', num: true, get: r => fmt.num(r.fish_mill, 1) }, { label: 'Harvest t WFE', num: true, get: r => fmt.num(r.harvest_t) }, { label: 'Dead (mill.)', num: true, get: r => fmt.num(r.dead_mill, 2) }, { label: 'Mortality %', num: true, get: r => fmt.num(r.mortality_pct, 2) }, { label: 'Feed t', num: true, get: r => fmt.num(r.feed_t) }, { label: 'Smolt (mill.)', num: true, get: r => fmt.num(r.smolt_mill, 1) }, { label: 'Escaped', num: true, get: r => fmt.num(r.escaped_count) }], rows: nat.slice(-36).reverse() };
+  figure(box, {
+    title: 'Standing biomass of salmon in sea', unit: 'tonnes at month end',
+    legend: [{ name: String(y0), color: blue }, { name: String(y1), color: grey }, { name: String(y2), color: grey2 }],
+    render: (el) => lineChart(el, { labels: months, series: [{ name: String(y2), color: grey2, values: byMonth(y2, 'biomass_t'), endLabel: false }, { name: String(y1), color: grey, values: byMonth(y1, 'biomass_t'), endLabel: false }, { name: String(y0), color: blue, values: byMonth(y0, 'biomass_t'), area: true }], yMin0: false, endLabels: true, yFormat: v => fmt.compact(v, 0), endFormat: v => fmt.compact(v, 0), tipFormat: v => fmt.num(v) + ' t', xTicks: [0, 2, 4, 6, 8, 10], aria: 'Standing biomass by month for the last three years' }),
+    note: 'Source: Fiskeridirektoratet biomass register, all production areas plus broodstock and research licences. Salmon only.', table: bioTable,
+  });
+  figure(box, {
+    title: 'Harvest per month', unit: 'tonnes round weight (WFE)',
+    legend: [{ name: String(y0), color: blue, type: 'rect' }, { name: String(y1), color: grey, type: 'rect' }],
+    render: (el) => barChart(el, { categories: months, series: [{ name: String(y1), color: grey, values: byMonth(y1, 'harvest_t') }, { name: String(y0), color: blue, values: byMonth(y0, 'harvest_t') }], yFormat: v => fmt.compact(v, 0), tipFormat: v => fmt.num(v) + ' t', aria: 'Monthly harvest, this year against last year' }),
+    note: `${y0} so far: ${fmt.num((bm.year_totals || []).find(t => t.year === y0)?.harvest_t)} t against ${fmt.num((bm.year_totals || []).find(t => t.year === y1)?.harvest_t)} t for the whole of ${y1}.`,
+  });
+  figure(box, {
+    title: 'Mortality per month', unit: 'million fish registered dead',
+    legend: [{ name: String(y0), color: blue, type: 'rect' }, { name: String(y1), color: grey, type: 'rect' }],
+    render: (el) => barChart(el, { categories: months, series: [{ name: String(y1), color: grey, values: byMonth(y1, 'dead_mill') }, { name: String(y0), color: blue, values: byMonth(y0, 'dead_mill') }], yFormat: v => fmt.num(v, 1), tipFormat: v => fmt.num(v, 2) + ' million', aria: 'Monthly mortality in million fish' }),
+    note: 'Autumn is the high-mortality season (lice treatments, gill disease, jellyfish). Compare months, not adjacent bars.',
+  });
+  const areas = Object.entries(bm.by_area || {}).map(([pa, ser]) => ({ pa, last: ser[ser.length - 1] })).filter(a => a.last);
+  const reg = latest.register || {}; const compArea = Object.fromEntries(((reg.company || {}).by_area || []).map(a => [a.production_area, a]));
+  if (areas.length) figure(box, {
+    title: `Salmon biomass by production area, ${fmt.month(bm.latest_month)}`, unit: 'tonnes at month end · Mowi site count for context',
+    render: (el) => hbarChart(el, { rows: areas.map(a => ({ label: `PO${a.pa} ${poName(a.pa)}`, value: a.last.biomass_t, note: compArea[a.pa] ? `Mowi ${compArea[a.pa].company_localities} sites` : '', noteColor: compArea[a.pa] ? 'var(--accent)' : 'var(--muted)', tip: [{ name: 'Biomass', value: fmt.num(a.last.biomass_t) + ' t' }, { name: 'Fish', value: fmt.num(a.last.fish_mill, 1) + ' million' }, { name: 'Harvest in month', value: fmt.num(a.last.harvest_t) + ' t' }, { name: 'Mortality', value: fmt.num(a.last.mortality_pct, 2) + '%' }, { name: 'Mowi sites', value: String(compArea[a.pa] ? compArea[a.pa].company_localities : 0) }] })), format: v => fmt.compact(v, 0), valueName: 'Biomass t', noteWidth: 110, aria: 'Standing biomass by production area' }),
+    table: { columns: [{ label: 'Area', get: a => `PO${a.pa} ${poName(a.pa)}` }, { label: 'Biomass t', num: true, get: a => fmt.num(a.last.biomass_t) }, { label: 'Fish (mill.)', num: true, get: a => fmt.num(a.last.fish_mill, 1) }, { label: 'Harvest t', num: true, get: a => fmt.num(a.last.harvest_t) }, { label: 'Dead (mill.)', num: true, get: a => fmt.num(a.last.dead_mill, 2) }, { label: 'Mortality %', num: true, get: a => fmt.num(a.last.mortality_pct, 2) }, { label: 'Mowi sites', num: true, get: a => compArea[a.pa] ? compArea[a.pa].company_localities : 0 }], rows: areas },
+  });
+}
+
+function renderLice(latest) {
+  const box = clear(document.getElementById('lice-body'));
+  const lice = latest.lice || {}; const src = (latest.sources || {}).barentswatch_lice || {};
+  if (!lice.weekly || !lice.weekly.length) {
+    document.getElementById('lice-meta').textContent = src.status === 'error' ? 'Last fetch failed' : 'Not configured';
+    box.append(h('div', { class: 'notice' },
+      h('p', { style: 'margin:0 0 8px' }, h('b', { text: 'Lice data is switched off until a BarentsWatch API client is added. ' }), 'BarentsWatch publishes every locality’s weekly lice count, treatments and PD/ILA status through a free API that needs a registered client.'),
+      h('ol', { style: 'margin:0 0 8px; padding-left: 20px' },
+        h('li', null, 'Sign in at ', h('a', { href: 'https://www.barentswatch.no/minside/', target: '_blank', rel: 'noopener', text: 'barentswatch.no/minside' }), ' and create an API client (client ID and secret).'),
+        h('li', null, 'In the GitHub repository go to Settings → Secrets and variables → Actions and add ', h('code', { text: 'BARENTSWATCH_CLIENT_ID' }), ' and ', h('code', { text: 'BARENTSWATCH_CLIENT_SECRET' }), '.'),
+        h('li', null, 'The next weekly run backfills 52 weeks of lice data per production area and for every Mowi locality.')),
+      src.status === 'error' ? h('p', { style: 'margin:0', text: `Last error: ${src.error}` }) : h('p', { style: 'margin:0' }, 'Until then, the public map at ', h('a', { href: 'https://www.barentswatch.no/fiskehelse/', target: '_blank', rel: 'noopener', text: 'barentswatch.no/fiskehelse' }), ' shows the same data interactively.')));
+    return;
+  }
+  const weekly = lice.weekly; const last = weekly[weekly.length - 1];
+  document.getElementById('lice-meta').textContent = `Latest week ${last.week} · ${last.national.reporting} localities reporting`;
+  const grid = h('div', { class: 'grid2' }); box.append(grid);
+  const cols = weekly.slice(-16); const pas = Array.from({ length: 13 }, (_, i) => String(i + 1));
+  const values = pas.map(pa => cols.map(w => { const a = (w.by_area || []).find(x => x.production_area === pa); return a ? a.avg_adult_female_lice : null; }));
+  figure(grid, {
+    title: 'Adult female lice per fish by production area', unit: 'weekly average of reporting localities · last 16 weeks',
+    render: (el) => heatmap(el, { rows: pas.map(pa => `PO${pa} ${poName(pa)}`), cols: cols.map(w => 'W' + w.week_no), values, max: 1.0, valueName: 'Avg adult female lice', tipRows: (i, j) => { const a = (cols[j].by_area || []).find(x => x.production_area === pas[i]) || {}; return [{ name: 'Avg adult female lice', value: a.avg_adult_female_lice == null ? 'no reports' : a.avg_adult_female_lice.toFixed(2) }, { name: 'Reporting sites', value: String(a.reporting || 0) }, { name: 'Sites over limit', value: String(a.over_limit || 0) }, { name: 'Sites with PD / ILA', value: `${a.with_pd || 0} / ${a.with_ila || 0}` }]; }, aria: 'Heatmap of lice levels by production area and week' }),
+    note: 'Darker is more lice. The regulatory limit is 0.5 adult female lice per fish (0.2 in the spring window).',
+    table: { columns: [{ label: 'Area', get: r => r.label }, ...cols.map((w, j) => ({ label: 'W' + w.week_no, num: true, get: r => r.v[j] == null ? '–' : r.v[j].toFixed(2) }))], rows: pas.map((pa, i) => ({ label: `PO${pa}`, v: values[i] })) },
+  });
+  const blue = CSS('--s1'), grey = CSS('--deemph');
+  figure(grid, {
+    title: 'Lice level, Mowi against the national average', unit: 'adult female lice per fish · weekly',
+    legend: [{ name: 'Mowi localities', color: blue }, { name: 'All localities', color: grey }],
+    render: (el) => lineChart(el, { labels: weekly.map(w => w.week), series: [{ name: 'All localities', color: grey, values: weekly.map(w => w.national.avg_adult_female_lice) }, { name: 'Mowi localities', color: blue, values: weekly.map(w => w.company.avg_adult_female_lice) }], yMin0: true, endLabels: true, yFormat: v => fmt.num(v, 2), tipFormat: v => fmt.num(v, 3), tipTitle: i => `${weekly[i].week} · ${weekly[i].company.over_limit} Mowi sites over limit`, xTicks: weekly.map((w, i) => i).filter(i => i % Math.ceil(weekly.length / 8) === 0), xFormat: i => 'W' + weekly[i].week_no, aria: 'Weekly lice averages for Mowi and all localities' }),
+    table: { columns: [{ label: 'Week', get: w => w.week }, { label: 'National avg', num: true, get: w => fmt.num(w.national.avg_adult_female_lice, 3) }, { label: 'National over limit', num: true, get: w => w.national.over_limit }, { label: 'Mowi avg', num: true, get: w => fmt.num(w.company.avg_adult_female_lice, 3) }, { label: 'Mowi over limit', num: true, get: w => w.company.over_limit }, { label: 'Mowi PD / ILA sites', get: w => `${w.company.with_pd} / ${w.company.with_ila}` }], rows: weekly.slice().reverse() },
+  });
+  const sites = (lice.company_localities_latest || []).filter(c => c.reported);
+  if (sites.length) {
+    box.append(h('h3', { style: 'margin:18px 0 8px', text: `Mowi localities, week ${last.week_no}: ${sites.filter(c => c.over_limit).length} of ${sites.length} reporting sites over the limit` }));
+    box.append(h('div', { class: 'tablewrap' }, buildTable([{ label: 'Locality', get: c => c.name }, { label: 'No.', get: c => c.locality_no, mono: true }, { label: 'Area', get: c => poLabel(c.production_area) }, { label: 'Adult female lice', num: true, get: c => fmt.num(c.avg_adult_female_lice, 2) }, { label: 'Limit', num: true, get: c => fmt.num(c.lice_limit, 1) }, { label: 'Status', get: c => c.over_limit ? 'Over limit' : 'OK' }, { label: 'Treatments', get: c => [c.mechanical_removal ? 'mechanical' : null, c.substance_treatment ? 'medicinal' : null, c.cleanerfish ? 'cleaner fish' : null].filter(Boolean).join(', ') || '–' }, { label: 'PD / ILA', get: c => `${c.has_pd ? 'PD' : '–'} / ${c.has_ila ? 'ILA' : '–'}` }], sites.slice(0, 60), { rowClass: c => c.over_limit ? 'mowi' : null })));
+  }
+}
+
+function renderMowi(latest, locs) {
+  const reg = latest.register || {}; const c = reg.company; const ind = reg.industry_sea_foodfish || {};
+  const stats = clear(document.getElementById('mowi-stats'));
+  if (!c) { stats.append(h('div', { class: 'notice', text: 'Register data is not available in this run.' })); return; }
+  const stat = (v, l) => h('div', null, h('b', { text: v }), h('span', { text: l }));
+  stats.append(stat(fmt.num(c.localities), 'sea food-fish localities with a Mowi licence'), stat(fmt.num(c.localities_sole), 'held by Mowi alone'), stat(fmt.num(c.licences_sole_sites), 'licence numbers at Mowi-only sites'), stat(fmt.compact(c.capacity_t, 0) + ' t', `locality capacity · ${fmt.num(c.capacity_t / (ind.capacity_t || 1) * 100, 1)}% of ${fmt.compact(ind.capacity_t, 0)} t industry`), stat(String((c.entities || []).length), (c.entities || []).map(e => e.holder).join(' · ')));
+  // map
+  const mapEl = clear(document.getElementById('map'));
+  const pts = (locs && locs.localities) || (c.localities_list || []).map(l => ({ n: l.locality_no, name: l.locality_name, pa: l.production_area, lat: l.lat, lon: l.lon, cap: l.capacity_t, mowi: true, holders: l.holders }));
+  registerChart(mapEl, () => {
+    const W = Math.max(260, mapEl.clientWidth || 340), lat0 = 57.7, lat1 = 71.7, lon0 = 4.0, lon1 = 33.5; const k = Math.cos(65 * Math.PI / 180);
+    const scale = W / ((lon1 - lon0) * k); const H = Math.round((lat1 - lat0) * scale * 1.0);
+    const X = lon => (lon - lon0) * k * scale, Y = lat => H - (lat - lat0) * scale;
+    const svg = s('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'img', 'aria-label': 'Map of sea localities; Mowi sites highlighted' });
+    const tip = tooltip(mapEl);
+    const centroids = {};
+    for (const p of pts) { if (p.lat == null || p.lon == null) continue; const cpa = centroids[p.pa] || (centroids[p.pa] = { la: 0, lo: 0, n: 0 }); cpa.la += p.lat; cpa.lo += p.lon; cpa.n++; }
+    const ordered = pts.filter(p => p.lat != null && p.lon != null).sort((a, b) => (a.mowi ? 1 : 0) - (b.mowi ? 1 : 0));
+    for (const p of ordered) {
+      const dot = s('circle', { class: 'site' + (p.mowi ? ' mowi' : ''), cx: X(p.lon).toFixed(1), cy: Y(p.lat).toFixed(1), r: p.mowi ? 3.4 : 1.8 });
+      const hit = s('circle', { cx: X(p.lon).toFixed(1), cy: Y(p.lat).toFixed(1), r: 7, fill: 'transparent' });
+      hit.addEventListener('pointermove', () => { const rect = svg.getBoundingClientRect(), sc = rect.width / W; tip.show(X(p.lon) * sc, Y(p.lat) * sc, `${p.name || p.n} (${p.n})`, [{ name: 'Area', value: `${poLabel(p.pa)} ${poName(p.pa)}` }, { name: 'Capacity', value: p.cap ? fmt.num(p.cap) + ' t' : '–' }, { name: 'Holders', value: (p.holders || []).join(', ') || '–' }]); });
+      hit.addEventListener('pointerleave', () => tip.hide());
+      svg.append(dot, hit);
+    }
+    for (const [pa, cpa] of Object.entries(centroids)) { if (!pa || pa === 'other' || pa === 'null') continue; svg.append(s('text', { x: X(cpa.lo / cpa.n) + 8, y: Y(cpa.la / cpa.n), style: 'fill:var(--muted);font-size:10.5px;font-weight:500', text: 'PO' + pa })); }
+    mapEl.append(svg);
+    mapEl.append(h('div', { class: 'legend', style: 'margin-top:6px' }, h('span', { class: 'key' }, h('span', { class: 'swatch rect', style: 'background:var(--s1);border-radius:50%' }), `Mowi locality (${pts.filter(p => p.mowi).length})`), h('span', { class: 'key' }, h('span', { class: 'swatch rect', style: 'background:var(--deemph);border-radius:50%;width:7px;height:7px' }), `Other sea food-fish locality (${pts.filter(p => !p.mowi).length})`)));
+  });
+  // tables
+  const tables = clear(document.getElementById('mowi-tables'));
+  const tl = (latest.traffic_lights || {}).colours || {}; const bm = latest.biomass || {};
+  const rows = (ind.by_area || []).filter(a => a.production_area !== 'other');
+  tables.append(h('h3', { text: 'Mowi exposure by production area' }));
+  tables.append(h('div', { class: 'tablewrap' }, buildTable([
+    { label: 'Area', get: a => `PO${a.production_area}` }, { label: 'Name', get: a => a.name }, { label: 'Light', get: a => tlChip(tl[a.production_area]) },
+    { label: 'Mowi sites', num: true, get: a => a.company_localities || 0 }, { label: 'Share', num: true, get: a => a.company_localities ? `${fmt.num(a.company_share_localities_pct, 0)}%` : '–' },
+    { label: 'Mowi cap. t', num: true, get: a => a.company_capacity_t ? fmt.num(a.company_capacity_t) : '–' }, { label: 'Share', num: true, get: a => a.company_capacity_t ? `${fmt.num(a.company_share_capacity_pct, 0)}%` : '–' },
+    { label: 'Biomass t', num: true, get: a => { const ser = (bm.by_area || {})[a.production_area]; return ser ? fmt.num(ser[ser.length - 1].biomass_t) : '–'; } },
+  ], rows, { rowClass: a => a.company_localities ? 'mowi' : null })));
+  tables.append(h('figcaption', { text: 'Rows shaded blue are areas where Mowi holds a licence. Capacity is the locality MTB in tonnes; shared localities count in full for each holder.' }));
+  const esc = latest.escapes || {}; const mine = esc.company_recent || [];
+  tables.append(h('h3', { style: 'margin-top:8px', text: `Mowi escape reports, last 24 months (${mine.length})` }));
+  tables.append(mine.length ? h('div', { class: 'tablewrap' }, buildTable([{ label: 'Date', get: r => fmt.date(r.date) }, { label: 'Locality', get: r => `${r.locality_name || ''} (${r.locality_no || ''})` }, { label: 'Species', get: r => r.species }, { label: 'Fish confirmed', num: true, get: r => r.escaped_fish == null ? '–' : fmt.num(r.escaped_fish) }, { label: 'Estimate', get: r => r.estimated_range }, { label: 'Stage', get: r => r.report_stage }, { label: 'Recaptured', num: true, get: r => r.recaptured == null ? '–' : fmt.num(r.recaptured) }, { label: 'Municipality', get: r => r.municipality }], mine.slice(0, 30))) : h('div', { class: 'empty', text: 'No Mowi escape reports in the period.' }));
+}
+
+function renderTrafficLights(latest) {
+  const tl = latest.traffic_lights || {}; const colours = tl.colours || {}; const reg = latest.register || {};
+  const comp = Object.fromEntries((((reg.company || {}).by_area) || []).map(a => [a.production_area, a.company_localities]));
+  const coast = clear(document.getElementById('coast'));
+  for (let i = 1; i <= 13; i++) { const pa = String(i); const n = comp[pa] || 0; coast.append(h('div', { class: 'po ' + tlClass(colours[pa]), title: `PO${pa} ${poName(pa)}: ${colours[pa] || 'n/a'}` }, h('div', { class: 'light' }), h('div', { class: 'n', text: 'PO' + pa }), h('div', { class: 'nm', text: poName(pa) }), h('div', { class: 'm' + (n ? '' : ' none'), text: n ? `Mowi ${n}` : 'no Mowi' }))); }
+  document.getElementById('tl-meta').textContent = tl.decision_date ? `Decision ${fmt.date(tl.decision_date)} · next expected ${tl.next_decision_expected || '–'}` : '';
+  const lg = clear(document.getElementById('tl-legend'));
+  lg.append(h('span', { class: 'key' }, h('span', { class: 'sw', style: 'background:var(--good)' }), `Green: +${tl.green_growth_pct}% capacity offered (${Object.values(colours).filter(c => c === 'green').length} areas)`), h('span', { class: 'key' }, h('span', { class: 'sw', style: 'background:var(--warning)' }), `Yellow: no growth (${Object.values(colours).filter(c => c === 'yellow').length})`), h('span', { class: 'key' }, h('span', { class: 'sw', style: 'background:var(--critical)' }), `Red: ${tl.red_reduction_pct}% capacity (${Object.values(colours).filter(c => c === 'red').length})`), h('span', { text: `Basis: ${tl.basis || ''}. About ${fmt.num(tl.estimated_growth_tonnes_mtb)} t MTB growth offered nationally, ${fmt.num(tl.estimated_reduction_tonnes_mtb)} t withdrawn in red areas.` }));
+}
+
+function renderEscapes(latest) {
+  const esc = latest.escapes || {}; const box = clear(document.getElementById('escapes')); const stats = clear(document.getElementById('esc-stats'));
+  if (!esc.recent) { box.append(h('div', { class: 'notice', text: 'Escape data is not available in this run.' })); return; }
+  const by = esc.by_year || {}; const years = Object.keys(by).sort(); const y0 = years[years.length - 1], y1 = years[years.length - 2];
+  const stat = (v, l) => h('div', null, h('b', { text: v }), h('span', { text: l }));
+  if (y0) stats.append(stat(String(by[y0].salmon_reports), `salmon escape reports in ${y0}`), stat(fmt.num(by[y0].salmon_fish_confirmed), `fish confirmed escaped in ${y0}`), stat(String(by[y0].company_reports), `Mowi reports in ${y0}`));
+  if (y1) stats.append(stat(String(by[y1].salmon_reports), `reports in ${y1}`), stat(fmt.num(by[y1].salmon_fish_confirmed), `fish confirmed in ${y1}`));
+  document.getElementById('esc-meta').textContent = `${esc.total_reports} reports since ${esc.first_year}`;
+  const cols = [{ label: 'Date', get: r => fmt.date(r.date) }, { label: 'Locality', get: r => `${r.locality_name || ''} (${r.locality_no || ''})` }, { label: 'Company', get: r => r.company }, { label: 'Species', get: r => r.species }, { label: 'Fish confirmed', num: true, get: r => r.escaped_fish == null ? '–' : fmt.num(r.escaped_fish) }, { label: 'Estimate', get: r => r.estimated_range }, { label: 'Size g', num: true, get: r => r.size_g == null ? '–' : fmt.num(r.size_g) }, { label: 'Stage', get: r => r.report_stage }, { label: 'Recaptured', num: true, get: r => r.recaptured == null ? '–' : fmt.num(r.recaptured) }, { label: 'Municipality', get: r => r.municipality }];
+  const all = esc.recent; let shown = 40;
+  const wrap = h('div', { class: 'tablewrap' }); const more = h('button', { class: 'tbtn', type: 'button', style: 'margin-top:8px', text: `Show all ${all.length} reports from the last 24 months` });
+  const draw = () => { clear(wrap); wrap.append(buildTable(cols, all.slice(0, shown), { rowClass: r => r.is_company ? 'mowi' : null, subRow: r => r.description ? r.description : null })); more.hidden = shown >= all.length; };
+  more.addEventListener('click', () => { shown = all.length; draw(); });
+  box.append(wrap, more); draw();
+}
+
+function renderAnnual(latest) {
+  const box = clear(document.getElementById('annual'));
+  const ssb = ((latest.annual_sales || {}).series) || []; const fd = ((latest.biomass || {}).year_totals) || [];
+  const years = [...new Set([...ssb.map(r => String(r.year)), ...fd.map(r => String(r.year))])].sort().slice(-7);
+  if (!years.length) { box.append(h('div', { class: 'notice', text: 'Annual figures are not available in this run.' })); return; }
+  const rows = years.map(y => ({ y, s: ssb.find(r => String(r.year) === y) || {}, f: fd.find(r => String(r.year) === y) || {} }));
+  box.append(h('div', { class: 'tablewrap' }, buildTable([
+    { label: 'Year', get: r => r.y + (r.f.months && r.f.months < 12 ? ` (${r.f.months} months)` : '') },
+    { label: 'Salmon sold, t (SSB)', num: true, get: r => r.s.tonnes == null ? '–' : fmt.num(r.s.tonnes) }, { label: 'Sales value, MNOK (SSB)', num: true, get: r => r.s.mnok == null ? '–' : fmt.num(r.s.mnok) }, { label: 'NOK/kg (SSB)', num: true, get: r => r.s.nok_kg == null ? '–' : fmt.num(r.s.nok_kg, 2) },
+    { label: 'Harvest, t WFE (Fdir)', num: true, get: r => r.f.harvest_t == null ? '–' : fmt.num(r.f.harvest_t) }, { label: 'Fish dead, million (Fdir)', num: true, get: r => r.f.dead_mill == null ? '–' : fmt.num(r.f.dead_mill, 1) }, { label: 'Smolt released, million', num: true, get: r => r.f.smolt_mill == null ? '–' : fmt.num(r.f.smolt_mill, 1) }, { label: 'Feed, t', num: true, get: r => r.f.feed_t == null ? '–' : fmt.num(r.f.feed_t) }, { label: 'Escaped fish (biomass reports)', num: true, get: r => r.f.escaped_count == null ? '–' : fmt.num(r.f.escaped_count) },
+  ], rows.reverse())));
+  box.append(h('figcaption', { text: 'SSB sales figures are first-hand sales of slaughtered salmon (preliminary for the latest year). Fiskeridirektoratet totals are sums of the monthly biomass reports; the current year is year-to-date.' }));
+}
+
+function renderSources(latest) {
+  const box = clear(document.getElementById('sources'));
+  const rows = Object.entries(latest.sources || {}).map(([k, v]) => ({ k, ...v }));
+  const pill = (r) => h('span', { class: 'pill ' + (r.status === 'ok' ? 'ok' : r.status === 'error' ? 'bad' : 'warn') }, h('span', { class: 'dot' }), r.status === 'ok' ? 'OK' : r.status === 'error' ? 'Failed' : r.status === 'not_configured' ? 'Not configured' : r.status || '–');
+  box.append(h('div', { class: 'tablewrap' }, buildTable([{ label: 'Dataset', wrap: true, get: r => h('a', { href: r.url || '#', target: '_blank', rel: 'noopener', text: r.name || r.k }) }, { label: 'Publisher', wrap: true, get: r => r.publisher }, { label: 'Cadence', wrap: true, get: r => r.frequency }, { label: 'Last run', get: r => pill(r) }, { label: 'Fetched', get: r => r.fetched_at ? (r.fetched_at.length > 10 ? fmt.datetime(r.fetched_at) : fmt.date(r.fetched_at)) : '–' }, { label: 'Note', wrap: true, get: r => { const n = r.error || r.note || (r.stale_from_previous_run ? `Showing data from ${fmt.date(r.stale_from_previous_run)}` : ''); return n.length > 160 ? h('span', { title: n, text: n.slice(0, 157) + '…' }) : n; } }], rows)));
+}
+
+function renderFoot(latest) {
+  const f = clear(document.getElementById('foot'));
+  f.append(h('p', null, 'This page is rebuilt from a weekly GitHub Actions job in ', h('a', { href: REPO_URL, target: '_blank', rel: 'noopener', text: 'Maxhyde/demos' }), ' that fetches the sources above every Wednesday morning and commits the result. Every figure is as published by the Norwegian authorities; nothing is estimated here except the export value (volume × average price) and the mortality ratio.'));
+  f.append(h('p', { text: 'Data licences: Statistics Norway and Fiskeridirektoratet data under the Norwegian Licence for Open Government Data (NLOD); Norges Bank exchange rates; BarentsWatch fish-health data under NLOD. The traffic-light colours are transcribed from the ministry’s decision and kept in the repository config.' }));
+  f.append(h('p', { text: `Run id ${latest.run_date} · generated ${fmt.datetime(latest.generated_at)} · ${latest.change_count || 0} change items` }));
+}
+
+// ------------------------------------------------------------------ main
+async function main() {
+  const [latest, changes, changelog, locs] = await Promise.all([loadJSON('latest.json'), loadJSON('changes.json'), loadJSON('changelog.json'), loadJSON('register_localities.json')]);
+  if (!latest) {
+    clear(document.getElementById('status')).append(h('span', { class: 'pill bad' }, h('span', { class: 'dot' }), 'Could not load data'));
+    document.getElementById('feed').textContent = 'The data files could not be loaded. If you opened this file directly, serve the folder over HTTP or open the published dashboard.';
+    return;
+  }
+  Object.assign(PO_NAMES, latest.production_areas || {});
+  renderStatus(latest); renderChanges(changes, changelog, latest); renderKPIs(latest); renderMarket(latest); renderBio(latest); renderLice(latest); renderMowi(latest, locs); renderTrafficLights(latest); renderEscapes(latest); renderAnnual(latest); renderSources(latest); renderFoot(latest);
+  flushCharts();
+}
+main().catch(err => { console.error(err); const st = clear(document.getElementById('status')); st.append(h('span', { class: 'pill bad' }, h('span', { class: 'dot' }), 'Rendering error: ' + err.message)); });
+})();
+</script>
