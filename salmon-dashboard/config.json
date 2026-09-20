@@ -1,0 +1,140 @@
+{
+  "company": {
+    "name": "Mowi",
+    "name_patterns": ["MOWI", "MARINE HARVEST"],
+    "org_numbers": ["964118191", "921668236", "916146337"],
+    "notes": "Register rows whose holder name matches a pattern (case-insensitive) are treated as Mowi. Org numbers: Mowi ASA 964118191, Mowi Seawater Norway AS 921668236, Mowi Markets Norway AS 916146337."
+  },
+  "production_areas": {
+    "1": "Svenskegrensen til Jæren",
+    "2": "Ryfylke",
+    "3": "Karmøy til Sotra",
+    "4": "Nordhordland til Stad",
+    "5": "Stad til Hustadvika",
+    "6": "Nordmøre og Sør-Trøndelag",
+    "7": "Nord-Trøndelag med Bindal",
+    "8": "Helgeland til Bodø",
+    "9": "Vestfjorden og Vesterålen",
+    "10": "Andøya til Senja",
+    "11": "Kvaløya til Loppa",
+    "12": "Vest-Finnmark",
+    "13": "Øst-Finnmark"
+  },
+  "traffic_lights": {
+    "decision_date": "2026-06-19",
+    "decided_by": "Nærings- og fiskeridepartementet (Ministry of Trade, Industry and Fisheries)",
+    "basis": "Expert group assessment of sea-lice induced mortality on wild salmon, 2024 and 2025",
+    "next_decision_expected": "2028",
+    "green_growth_pct": 6,
+    "red_reduction_pct": -6,
+    "estimated_growth_tonnes_mtb": 8300,
+    "estimated_reduction_tonnes_mtb": 5300,
+    "colours": {
+      "1": "green", "2": "yellow", "3": "red", "4": "yellow", "5": "yellow", "6": "yellow",
+      "7": "yellow", "8": "yellow", "9": "yellow", "10": "yellow", "11": "yellow", "12": "green", "13": "green"
+    },
+    "previous_decision": {
+      "decision_date": "2024",
+      "note": "Colours from the 2024 decision are not stored here; see trafikklyssystemet.no for history."
+    },
+    "sources": [
+      "https://www.regjeringen.no/no/aktuelt/ny-fargelegging-i-trafikklyssystemet-for-havbruk/id3167021/",
+      "https://trafikklyssystemet.no/Trafikklyssystemet"
+    ]
+  },
+  "lice": {
+    "limit_default": 0.5,
+    "limit_spring": 0.2,
+    "note": "Adult female lice per fish. The 0.2 limit applies during the spring smolt migration window (weeks 16-21 south of Nordland, weeks 21-26 in Nordland, Troms and Finnmark)."
+  },
+  "ssb": {
+    "weekly_table": "03024",
+    "trade_tables": ["08799", "08801"],
+    "salmon_hs_codes": {
+      "03021411": "Fresh/chilled farmed Atlantic salmon, whole",
+      "03021419": "Fresh/chilled farmed Atlantic salmon, other",
+      "03031311": "Frozen farmed Atlantic salmon, whole",
+      "03031319": "Frozen farmed Atlantic salmon, other"
+    },
+    "annual_sales_table": "07326",
+    "weeks_back": 320,
+    "months_back": 26
+  },
+  "fiskeridir": {
+    "biomass_pages": [
+      "https://www.fiskeridir.no/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-produksjonsomrade",
+      "https://www.fiskeridir.no/Akvakultur/Tall-og-analyse/Biomassestatistikk/Biomassestatistikk-etter-produksjonsomraade"
+    ],
+    "biomass_years_back": 3,
+    "gis_root": "https://gis.fiskeridir.no/server/rest/services",
+    "register_layer": "https://gis.fiskeridir.no/server/rest/services/Yggdrasil/Akvakulturregisteret/MapServer/0",
+    "escapes_keywords": ["mming", "escape"]
+  },
+  "barentswatch": {
+    "token_url": "https://id.barentswatch.no/connect/token",
+    "api_root": "https://www.barentswatch.no/bwapi",
+    "weeks_backfill": 52,
+    "weeks_refresh": 6
+  },
+  "norges_bank": {
+    "series_url": "https://data.norges-bank.no/api/data/EXR/B.EUR.NOK.SP",
+    "years_back": 2
+  },
+  "sources": {
+    "ssb_weekly": {
+      "name": "Weekly export of farmed salmon (price and volume)",
+      "publisher": "Statistics Norway (SSB)",
+      "url": "https://www.ssb.no/en/utenriksokonomi/utenrikshandel/statistikk/eksport-av-laks",
+      "table_url": "https://www.ssb.no/en/statbank/table/03024",
+      "frequency": "Weekly, Wednesdays 08:00 (covers the previous week)"
+    },
+    "ssb_markets": {
+      "name": "Salmon exports by destination country (HS 0302.14 / 0303.13)",
+      "publisher": "Statistics Norway (SSB), external trade in goods",
+      "url": "https://www.ssb.no/en/utenriksokonomi/utenrikshandel/statistikk/utenrikshandel-med-varer",
+      "frequency": "Monthly, around the 15th (previous month)"
+    },
+    "ssb_annual": {
+      "name": "Aquaculture: sales of slaughtered salmon (quantity and value)",
+      "publisher": "Statistics Norway (SSB)",
+      "url": "https://www.ssb.no/en/jord-skog-jakt-og-fiskeri/fiske-og-fangst/statistikk/akvakultur",
+      "frequency": "Annual (preliminary in June, final in October)"
+    },
+    "fdir_biomass": {
+      "name": "Biomass statistics: standing stock, harvest, feed, losses, smolt release per production area",
+      "publisher": "Fiskeridirektoratet (Directorate of Fisheries)",
+      "url": "https://www.fiskeridir.no/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-produksjonsomrade",
+      "frequency": "Monthly, around the 20th (previous month)"
+    },
+    "fdir_register": {
+      "name": "Aquaculture register (Akvakulturregisteret): licences, localities, holders, capacity",
+      "publisher": "Fiskeridirektoratet (Directorate of Fisheries)",
+      "url": "https://www.fiskeridir.no/Akvakultur/Registre-og-skjema/Akvakulturregisteret",
+      "frequency": "Continuously updated"
+    },
+    "fdir_escapes": {
+      "name": "Reported escape incidents (Rømmingshendelser)",
+      "publisher": "Fiskeridirektoratet (Directorate of Fisheries)",
+      "url": "https://www.fiskeridir.no/Akvakultur/Tall-og-analyse/Roemmingsstatistikk",
+      "frequency": "Continuously updated as incidents are reported"
+    },
+    "barentswatch_lice": {
+      "name": "Sea lice counts, treatments and disease status per locality",
+      "publisher": "BarentsWatch Fish Health (data from Mattilsynet / Fiskeridirektoratet / Veterinærinstituttet)",
+      "url": "https://www.barentswatch.no/fiskehelse/",
+      "frequency": "Weekly (reporting deadline Tuesday of the following week); API updated daily 06:00"
+    },
+    "norges_bank_fx": {
+      "name": "EUR/NOK exchange rate",
+      "publisher": "Norges Bank",
+      "url": "https://www.norges-bank.no/en/topics/Statistics/exchange_rates/",
+      "frequency": "Daily (business days)"
+    },
+    "traffic_lights": {
+      "name": "Traffic light system: production-area colours and capacity adjustment",
+      "publisher": "Nærings- og fiskeridepartementet",
+      "url": "https://trafikklyssystemet.no/Trafikklyssystemet",
+      "frequency": "Every second year (latest decision 19 June 2026)"
+    }
+  }
+}
