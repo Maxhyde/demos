@@ -98,6 +98,12 @@ def pct(new, old):
     return round((new - old) / old * 100.0, 1)
 
 
+def share(part, whole):
+    if part is None or whole in (None, 0):
+        return None
+    return round(part / whole * 100.0, 1)
+
+
 def r1(v, nd=1):
     return None if v is None else round(v, nd)
 
@@ -255,6 +261,10 @@ def _scale_from_label(label: str) -> tuple[float, str]:
     return 1.0, label
 
 
+def _norm_code(c: str) -> str:
+    return re.sub(r"\D", "", str(c))
+
+
 def fetch_ssb_export_markets() -> dict:
     wanted = CONFIG["ssb"]["salmon_hs_codes"]
     errors = []
@@ -274,14 +284,29 @@ def fetch_ssb_export_markets() -> dict:
         if not var_code:
             errors.append(f"{table}: no commodity variable")
             continue
-        present = [c for c in wanted if c in set(vars_[var_code]["values"])]
+        vals, texts = vars_[var_code]["values"], vars_[var_code]["valueTexts"]
+        salmon_like = [(v, t) for v, t in zip(vals, texts) if _norm_code(v)[:4] in ("0302", "0303") and ("salmon" in t.lower() or "laks" in t.lower())]
+        log(f"  {table}: commodity values sample={vals[:3]} {texts[:3]}; salmon-like 0302/0303 codes: " + "; ".join(f"{v}={t[:60]}" for v, t in salmon_like[:30]))
+        present, labels = [], {}
+        for v, t in zip(vals, texts):
+            n = _norm_code(v)
+            for w in wanted:
+                if n[:8] == w or n == w:
+                    present.append(v)
+                    labels[v] = f"{wanted[w]} [{v}]"
         if not present:
-            errors.append(f"{table}: none of {list(wanted)} present")
+            # fall back to any 0302/0303 code whose text mentions salmon and farmed/Atlantic
+            for v, t in salmon_like:
+                if "atlantic" in t.lower() or "farm" in t.lower() or "oppdrett" in t.lower():
+                    present.append(v)
+                    labels[v] = f"{t} [{v}]"
+        if not present:
+            errors.append(f"{table}: none of {list(wanted)} present (see log for salmon-like codes)")
             continue
         selections = {var_code: present}
         for c, v in vars_.items():
             txt = v["text"].lower()
-            if c.lower() == "impeks" or "import" in txt and "export" in txt:
+            if c.lower() == "impeks" or ("import" in txt and "export" in txt):
                 exp_vals = [val for val, t in zip(v["values"], v["valueTexts"]) if "export" in t.lower() or t.lower().startswith("eks")]
                 if exp_vals:
                     selections[c] = exp_vals
@@ -292,11 +317,11 @@ def fetch_ssb_export_markets() -> dict:
             errors.append(f"{table}: no country dimension in {ds['id']}")
             continue
         contents = ds["dimension"]["ContentsCode"]["category"]["label"]
-        qty_code = next((c for c, l in contents.items() if "quantity" in l.lower() or "weight" in l.lower() or "mengde" in l.lower() or "kg" in l.lower()), None)
+        qty_code = next((c for c, l in contents.items() if "quantity" in l.lower() or "weight" in l.lower() or "mengde" in l.lower() or "kg" in l.lower() or "tonn" in l.lower()), None)
         val_code = next((c for c, l in contents.items() if "value" in l.lower() or "verdi" in l.lower() or "nok" in l.lower()), None)
+        log(f"  contents: {contents}; qty={qty_code} val={val_code}")
         qty_scale, qty_label = _scale_from_label(contents.get(qty_code, "")) if qty_code else (1.0, "")
         val_scale, val_label = _scale_from_label(contents.get(val_code, "")) if val_code else (1.0, "")
-        # aggregate: month -> country -> {fresh/frozen: tonnes, mnok}
         agg: dict[str, dict[str, dict]] = {}
         for r in recs:
             v = r["value"]
@@ -305,29 +330,29 @@ def fetch_ssb_export_markets() -> dict:
             month = r["Tid"]
             country = r[country_dim + "_label"]
             ccode = r[country_dim]
-            code = r[var_code]
-            kind = "fresh" if code.startswith("0302") else "frozen"
+            kind = "fresh" if _norm_code(r[var_code]).startswith("0302") else "frozen"
             cell = agg.setdefault(month, {}).setdefault(country, {"code": ccode, "fresh_tonnes": 0.0, "frozen_tonnes": 0.0, "fresh_mnok": 0.0, "frozen_mnok": 0.0})
             if r["ContentsCode"] == qty_code:
-                kg = v * qty_scale
-                cell[f"{kind}_tonnes"] += kg / 1000.0
+                cell[f"{kind}_tonnes"] += v * qty_scale / 1000.0
             elif r["ContentsCode"] == val_code:
                 cell[f"{kind}_mnok"] += v * val_scale / 1e6
         months = sorted(agg)
-        total_words = ("all countries", "total", "world", "alle land", "i alt")
+        total_words = ("all countries", "total", "world", "alle land", "i alt", "unspecified")
 
         def is_total(name: str, code: str) -> bool:
             n = name.lower()
-            return any(w in n for w in total_words) or code in ("0", "00", "999", "9999")
+            return any(w in n for w in total_words) or code in ("0", "00", "999", "9999", "AA", "ZZ")
 
         monthly_total = []
         for m in months:
-            ft = sum(c["fresh_tonnes"] for n, c in agg[m].items() if not is_total(n, c["code"]))
-            fz = sum(c["frozen_tonnes"] for n, c in agg[m].items() if not is_total(n, c["code"]))
-            fv = sum(c["fresh_mnok"] for n, c in agg[m].items() if not is_total(n, c["code"]))
-            zv = sum(c["frozen_mnok"] for n, c in agg[m].items() if not is_total(n, c["code"]))
+            cells = [c for n, c in agg[m].items() if not is_total(n, c["code"])]
+            ft = sum(c["fresh_tonnes"] for c in cells)
+            fz = sum(c["frozen_tonnes"] for c in cells)
+            fv = sum(c["fresh_mnok"] for c in cells)
+            zv = sum(c["frozen_mnok"] for c in cells)
             monthly_total.append({"month": m, "fresh_tonnes": r1(ft), "frozen_tonnes": r1(fz), "fresh_mnok": r1(fv), "frozen_mnok": r1(zv),
-                                  "total_tonnes": r1(ft + fz), "total_mnok": r1(fv + zv)})
+                                  "total_tonnes": r1(ft + fz), "total_mnok": r1(fv + zv),
+                                  "fresh_nok_kg": r1(fv * 1e6 / (ft * 1000), 2) if ft > 0 else None})
         latest = months[-1] if months else None
         rows = []
         if latest:
@@ -344,12 +369,11 @@ def fetch_ssb_export_markets() -> dict:
                 py_v = (py["fresh_mnok"] + py["frozen_mnok"]) if py else None
                 rows.append({"country": name, "code": c["code"], "tonnes": r1(tot_t), "mnok": r1(tot_v),
                              "fresh_tonnes": r1(c["fresh_tonnes"]), "frozen_tonnes": r1(c["frozen_tonnes"]),
-                             "nok_kg": r1(tot_v * 1e6 / (tot_t * 1000)) if tot_t > 0 else None,
+                             "nok_kg": r1(tot_v * 1e6 / (tot_t * 1000), 2) if tot_t > 0 else None,
                              "tonnes_yoy_pct": pct(tot_t, py_t), "mnok_yoy_pct": pct(tot_v, py_v)})
             rows.sort(key=lambda x: -(x["mnok"] or 0))
-        return {"table": table, "title": meta.get("title"), "hs_codes": {c: wanted[c] for c in present},
-                "quantity_label": qty_label, "value_label": val_label, "latest_month": latest,
-                "monthly_total": monthly_total, "by_country_latest": rows[:25], "country_count": len(rows)}
+        return {"table": table, "title": meta.get("title"), "hs_codes": labels, "quantity_label": qty_label, "value_label": val_label,
+                "latest_month": latest, "monthly_total": monthly_total, "by_country_latest": rows[:25], "country_count": len(rows)}
     raise RuntimeError("; ".join(errors) or "no trade table worked")
 
 
@@ -362,24 +386,45 @@ def fetch_ssb_annual_sales() -> dict:
     for c, v in vars_.items():
         if c in ("Tid", "ContentsCode"):
             continue
-        sal = [val for val, t in zip(v["values"], v["valueTexts"]) if "salmon" in t.lower() or "laks" in t.lower()]
+        pairs = list(zip(v["values"], v["valueTexts"]))
+        sal = [val for val, t in pairs if t.lower().strip() in ("salmon", "laks") or t.lower().startswith("salmon")]
         if sal:
-            selections[c] = sal[:3]
+            selections[c] = sal[:1]
+            continue
+        # any other dimension (e.g. region): take the national total only
+        tot = [val for val, t in pairs if any(w in t.lower() for w in ("whole country", "the whole", "norway", "total", "hele landet", "i alt"))]
+        selections[c] = tot[:1] if tot else [v["values"][0]]
+    log(f"  selections: {selections}")
     ds = ssb_query(table, meta, selections, top_time=15)
     recs = jsonstat_records(ds)
     out: dict[str, dict] = {}
+    labels: dict[str, str] = {}
     for r in recs:
         row = out.setdefault(r["Tid"], {"year": r["Tid"]})
         label = str(r["ContentsCode_label"])
-        key = re.sub(r"\W+", "_", label.lower()).strip("_")
-        other = " / ".join(str(r[d + "_label"]) for d in ds["id"] if d not in ("Tid", "ContentsCode"))
-        row.setdefault("labels", {})[key] = f"{other}: {label}".strip(": ")
-        row[key] = (row.get(key) or 0) + (r["value"] or 0) if r["value"] is not None else row.get(key)
+        l = label.lower()
+        if "tonn" in l or "quantity" in l:
+            key, scale = "tonnes", 1.0
+        elif "nok" in l or "value" in l:
+            factor, _ = _scale_from_label(label)
+            key, scale = "mnok", factor / 1e6
+        else:
+            key, scale = re.sub(r"\W+", "_", l).strip("_"), 1.0
+        labels[key] = label
+        if r["value"] is not None:
+            row[key] = round((row.get(key) or 0) + r["value"] * scale, 1)
     series = sorted(out.values(), key=lambda x: x["year"])
-    return {"table": table, "title": meta.get("title"), "selection": selections, "series": series}
+    for row in series:
+        if row.get("tonnes") and row.get("mnok"):
+            row["nok_kg"] = round(row["mnok"] * 1e6 / (row["tonnes"] * 1000), 2)
+    return {"table": table, "title": meta.get("title"), "selection": selections, "labels": labels, "series": series}
 
 
-# --------------------------------------------------------------------------- Fiskeridirektoratet biomass (Excel scrape)
+# --------------------------------------------------------------------------- Fiskeridirektoratet biomass (Excel)
+PARSER_VERSION = "1.0-total-omr"
+MONTHS_NO = {1: "januar", 2: "februar", 3: "mars", 4: "april", 5: "mai", 6: "juni", 7: "juli", 8: "august", 9: "september", 10: "oktober", 11: "november", 12: "desember"}
+
+
 def fetch_fdir_biomass() -> dict:
     import openpyxl  # noqa: PLC0415
 
@@ -391,81 +436,123 @@ def fetch_fdir_biomass() -> dict:
         except Exception as e:  # noqa: BLE001
             log(f"  biomass page failed {page}: {e}")
             continue
-        html = r.text
         page_used = r.url
-        for m in re.finditer(r'<a[^>]+href="([^"]+\.xlsx?)(?:\?[^"]*)?"[^>]*>(.*?)</a>', html, flags=re.I | re.S):
+        for m in re.finditer(r'<a[^>]+href="([^"]+\.xlsx?)(?:\?[^"]*)?"[^>]*>(.*?)</a>', r.text, flags=re.I | re.S):
             href, text = m.group(1), re.sub(r"<[^>]+>", "", m.group(2)).strip()
             if href.startswith("/"):
                 href = "https://www.fiskeridir.no" + href
             links.append({"href": href, "text": re.sub(r"\s+", " ", text), "file": href.rsplit("/", 1)[-1]})
         if links:
             break
-    log(f"  biomass page: {page_used}; {len(links)} xlsx links")
-    for l in links:
-        log(f"    - {l['file']}  [{l['text'][:80]}]")
+    log(f"  biomass page: {page_used}; {len(links)} xlsx links: " + ", ".join(l["file"] for l in links))
     if not links:
         raise RuntimeError("no xlsx links found on biomass pages")
-
-    this_year = NOW.year
-    years_ok = {str(y) for y in range(this_year - CONFIG["fiskeridir"]["biomass_years_back"], this_year + 1)}
-    chosen = []
-    for l in links:
-        yrs = set(re.findall(r"(20\d\d)", l["file"] + " " + l["text"]))
-        if yrs & years_ok:
-            chosen.append(l)
-    # de-duplicate by file name
-    seen = set()
-    chosen = [c for c in chosen if not (c["file"] in seen or seen.add(c["file"]))]
-    log(f"  downloading {len(chosen)} files for years {sorted(years_ok)}")
-    files_meta = []
-    tables: dict[str, list] = {}
-    for l in chosen:
-        try:
-            r = http("GET", l["href"], headers={"Accept": "*/*"}, timeout=120)
-        except Exception as e:  # noqa: BLE001
-            log(f"    download failed {l['file']}: {e}")
-            files_meta.append({**l, "error": str(e)})
+    total = next((l for l in links if "total" in l["file"].lower()), None)
+    if not total:
+        raise RuntimeError("biostat-total-omr.xlsx not found among links: " + ", ".join(l["file"] for l in links))
+    content = http("GET", total["href"], headers={"Accept": "*/*"}, timeout=180).content
+    if KEEP_RAW:
+        (RAW / "biomass").mkdir(parents=True, exist_ok=True)
+        (RAW / "biomass" / total["file"]).write_bytes(content)
+    wb = openpyxl.load_workbook(io.BytesIO(content), data_only=True, read_only=True)
+    ws = next((w for w in wb.worksheets if "prod" in w.title.lower() or "biomasse" in w.title.lower()), wb.worksheets[-1])
+    rows = list(ws.iter_rows(values_only=True))
+    as_of = None
+    header_idx = None
+    for i, row in enumerate(rows[:40]):
+        c0 = str(row[0]).strip() if row and row[0] is not None else ""
+        m = re.search(r"pr\.?\s*(\d{1,2})\.(\d{1,2})\.(\d{4})", c0)
+        if m and not as_of:
+            as_of = f"{m[3]}-{int(m[2]):02d}-{int(m[1]):02d}"
+        if c0.upper() == "ÅR":
+            header_idx = i
+            break
+    if header_idx is None:
+        raise RuntimeError("header row 'ÅR' not found in biomass total sheet")
+    cols = [re.sub(r"\s+", "", str(c)).upper() if c is not None else "" for c in rows[header_idx]]
+    idx = {c: i for i, c in enumerate(cols) if c}
+    log(f"  biomass sheet '{ws.title}': {len(rows) - header_idx - 1} data rows; as_of={as_of}; columns={list(idx)}")
+    need = ["ÅR", "MÅNED_KODE", "PO_KODE", "ARTSID"]
+    for n in need:
+        if n not in idx:
+            raise RuntimeError(f"column {n} missing in biomass sheet; have {list(idx)}")
+    measures = {
+        "BEHFISK_STK": ("fish_mill", 1e-6), "BIOMASSE_KG": ("biomass_t", 1e-3), "UTSETT_SMOLT_STK": ("smolt_mill", 1e-6),
+        "FORFORBRUK_KG": ("feed_t", 1e-3), "UTTAK_STK": ("harvest_mill", 1e-6), "UTTAK_KG": ("harvest_t", 1e-3),
+        "DØDFISK_STK": ("dead_mill", 1e-6), "UTKAST_STK": ("discard_mill", 1e-6), "RØMMING_STK": ("escaped_count", 1.0),
+        "ANDRE_STK": ("other_loss_mill", 1e-6), "TAP_ANNET_NY_STK": ("other_loss_new_mill", 1e-6), "TAP_TELLEFEIL_STK": ("count_adjust_mill", 1e-6),
+    }
+    present_measures = {k: v for k, v in measures.items() if k in idx}
+    agg: dict[tuple, dict] = {}
+    for row in rows[header_idx + 1:]:
+        if not row or row[idx["ÅR"]] is None:
             continue
-        content = r.content
-        if KEEP_RAW:
-            (RAW / "biomass").mkdir(parents=True, exist_ok=True)
-            (RAW / "biomass" / l["file"]).write_bytes(content)
         try:
-            wb = openpyxl.load_workbook(io.BytesIO(content), data_only=True, read_only=True)
-        except Exception as e:  # noqa: BLE001
-            log(f"    not a workbook {l['file']}: {e}")
-            files_meta.append({**l, "error": f"openpyxl: {e}"})
+            year = int(row[idx["ÅR"]]); month = int(row[idx["MÅNED_KODE"]])
+        except (TypeError, ValueError):
             continue
-        sheets = []
-        for ws in wb.worksheets:
-            rows = []
-            for i, row in enumerate(ws.iter_rows(values_only=True)):
-                rows.append(list(row))
-                if i > 400:
-                    break
-            sheets.append({"name": ws.title, "rows": rows})
-            # diagnostic dump so the parser can be written/maintained from CI logs
-            log(f"    sheet '{ws.title}' ({len(rows)} rows read) of {l['file']}")
-            for row in rows[:14]:
-                cells = ["" if c is None else str(c)[:18] for c in row[:14]]
-                log("       | " + " | ".join(cells))
-        parsed = parse_biomass_workbook(l, sheets)
-        for k, v in parsed.items():
-            tables.setdefault(k, []).extend(v)
-        files_meta.append({**l, "sheets": [s["name"] for s in sheets], "parsed_tables": {k: len(v) for k, v in parsed.items()}})
-    return {"page": page_used, "files": files_meta, "tables": tables, "parser_version": PARSER_VERSION}
+        po = row[idx["PO_KODE"]]
+        po = str(int(po)) if isinstance(po, (int, float)) else (None if po in (None, "(null)", "") else str(po))
+        species = str(row[idx["ARTSID"]] or "").upper()
+        key = (year, month, po, species)
+        d = agg.setdefault(key, {})
+        for col, (name, scale) in present_measures.items():
+            v = fnum(row[idx[col]])
+            if v is not None:
+                d[name] = d.get(name, 0.0) + v * scale
 
+    def series_for(species_filter, po_filter):
+        out: dict[str, dict] = {}
+        for (y, m, po, sp), d in agg.items():
+            if species_filter and sp != species_filter:
+                continue
+            if po_filter == "areas_only" and po is None:
+                continue
+            if po_filter not in (None, "areas_only") and po != po_filter:
+                continue
+            k = f"{y}-{m:02d}"
+            o = out.setdefault(k, {"month": k, "year": y, "month_no": m})
+            for name, v in d.items():
+                o[name] = o.get(name, 0.0) + v
+        res = sorted(out.values(), key=lambda x: x["month"])
+        for o in res:
+            for name in list(o):
+                if isinstance(o[name], float):
+                    o[name] = round(o[name], 3 if name.endswith("_mill") else 1)
+            fish = o.get("fish_mill") or 0
+            dead = o.get("dead_mill") or 0
+            o["mortality_pct"] = round(dead / (fish + dead) * 100, 2) if fish + dead > 0 else None
+        return res
 
-PARSER_VERSION = "0.1-dump-only"
-
-
-def parse_biomass_workbook(link: dict, sheets: list[dict]) -> dict[str, list]:
-    """Turn the Fiskeridirektoratet biomass workbooks into tidy rows.
-
-    The first pipeline run only dumps the sheet layout to the log; the parser is
-    filled in once the layout is known.  Returns {table_name: [rows]}.
-    """
-    return {}
+    national = series_for("LAKS", None)
+    trout = series_for("REGNBUEØRRET", None)
+    by_area = {}
+    for po in [str(i) for i in range(1, 14)]:
+        ser = series_for("LAKS", po)
+        if ser:
+            by_area[po] = ser[-36:]
+    latest = national[-1]["month"] if national else None
+    # year-over-year on the national series
+    nat_idx = {o["month"]: o for o in national}
+    for o in national:
+        prev = nat_idx.get(f"{o['year'] - 1}-{o['month_no']:02d}")
+        o["biomass_t_yoy_pct"] = pct(o.get("biomass_t"), prev.get("biomass_t")) if prev else None
+        o["harvest_t_yoy_pct"] = pct(o.get("harvest_t"), prev.get("harvest_t")) if prev else None
+    year_totals: dict[int, dict] = {}
+    for o in national:
+        yt = year_totals.setdefault(o["year"], {"year": o["year"], "months": 0, "harvest_t": 0.0, "feed_t": 0.0, "smolt_mill": 0.0, "dead_mill": 0.0, "escaped_count": 0.0})
+        yt["months"] += 1
+        for k in ("harvest_t", "feed_t", "smolt_mill", "dead_mill", "escaped_count"):
+            yt[k] = round(yt[k] + (o.get(k) or 0), 3)
+    return {"page": page_used, "file": total, "as_of": as_of, "parser_version": PARSER_VERSION, "latest_month": latest,
+            "measures": {v[0]: k for k, v in present_measures.items()},
+            "units": {"biomass_t": "tonnes standing biomass at month end (LAKS)", "fish_mill": "million fish at month end", "harvest_t": "tonnes round weight (WFE) harvested in month",
+                      "feed_t": "tonnes feed used in month", "smolt_mill": "million smolt released in month", "dead_mill": "million fish registered dead in month",
+                      "escaped_count": "fish registered as escaped in month", "mortality_pct": "dead / (stock + dead) in month, %"},
+            "national_latest": national[-1] if national else {},
+            "national": national[-60:], "trout_national": trout[-24:], "by_area": by_area,
+            "year_totals": sorted(year_totals.values(), key=lambda x: x["year"])[-6:],
+            "all_links": [{"file": l["file"], "href": l["href"]} for l in links]}
 
 
 # --------------------------------------------------------------------------- Fiskeridirektoratet GIS (ArcGIS REST)
@@ -547,204 +634,181 @@ def pick(row: dict, *cands, default=None):
     return default
 
 
+def split_list(v) -> list[str]:
+    if v is None:
+        return []
+    return [x.strip() for x in str(v).split(",") if x.strip()]
+
+
 def fetch_fdir_register() -> dict:
     layer = CONFIG["fiskeridir"]["register_layer"]
     info = gis_layer_info(layer)
     rows = gis_query_all(layer, info)
     if rows:
-        log("  sample rows: " + json.dumps(rows[:2], ensure_ascii=False, default=str)[:1500])
+        log("  sample row: " + json.dumps(rows[0], ensure_ascii=False, default=str)[:800])
     date_fields = {f["name"] for f in info.get("fields", []) if f["type"] == "esriFieldTypeDate"}
+    company_patterns = [p.upper() for p in CONFIG["company"]["name_patterns"]]
+    recs = []
     for r in rows:
         for k in date_fields:
             if k in r:
                 r[k] = epoch_ms_to_date(r[k])
-    fields = [f["name"] for f in info.get("fields", [])]
-    # classify
-    recs = []
-    for r in rows:
+        holders = split_list(r.get("til_innehavere"))
+        species = split_list(r.get("til_arter"))
+        purposes = [p.upper() for p in split_list(r.get("til_formaal"))]
+        forms = split_list(r.get("til_produksjonsform"))
+        licences = split_list(r.get("til_tillatelser"))
+        company_holders = [h for h in holders if any(p in h.upper() for p in company_patterns)]
+        unit = str(r.get("kapasitet_unittype") or "")
+        cap = fnum(r.get("kapasitet_lok"))
+        pa = r.get("prodareacode")
+        pa = str(int(pa)) if isinstance(pa, (int, float)) else (str(pa).strip() if pa not in (None, "") else None)
+        salmonid = any(sp.lower() in ("laks", "regnbueørret", "ørret") for sp in species)
         rec = {
-            "locality_no": pick(r, "loknr", "lok_nr", "lokalitetsnr", "localityno"),
-            "locality_name": pick(r, "navn", "lok_navn", "lokalitetsnavn", "name"),
-            "licence_no": pick(r, "tillatelsesnr", "till_nr", "tillatelse", "licence", "license"),
-            "holder": pick(r, "innehaver", "till_innehaver", "holder", "selskap", "navn_innehaver", "org_navn"),
-            "org_no": pick(r, "org_nr", "orgnr", "organisasjonsnr", "org"),
-            "species": pick(r, "art", "species", "fiskeart"),
-            "purpose": pick(r, "formaal", "formål", "purpose", "till_formaal"),
-            "production_form": pick(r, "produksjonsform", "prod_form", "prodform"),
-            "capacity": fnum(pick(r, "kapasitet", "till_kap", "capacity", "mtb")),
-            "capacity_unit": pick(r, "enhet", "kap_enhet", "unit"),
-            "municipality": pick(r, "kommune", "komm_navn", "municipality"),
-            "county": pick(r, "fylke", "fylkesnavn", "county"),
-            "production_area": pick(r, "prod_omr", "produksjonsomraade", "produksjonsområde", "prodomr", "po", "production_area"),
-            "placement": pick(r, "plassering", "vann", "placement"),
-            "status": pick(r, "status", "lok_status", "till_status"),
-            "lat": r.get("lat"),
-            "lon": r.get("lon"),
+            "locality_no": r.get("loknr"), "locality_name": r.get("navn"), "status": r.get("status_lokalitet"),
+            "cleared": r.get("klareringsdato"), "capacity_t": cap if unit.upper() == "TN" else None, "capacity_raw": cap, "capacity_unit": unit,
+            "placement": r.get("plassering"), "water": r.get("vannmiljo"), "county": r.get("fylke"), "municipality": r.get("kommune"),
+            "production_area": pa, "lat": r.get("lat"), "lon": r.get("lon"), "symbol": r.get("symbol"),
+            "species": species, "holders": holders, "licences": licences, "purposes": purposes, "production_forms": forms,
+            "url": r.get("lokalitet_url_ekstern") or r.get("lokalitet_url"),
+            "is_company": bool(company_holders), "company_holders": company_holders, "company_sole": bool(company_holders) and len(holders) == len(company_holders),
+            "is_salmonid": salmonid,
+            "is_sea_foodfish": salmonid and str(r.get("plassering") or "").upper() == "SJØ" and any("matfisk" in f.lower() for f in forms) and ("KOMMERSIELL" in purposes),
         }
-        rec["is_company"] = matches_company(rec["holder"]) or str(rec["org_no"] or "") in set(CONFIG["company"]["org_numbers"])
         recs.append(rec)
-    sp = lambda x: str(x or "").lower()  # noqa: E731
-    salmonid = [r for r in recs if any(w in sp(r["species"]) for w in ("laks", "salmon", "ørret", "orret", "trout", "regnbue"))]
-    commercial = [r for r in salmonid if "kommersiell" in sp(r["purpose"]) or "commercial" in sp(r["purpose"]) or not r["purpose"]]
-    sea = [r for r in commercial if "matfisk" in sp(r["production_form"]) or "sjø" in sp(r["placement"]) or "sjo" in sp(r["placement"]) or not r["production_form"]]
-
-    def summarize(sub: list[dict]) -> dict:
-        locs = {r["locality_no"] for r in sub if r["locality_no"]}
-        lics = {r["licence_no"] for r in sub if r["licence_no"]}
-        cap_by_loc: dict = {}
-        for r in sub:
-            if r["locality_no"] and r["capacity"]:
-                cap_by_loc[r["locality_no"]] = max(cap_by_loc.get(r["locality_no"], 0), r["capacity"])
-        by_area: dict[str, dict] = {}
-        for r in sub:
-            pa = str(r["production_area"] or "?")
-            pa = re.sub(r"\D", "", pa) or pa
-            d = by_area.setdefault(pa, {"production_area": pa, "localities": set(), "licences": set(), "capacity_t": {}})
-            if r["locality_no"]:
-                d["localities"].add(r["locality_no"])
-                if r["capacity"]:
-                    d["capacity_t"][r["locality_no"]] = max(d["capacity_t"].get(r["locality_no"], 0), r["capacity"])
-            if r["licence_no"]:
-                d["licences"].add(r["licence_no"])
-        areas = []
-        for pa, d in sorted(by_area.items(), key=lambda kv: (len(kv[0]), kv[0])):
-            areas.append({"production_area": pa, "name": CONFIG["production_areas"].get(pa, ""), "localities": len(d["localities"]),
-                          "licences": len(d["licences"]), "locality_capacity_t": r1(sum(d["capacity_t"].values()), 0)})
-        holders: dict[str, dict] = {}
-        for r in sub:
-            h = str(r["holder"] or "unknown")
-            hd = holders.setdefault(h, {"holder": h, "org_no": r["org_no"], "localities": set(), "licences": set()})
-            if r["locality_no"]:
-                hd["localities"].add(r["locality_no"])
-            if r["licence_no"]:
-                hd["licences"].add(r["licence_no"])
-        top_holders = sorted(({"holder": h["holder"], "org_no": h["org_no"], "localities": len(h["localities"]), "licences": len(h["licences"])}
-                              for h in holders.values()), key=lambda x: -x["localities"])[:15]
-        return {"rows": len(sub), "localities": len(locs), "licences": len(lics), "locality_capacity_t": r1(sum(cap_by_loc.values()), 0),
-                "by_area": areas, "top_holders": top_holders}
-
-    company_rows = [r for r in sea if r["is_company"]]
+    sea = [r for r in recs if r["is_sea_foodfish"]]
     company_all = [r for r in recs if r["is_company"]]
-    entities = sorted({(str(r["holder"]), str(r["org_no"])) for r in company_all})
-    log(f"  register: {len(recs)} rows, {len(sea)} salmonid commercial sea rows, company rows={len(company_rows)}, entities={entities}")
-    company_locs: dict = {}
-    for r in company_rows:
-        if not r["locality_no"]:
-            continue
-        d = company_locs.setdefault(r["locality_no"], {**{k: r[k] for k in ("locality_no", "locality_name", "municipality", "county", "production_area", "lat", "lon", "capacity", "capacity_unit", "holder", "org_no")}, "licences": set(), "species": set()})
-        if r["licence_no"]:
-            d["licences"].add(str(r["licence_no"]))
-        if r["species"]:
-            d["species"].add(str(r["species"]))
-        if r["capacity"] and (d["capacity"] or 0) < r["capacity"]:
-            d["capacity"] = r["capacity"]
+    company_sea = [r for r in sea if r["is_company"]]
+    entities: dict[str, int] = {}
+    for r in company_all:
+        for h in r["company_holders"]:
+            entities[h] = entities.get(h, 0) + 1
+    log(f"  register: {len(recs)} rows; sea food-fish salmonid={len(sea)}; company any={len(company_all)} sea={len(company_sea)}; entities={entities}")
+
+    def by_area(sub):
+        out = {}
+        for r in sub:
+            pa = r["production_area"] or "other"
+            d = out.setdefault(pa, {"production_area": pa, "name": CONFIG["production_areas"].get(pa, "Broodstock / research / other"), "localities": 0, "capacity_t": 0.0, "active": 0})
+            d["localities"] += 1
+            d["capacity_t"] += r["capacity_t"] or 0
+            d["active"] += 1 if str(r["status"] or "").upper() == "AKTIV" else 0
+        for d in out.values():
+            d["capacity_t"] = round(d["capacity_t"], 0)
+        return sorted(out.values(), key=lambda d: (d["production_area"] == "other", len(d["production_area"]), d["production_area"]))
+
+    def holder_counts(sub, top=15):
+        cnt: dict[str, dict] = {}
+        for r in sub:
+            for h in r["holders"]:
+                d = cnt.setdefault(h, {"holder": h, "localities": 0, "capacity_t": 0.0})
+                d["localities"] += 1
+                d["capacity_t"] += r["capacity_t"] or 0
+        res = sorted(cnt.values(), key=lambda d: -d["localities"])[:top]
+        for d in res:
+            d["capacity_t"] = round(d["capacity_t"], 0)
+            d["is_company"] = any(p in d["holder"].upper() for p in company_patterns)
+        return res
+
+    industry_area = by_area(sea)
+    company_area = {d["production_area"]: d for d in by_area(company_sea)}
+    areas = []
+    for d in industry_area:
+        c = company_area.get(d["production_area"], {})
+        areas.append({**d, "company_localities": c.get("localities", 0), "company_capacity_t": c.get("capacity_t", 0.0),
+                      "company_share_localities_pct": share(c.get("localities", 0), d["localities"]),
+                      "company_share_capacity_pct": share(c.get("capacity_t", 0.0), d["capacity_t"])})
     company_localities = []
-    for d in company_locs.values():
-        d["licences"] = sorted(d["licences"])
-        d["species"] = sorted(d["species"])
-        d["production_area"] = re.sub(r"\D", "", str(d["production_area"] or "")) or d["production_area"]
-        company_localities.append(d)
-    company_localities.sort(key=lambda x: (str(x["production_area"]).zfill(2), str(x["locality_name"])))
+    for r in sorted(company_sea, key=lambda x: ((x["production_area"] or "99").zfill(2), str(x["locality_name"]))):
+        company_localities.append({k: r[k] for k in ("locality_no", "locality_name", "status", "capacity_t", "capacity_unit", "county", "municipality", "production_area",
+                                                     "lat", "lon", "species", "holders", "company_holders", "company_sole", "licences", "url")})
+    compact = [{"n": r["locality_no"], "name": r["locality_name"], "pa": r["production_area"], "lat": r["lat"], "lon": r["lon"], "cap": r["capacity_t"],
+                "mowi": r["is_company"], "sole": r["company_sole"], "status": r["status"], "holders": r["holders"][:4]} for r in sea]
     return {
-        "layer": layer,
-        "fields": fields,
-        "row_count": len(recs),
-        "industry_salmonid_sea": summarize(sea),
-        "company": {
-            "name": CONFIG["company"]["name"],
-            "entities": [{"holder": h, "org_no": o} for h, o in entities],
-            **summarize(company_rows),
-            "localities_list": company_localities,
-        },
+        "layer": layer, "fields": [f["name"] for f in info.get("fields", [])], "row_count": len(recs),
+        "industry_sea_foodfish": {"localities": len(sea), "active": sum(1 for r in sea if str(r["status"] or "").upper() == "AKTIV"),
+                                  "capacity_t": round(sum(r["capacity_t"] or 0 for r in sea), 0), "by_area": areas, "top_holders": holder_counts(sea)},
+        "company": {"name": CONFIG["company"]["name"], "entities": [{"holder": h, "localities": n} for h, n in sorted(entities.items(), key=lambda kv: -kv[1])],
+                    "localities": len(company_sea), "localities_sole": sum(1 for r in company_sea if r["company_sole"]),
+                    "localities_any_type": len(company_all), "active": sum(1 for r in company_sea if str(r["status"] or "").upper() == "AKTIV"),
+                    "capacity_t": round(sum(r["capacity_t"] or 0 for r in company_sea), 0),
+                    "licences": len({l for r in company_sea for l in r["licences"]}),
+                    "by_area": [a for a in areas if a["company_localities"]],
+                    "localities_list": company_localities},
+        "_localities": compact,
     }
 
 
 def fetch_fdir_escapes() -> dict:
     root = CONFIG["fiskeridir"]["gis_root"]
     folder = gis_json(root + "/Yggdrasil")
-    names = [s["name"] for s in folder.get("services", [])]
-    log("  Yggdrasil services: " + ", ".join(names))
     kws = [k.lower() for k in CONFIG["fiskeridir"]["escapes_keywords"]]
     cands = [s for s in folder.get("services", []) if any(k in s["name"].lower() for k in kws)]
     if not cands:
-        # search all folders
-        top = gis_json(root)
-        for f in top.get("folders", []):
-            try:
-                sub = gis_json(f"{root}/{f}")
-            except Exception:  # noqa: BLE001
-                continue
-            cands += [s for s in sub.get("services", []) if any(k in s["name"].lower() for k in kws)]
-    if not cands:
-        raise RuntimeError("no escape (rømming) service found in Yggdrasil folder")
-    all_rows: list[dict] = []
+        raise RuntimeError("no escape (rømming) service found in Yggdrasil folder: " + ", ".join(s["name"] for s in folder.get("services", [])))
+    cands.sort(key=lambda s: 0 if s["type"] == "FeatureServer" else 1)
+    svc = cands[0]
+    svc_url = f"{root}/{svc['name']}/{svc['type']}"
+    svc_info = gis_json(svc_url)
     layers_used = []
-    for s in cands:
-        svc_url = f"{root}/{s['name']}/{s['type']}"
-        try:
-            svc = gis_json(svc_url)
-        except Exception as e:  # noqa: BLE001
-            log(f"  service failed {svc_url}: {e}")
+    all_rows: list[dict] = []
+    for lyr in svc_info.get("layers", []):
+        layer_url = f"{svc_url}/{lyr['id']}"
+        info = gis_layer_info(layer_url)
+        if info.get("type") not in ("Feature Layer", "Table"):
             continue
-        for lyr in svc.get("layers", []) + svc.get("tables", []):
-            layer_url = f"{svc_url}/{lyr['id']}"
-            log(f"  candidate layer {layer_url} '{lyr.get('name')}'")
-            try:
-                info = gis_layer_info(layer_url)
-                if info.get("type") not in ("Feature Layer", "Table"):
-                    continue
-                rows = gis_query_all(layer_url, info, geometry=True)
-            except Exception as e:  # noqa: BLE001
-                log(f"    failed: {e}")
-                continue
-            date_fields = {f["name"] for f in info.get("fields", []) if f["type"] == "esriFieldTypeDate"}
-            for r in rows:
-                for k in date_fields:
-                    if k in r:
-                        r[k] = epoch_ms_to_date(r[k])
-                r["_layer"] = lyr.get("name")
-            if rows:
-                log("  sample: " + json.dumps(rows[:2], ensure_ascii=False, default=str)[:1500])
-            all_rows.extend(rows)
-            layers_used.append({"url": layer_url, "name": lyr.get("name"), "rows": len(rows), "fields": [f["name"] for f in info.get("fields", [])]})
+        rows = gis_query_all(layer_url, info, geometry=True)
+        date_fields = {f["name"] for f in info.get("fields", []) if f["type"] == "esriFieldTypeDate"}
+        for r in rows:
+            for k in date_fields:
+                if k in r:
+                    r[k] = epoch_ms_to_date(r[k])
+        all_rows.extend(rows)
+        layers_used.append({"url": layer_url, "name": lyr.get("name"), "rows": len(rows)})
+        break  # one layer holds the incidents
+    if all_rows:
+        log("  sample: " + json.dumps(all_rows[-1], ensure_ascii=False, default=str)[:900])
+    seen = set()
     incidents = []
     for r in all_rows:
-        date = pick(r, "dato", "hendelsesdato", "meldt_dato", "date", "rapportert", "innmeldt")
+        key = r.get("globalid") or (r.get("objectid"), r.get("rommingsdato"), r.get("loknr"))
+        if key in seen:
+            continue
+        seen.add(key)
+        est_txt = r.get("antall_romt_estimert")
+        est_num = fnum(est_txt)
+        if est_num is None and est_txt:
+            m = re.findall(r"\d[\d\s]*", str(est_txt).replace(" ", ""))
+            nums = [fnum(x) for x in m if fnum(x) is not None]
+            est_num = max(nums) if nums else None
         rec = {
-            "date": date,
-            "locality_no": pick(r, "loknr", "lok_nr", "lokalitetsnr", "lokalitet_nr"),
-            "locality_name": pick(r, "lok_navn", "lokalitetsnavn", "lokalitet", "navn"),
-            "company": pick(r, "selskap", "innehaver", "oppdretter", "firma", "company", "eier"),
-            "species": pick(r, "art", "species"),
-            "reported_count": fnum(pick(r, "antall_rapportert", "ant_rapportert", "rapportert_antall", "antall_romt", "antall_rømt", "antall")),
-            "recaptured_count": fnum(pick(r, "gjenfanget", "antall_gjenfanget", "recaptured")),
-            "avg_weight_kg": fnum(pick(r, "snittvekt", "vekt", "gjennomsnittsvekt")),
-            "cause": pick(r, "aarsak", "årsak", "cause", "hendelse"),
-            "status": pick(r, "status"),
-            "municipality": pick(r, "kommune", "municipality"),
-            "county": pick(r, "fylke", "county"),
-            "production_area": pick(r, "prod_omr", "produksjonsomr", "po"),
-            "lat": r.get("lat"),
-            "lon": r.get("lon"),
-            "id": pick(r, "objectid", "id", "hendelsesid", "saksnr", "meldingsnr"),
-            "layer": r.get("_layer"),
+            "id": r.get("globalid") or r.get("objectid"), "date": r.get("rommingsdato") or r.get("rommingsdato_antatt"), "date_assumed": r.get("rommingsdato_antatt"),
+            "locality_no": r.get("loknr"), "locality_name": r.get("navn"), "company": r.get("selskapsnavn"), "species": r.get("art"),
+            "description": r.get("beskrivelse"), "report_stage": r.get("status"), "estimated_range": est_txt, "estimated_max": est_num,
+            "escaped_fish": fnum(r.get("antall_romt_fisk")), "size_g": fnum(r.get("storrelse_estimert")) or fnum(r.get("storrelse")),
+            "recapture_started": r.get("gjenfangst_iverksatt"), "recaptured": fnum(r.get("gjenfangst_gjennomfort")), "recapture_note": r.get("gjenfangst_beskrivelse"),
+            "cleanerfish": r.get("rensefisk"), "county": r.get("fylke"), "municipality": r.get("kommune"), "lat": r.get("lat"), "lon": r.get("lon"),
+            "locality_capacity_t": fnum(r.get("kapsitet_lok")),
         }
         rec["is_company"] = matches_company(rec["company"])
         incidents.append(rec)
     incidents.sort(key=lambda x: str(x["date"] or ""), reverse=True)
     cutoff = (NOW - dt.timedelta(days=730)).date().isoformat()
     recent = [i for i in incidents if str(i["date"] or "") >= cutoff]
-    this_year = str(NOW.year)
 
-    def ytd(rows, year):
-        rows = [r for r in rows if str(r["date"] or "").startswith(year)]
-        salmon = [r for r in rows if "laks" in str(r["species"] or "").lower() or "salmon" in str(r["species"] or "").lower() or not r["species"]]
-        return {"incidents": len(rows), "salmon_incidents": len(salmon), "reported_fish": r1(sum(r["reported_count"] or 0 for r in salmon), 0),
-                "company_incidents": sum(1 for r in rows if r["is_company"])}
+    def year_stats(year: str):
+        rows = [r for r in incidents if str(r["date"] or "").startswith(year)]
+        salmon = [r for r in rows if "laks" in str(r["species"] or "").lower()]
+        return {"reports": len(rows), "salmon_reports": len(salmon),
+                "salmon_fish_confirmed": round(sum(r["escaped_fish"] or 0 for r in salmon)),
+                "salmon_fish_estimated_max": round(sum((r["escaped_fish"] if r["escaped_fish"] is not None else (r["estimated_max"] or 0)) for r in salmon)),
+                "company_reports": sum(1 for r in rows if r["is_company"]),
+                "company_fish_confirmed": round(sum(r["escaped_fish"] or 0 for r in rows if r["is_company"]))}
 
-    return {"layers": layers_used, "total_rows": len(incidents), "recent": recent[:400],
-            "ytd": {this_year: ytd(incidents, this_year), str(NOW.year - 1): ytd(incidents, str(NOW.year - 1))},
-            "company_recent": [i for i in recent if i["is_company"]]}
+    years = sorted({str(i["date"])[:4] for i in incidents if i["date"]})
+    return {"service": svc_url, "layers": layers_used, "total_reports": len(incidents), "first_year": years[0] if years else None,
+            "recent": recent[:400], "company_recent": [i for i in recent if i["is_company"]],
+            "by_year": {y: year_stats(y) for y in years[-6:]}}
 
 
 # --------------------------------------------------------------------------- BarentsWatch fish health
@@ -771,23 +835,11 @@ def fetch_barentswatch(register: dict | None, previous: dict | None) -> dict:
     loc_to_area: dict[str, str] = {}
     company_locs: set[str] = set()
     if register:
+        for r in register.get("_localities") or []:
+            if r.get("n") is not None and r.get("pa"):
+                loc_to_area[str(r["n"])] = str(r["pa"])
         for r in register.get("company", {}).get("localities_list", []):
             company_locs.add(str(r["locality_no"]))
-    # production area mapping for all salmonid sea localities
-    # (register summary only keeps the company's localities; we fetch the mapping from the register layer cheaply)
-    try:
-        layer = CONFIG["fiskeridir"]["register_layer"]
-        info = gis_json(layer)
-        pa_field = next((f["name"] for f in info.get("fields", []) if "prod" in f["name"].lower() and "om" in f["name"].lower()), None)
-        lok_field = next((f["name"] for f in info.get("fields", []) if f["name"].lower() in ("loknr", "lok_nr", "lokalitetsnr")), None)
-        if pa_field and lok_field:
-            j = gis_json(layer + "/query", where="1=1", outFields=f"{lok_field},{pa_field}", returnGeometry="false", returnDistinctValues="true", resultRecordCount=20000)
-            for f in j.get("features", []):
-                a = f["attributes"]
-                if a.get(lok_field) is not None and a.get(pa_field):
-                    loc_to_area[str(a[lok_field])] = re.sub(r"\D", "", str(a[pa_field])) or str(a[pa_field])
-    except Exception as e:  # noqa: BLE001
-        log(f"  PA mapping failed: {e}")
     log(f"  locality->PA mapping: {len(loc_to_area)} localities; company localities: {len(company_locs)}")
 
     prev_weeks = {w["week"]: w for w in (previous or {}).get("weekly", [])} if previous else {}
@@ -947,8 +999,10 @@ def compute_changes(latest: dict, previous: dict | None) -> list[dict]:
     pbm = (previous or {}).get("biomass") or {}
     if bm.get("latest_month") and bm.get("latest_month") != pbm.get("latest_month"):
         nat = bm.get("national_latest") or {}
-        add("biomass", f"New biomass month {bm['latest_month']}",
-            ", ".join(f"{k.replace('_', ' ')}: {v:,.0f}" for k, v in nat.items() if isinstance(v, (int, float))), "info")
+        add("biomass", f"New biomass month {bm['latest_month']}: {nat.get('biomass_t', 0):,.0f} t salmon standing biomass" + (f" ({nat['biomass_t_yoy_pct']:+.1f}% y/y)" if nat.get("biomass_t_yoy_pct") is not None else ""),
+            f"Harvest {nat.get('harvest_t', 0):,.0f} t WFE" + (f" ({nat['harvest_t_yoy_pct']:+.1f}% y/y)" if nat.get("harvest_t_yoy_pct") is not None else "") +
+            f"; {nat.get('dead_mill', 0):.1f} million fish dead ({nat.get('mortality_pct')}% of stock); feed {nat.get('feed_t', 0):,.0f} t; smolt released {nat.get('smolt_mill', 0):.1f} million.",
+            "notable")
 
     # register / company
     reg = latest.get("register") or {}
@@ -956,23 +1010,23 @@ def compute_changes(latest: dict, previous: dict | None) -> list[dict]:
     if reg.get("company"):
         c, pc = reg["company"], preg.get("company") or {}
         if not previous:
-            add("company", f"{c['name']}: {c['localities']} sea localities, {c['licences']} licences in the register",
-                f"Locality capacity {c['locality_capacity_t']:,.0f} t; entities: " + ", ".join(e['holder'] for e in c['entities']), "info", company=True)
+            add("company", f"{c['name']}: {c['localities']} sea food-fish localities, {c['licences']} licences in the register",
+                f"Locality capacity {c['capacity_t']:,.0f} t; entities: " + ", ".join(e['holder'] for e in c['entities']), "info", company=True)
         else:
             cur_l = {str(x["locality_no"]): x for x in c.get("localities_list", [])}
             old_l = {str(x["locality_no"]): x for x in pc.get("localities_list", [])}
             for k in sorted(set(cur_l) - set(old_l)):
                 x = cur_l[k]
-                add("company", f"New {c['name']} locality in register: {x['locality_name']} ({k})", f"PO{x['production_area']} {x.get('municipality') or ''}; capacity {x.get('capacity') or 0:,.0f} {x.get('capacity_unit') or ''}", "notable", company=True)
+                add("company", f"New {c['name']} locality in register: {x['locality_name']} ({k})", f"PO{x['production_area']} {x.get('municipality') or ''}; capacity {x.get('capacity_t') or 0:,.0f} t", "notable", company=True)
             for k in sorted(set(old_l) - set(cur_l)):
                 x = old_l[k]
                 add("company", f"{c['name']} locality removed from register: {x['locality_name']} ({k})", f"PO{x['production_area']}", "notable", company=True)
             if c.get("licences") != pc.get("licences"):
                 add("company", f"{c['name']} licence count {pc.get('licences')} → {c.get('licences')}", "", "notable", company=True)
-            if c.get("locality_capacity_t") != pc.get("locality_capacity_t") and pc.get("locality_capacity_t"):
-                add("company", f"{c['name']} locality capacity {pc['locality_capacity_t']:,.0f} → {c['locality_capacity_t']:,.0f} t", "", "info", company=True,
-                    delta_pct=pct(c["locality_capacity_t"], pc["locality_capacity_t"]))
-        ind, pind = reg.get("industry_salmonid_sea") or {}, preg.get("industry_salmonid_sea") or {}
+            if c.get("capacity_t") != pc.get("capacity_t") and pc.get("capacity_t"):
+                add("company", f"{c['name']} locality capacity {pc['capacity_t']:,.0f} → {c['capacity_t']:,.0f} t", "", "info", company=True,
+                    delta_pct=pct(c["capacity_t"], pc["capacity_t"]))
+        ind, pind = reg.get("industry_sea_foodfish") or {}, preg.get("industry_sea_foodfish") or {}
         if previous and ind and pind and ind.get("localities") != pind.get("localities"):
             add("industry", f"Industry sea localities in register {pind['localities']} → {ind['localities']}", "", "info")
 
@@ -983,8 +1037,10 @@ def compute_changes(latest: dict, previous: dict | None) -> list[dict]:
         old_ids = {(str(i.get("id")), str(i.get("date"))) for i in pesc.get("recent", [])}
         new = [i for i in esc["recent"] if (str(i.get("id")), str(i.get("date"))) not in old_ids] if previous else esc["recent"][:5]
         for i in new[:12]:
+            n = i.get("escaped_fish")
+            qty = f"{n:,.0f} fish confirmed" if n is not None else (f"estimated {i.get('estimated_range')} fish" if i.get("estimated_range") else "number not yet reported")
             add("escapes", f"{'New ' if previous else 'Recent '}escape report {i.get('date')}: {i.get('locality_name') or i.get('locality_no')} ({i.get('company') or 'company n/a'})",
-                f"{i.get('species') or ''}; reported {i['reported_count']:,.0f} fish" if i.get("reported_count") is not None else str(i.get("species") or ""),
+                f"{i.get('species') or ''}; {qty}; {i.get('report_stage') or ''}. {i.get('description') or ''}".strip(),
                 "alert" if i.get("is_company") else "notable", company=bool(i.get("is_company")))
 
     # lice
@@ -1073,6 +1129,10 @@ def main() -> int:
     latest["escapes"] = keep_or(run("fdir_escapes", fetch_fdir_escapes), "escapes")
     latest["lice"] = keep_or(run("barentswatch_lice", fetch_barentswatch, latest.get("register"), (previous or {}).get("lice")), "lice")
     latest["fx"] = keep_or(run("norges_bank_fx", fetch_norges_bank), "fx")
+    if latest.get("register") and latest["register"].get("_localities"):
+        save_json(DATA / "register_localities.json", {"generated_at": latest["generated_at"], "localities": latest["register"].pop("_localities")})
+    elif latest.get("register"):
+        latest["register"].pop("_localities", None)
     latest["sources"]["traffic_lights"] = {**src_meta["traffic_lights"], "status": "ok", "fetched_at": CONFIG["traffic_lights"]["decision_date"], "note": "Maintained manually in config.json (decisions every second year)."}
 
     changes = compute_changes(latest, previous)
