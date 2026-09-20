@@ -63,8 +63,14 @@ def http(method: str, url: str, retries: int = 3, timeout: int = 90, **kw) -> re
             r = SESSION.request(method, url, timeout=timeout, **kw)
             if r.status_code in (429, 502, 503, 504):
                 raise requests.HTTPError(f"{r.status_code} from {url}", response=r)
+            if 400 <= r.status_code < 500:
+                r.raise_for_status()  # client errors are final: do not retry
             r.raise_for_status()
             return r
+        except requests.HTTPError as e:
+            if e.response is not None and 400 <= e.response.status_code < 500 and e.response.status_code != 429:
+                raise
+            last = e
         except requests.RequestException as e:  # noqa: PERF203
             last = e
             wait = 3 * (attempt + 1)
@@ -416,9 +422,14 @@ def fetch_ssb_annual_sales() -> dict:
         if not tid or not re.match(r"^\d{4}$", str(tid["values"][-1])):
             continue
         last_year = int(tid["values"][-1])
-        has_salmon = any("salmon" in t.lower() or "laks" in t.lower() for v in vars_.values() for t in v["valueTexts"])
-        log(f"  {table}: {meta.get('title')}; last year {last_year}; salmon={has_salmon}")
-        if has_salmon and last_year > best_year:
+        title_l = str(meta.get("title", "")).lower()
+        title_ok = any(w in title_l for w in ("sale", "sold", "slaughter", "salg", "slakt"))
+        contents = [t.lower() for t in vars_.get("ContentsCode", {}).get("valueTexts", [])]
+        qty_ok = any("tonn" in t or "quantity" in t for t in contents)
+        val_ok = any("nok" in t or "value" in t for t in contents)
+        species_ok = any(any(t.lower().strip() in ("salmon", "laks") or t.lower().startswith("salmon") for t in v["valueTexts"]) for c, v in vars_.items() if c not in ("Tid", "ContentsCode"))
+        log(f"  {table}: {meta.get('title')}; last year {last_year}; title_ok={title_ok} qty={qty_ok} value={val_ok} salmon={species_ok}")
+        if title_ok and qty_ok and val_ok and species_ok and last_year > best_year:
             best, best_meta, best_year = table, meta, last_year
     if not best:
         raise RuntimeError(f"no annual sales table with salmon found among {candidates}")

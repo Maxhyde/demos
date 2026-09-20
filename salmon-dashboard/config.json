@@ -80,14 +80,7 @@
     "annual_sales_table": "07326",
     "weeks_back": 320,
     "months_back": 26,
-    "annual_sales_fallbacks": [
-      "07327",
-      "13152",
-      "12841",
-      "07307",
-      "12447",
-      "08808"
-    ]
+    "annual_sales_fallbacks": []
   },
   "fiskeridir": {
     "biomass_pages": [

@@ -848,7 +848,8 @@ function renderAnnual(latest) {
     { label: 'Salmon sold, t (SSB)', num: true, get: r => r.s.tonnes == null ? '–' : fmt.num(r.s.tonnes) }, { label: 'Sales value, MNOK (SSB)', num: true, get: r => r.s.mnok == null ? '–' : fmt.num(r.s.mnok) }, { label: 'NOK/kg (SSB)', num: true, get: r => r.s.nok_kg == null ? '–' : fmt.num(r.s.nok_kg, 2) },
     { label: 'Harvest, t WFE (Fdir)', num: true, get: r => r.f.harvest_t == null ? '–' : fmt.num(r.f.harvest_t) }, { label: 'Fish dead, million (Fdir)', num: true, get: r => r.f.dead_mill == null ? '–' : fmt.num(r.f.dead_mill, 1) }, { label: 'Smolt released, million', num: true, get: r => r.f.smolt_mill == null ? '–' : fmt.num(r.f.smolt_mill, 1) }, { label: 'Feed, t', num: true, get: r => r.f.feed_t == null ? '–' : fmt.num(r.f.feed_t) }, { label: 'Escaped fish (biomass reports)', num: true, get: r => r.f.escaped_count == null ? '–' : fmt.num(r.f.escaped_count) },
   ], rows.reverse())));
-  box.append(h('figcaption', { text: 'SSB sales figures are first-hand sales of slaughtered salmon (preliminary for the latest year). Fiskeridirektoratet totals are sums of the monthly biomass reports; the current year is year-to-date.' }));
+  const ssbLast = ssb.length ? ssb[ssb.length - 1].year : null;
+  box.append(h('figcaption', { text: `SSB sales figures are first-hand sales of slaughtered salmon${ssbLast ? ` (series available through ${ssbLast}; SSB has not published a successor table in its API)` : ''}. Fiskeridirektoratet totals are sums of the monthly biomass reports; the current year is year-to-date.` }));
 }
 
 function renderSources(latest) {
