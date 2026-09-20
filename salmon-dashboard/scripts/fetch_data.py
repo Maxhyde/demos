@@ -394,14 +394,18 @@ def ssb_search(query: str) -> list[dict]:
 
 def fetch_ssb_annual_sales() -> dict:
     this_year = NOW.year
-    candidates = [CONFIG["ssb"]["annual_sales_table"]]
-    for hit in ssb_search("slaughtered fish"):
+    candidates = [CONFIG["ssb"]["annual_sales_table"]] + list(CONFIG["ssb"].get("annual_sales_fallbacks", []))
+    hits = []
+    for q in ("slaughtered fish", "aquaculture sales", "salmon sales", "fish for food"):
+        hits += ssb_search(q)
+    for hit in hits:
         tl = hit["title"].lower()
-        if "slaughter" in tl and ("sale" in tl or "sold" in tl) and hit["id"] not in candidates:
+        if ("sale" in tl or "sold" in tl or "salg" in tl) and ("fish" in tl or "salmon" in tl or "aquaculture" in tl) and hit["id"] not in candidates and re.match(r"^\d{4,6}$", hit["id"]):
             candidates.append(hit["id"])
+    log(f"  search hits: {[(h['id'], h['title'][:70]) for h in hits][:25]}")
     log(f"  candidate tables: {candidates}")
     best, best_meta, best_year = None, None, -1
-    for table in candidates[:6]:
+    for table in candidates[:12]:
         try:
             meta = ssb_metadata(table)
         except Exception as e:  # noqa: BLE001
@@ -1174,9 +1178,24 @@ def main() -> int:
     latest["sources"]["traffic_lights"] = {**src_meta["traffic_lights"], "status": "ok", "fetched_at": CONFIG["traffic_lights"]["decision_date"], "note": "Maintained manually in config.json (decisions every second year)."}
 
     changes = compute_changes(latest, previous)
+    compared_to = (previous or {}).get("generated_at")
+    prev_changes = load_json(DATA / "changes.json") or {}
+    if previous and prev_changes.get("items") is not None:
+        # A re-run inside the same ISO week (manual trigger, retry) must not wipe the weekly feed:
+        # keep the earlier items and add anything new.
+        try:
+            prev_week = dt.date.fromisoformat(str(previous.get("run_date"))).isocalendar()[:2]
+        except (TypeError, ValueError):
+            prev_week = None
+        if prev_week == NOW.date().isocalendar()[:2]:
+            seen = {(c.get("category"), c.get("title")) for c in changes}
+            carried = [c for c in prev_changes["items"] if (c.get("category"), c.get("title")) not in seen and c.get("category") != "system"]
+            changes = carried + changes
+            compared_to = prev_changes.get("compared_to") or compared_to
+            log(f"  same-week re-run: carried {len(carried)} earlier change items")
     latest["change_count"] = len(changes)
     save_json(DATA / "latest.json", latest)
-    save_json(DATA / "changes.json", {"generated_at": latest["generated_at"], "compared_to": (previous or {}).get("generated_at"), "items": changes})
+    save_json(DATA / "changes.json", {"generated_at": latest["generated_at"], "compared_to": compared_to, "items": changes})
     changelog = load_json(DATA / "changelog.json") or []
     changelog = [c for c in changelog if c.get("run_date") != latest["run_date"]]
     changelog.append({"run_date": latest["run_date"], "generated_at": latest["generated_at"], "items": changes,

@@ -1,8 +1,15 @@
 {
   "company": {
     "name": "Mowi",
-    "name_patterns": ["MOWI", "MARINE HARVEST"],
-    "org_numbers": ["964118191", "921668236", "916146337"],
+    "name_patterns": [
+      "MOWI",
+      "MARINE HARVEST"
+    ],
+    "org_numbers": [
+      "964118191",
+      "921668236",
+      "916146337"
+    ],
     "notes": "Register rows whose holder name matches a pattern (case-insensitive) are treated as Mowi. Org numbers: Mowi ASA 964118191, Mowi Seawater Norway AS 921668236, Mowi Markets Norway AS 916146337."
   },
   "production_areas": {
@@ -30,8 +37,19 @@
     "estimated_growth_tonnes_mtb": 8300,
     "estimated_reduction_tonnes_mtb": 5300,
     "colours": {
-      "1": "green", "2": "yellow", "3": "red", "4": "yellow", "5": "yellow", "6": "yellow",
-      "7": "yellow", "8": "yellow", "9": "yellow", "10": "yellow", "11": "yellow", "12": "green", "13": "green"
+      "1": "green",
+      "2": "yellow",
+      "3": "red",
+      "4": "yellow",
+      "5": "yellow",
+      "6": "yellow",
+      "7": "yellow",
+      "8": "yellow",
+      "9": "yellow",
+      "10": "yellow",
+      "11": "yellow",
+      "12": "green",
+      "13": "green"
     },
     "previous_decision": {
       "decision_date": "2024",
@@ -49,7 +67,10 @@
   },
   "ssb": {
     "weekly_table": "03024",
-    "trade_tables": ["08799", "08801"],
+    "trade_tables": [
+      "08799",
+      "08801"
+    ],
     "salmon_hs_codes": {
       "03021411": "Fresh/chilled farmed Atlantic salmon, whole",
       "03021419": "Fresh/chilled farmed Atlantic salmon, other",
@@ -58,7 +79,15 @@
     },
     "annual_sales_table": "07326",
     "weeks_back": 320,
-    "months_back": 26
+    "months_back": 26,
+    "annual_sales_fallbacks": [
+      "07327",
+      "13152",
+      "12841",
+      "07307",
+      "12447",
+      "08808"
+    ]
   },
   "fiskeridir": {
     "biomass_pages": [
@@ -68,7 +97,10 @@
     "biomass_years_back": 3,
     "gis_root": "https://gis.fiskeridir.no/server/rest/services",
     "register_layer": "https://gis.fiskeridir.no/server/rest/services/Yggdrasil/Akvakulturregisteret/MapServer/0",
-    "escapes_keywords": ["mming", "escape"]
+    "escapes_keywords": [
+      "mming",
+      "escape"
+    ]
   },
   "barentswatch": {
     "token_url": "https://id.barentswatch.no/connect/token",
