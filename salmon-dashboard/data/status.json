@@ -1,0 +1,15 @@
+{
+ "generated_at": "2026-09-20T14:35:17+00:00",
+ "critical_failed": [],
+ "statuses": {
+  "ssb_weekly": "ok",
+  "ssb_markets": "error",
+  "ssb_annual": "ok",
+  "fdir_biomass": "ok",
+  "fdir_register": "ok",
+  "fdir_escapes": "ok",
+  "barentswatch_lice": "not_configured",
+  "norges_bank_fx": "ok",
+  "traffic_lights": "ok"
+ }
+}
