@@ -1,105 +1,24 @@
 {
- "generated_at": "2026-09-20T15:05:11+00:00",
- "compared_to": "2026-09-20T14:59:35+00:00",
+ "generated_at": "2026-09-23T13:46:54+00:00",
+ "compared_to": "2026-09-20T15:05:11+00:00",
  "items": [
   {
    "category": "export",
-   "title": "New week 2026 W37: fresh salmon 70.18 NOK/kg",
-   "detail": "Price +0.7% w/w, -6.4% y/y. Volume 30,111 t (-2.2% w/w, +21.5% y/y).",
+   "title": "New week 2026 W38: fresh salmon 71.41 NOK/kg",
+   "detail": "Price +1.8% w/w, -7.7% y/y. Volume 31,087 t (+3.2% w/w, +26.9% y/y).",
    "severity": "info",
    "company": false,
-   "value": 70.18,
-   "delta_pct": 0.7
-  },
-  {
-   "category": "markets",
-   "title": "New month 2026M08: salmon exports 129,338 t, 9,460 MNOK",
-   "detail": "Top markets: Poland 26,464 t (+16% y/y), Netherlands 13,591 t (+29% y/y), China 10,906 t (+24% y/y), France 8,278 t (+8% y/y), Spain 7,787 t (+10% y/y)",
-   "severity": "info",
-   "company": false,
-   "value": null,
-   "delta_pct": null
-  },
-  {
-   "category": "biomass",
-   "title": "New biomass month 2026-08: 895,944 t salmon standing biomass (+2.8% y/y)",
-   "detail": "Harvest 186,683 t WFE (+5.0% y/y); 3.7 million fish dead (0.81% of stock); feed 245,339 t; smolt released 33.4 million.",
-   "severity": "notable",
-   "company": false,
-   "value": null,
-   "delta_pct": null
-  },
-  {
-   "category": "company",
-   "title": "Mowi: 158 sea food-fish localities in the register (122 held by Mowi alone)",
-   "detail": "Locality capacity 700,989 t; entities: MOWI SEAWATER NORWAY AS, MOWI ASA",
-   "severity": "info",
-   "company": true,
-   "value": null,
-   "delta_pct": null
-  },
-  {
-   "category": "escapes",
-   "title": "Recent escape report 2026-07-23: MORTENSNES (SALMAR OPPDRETT AS)",
-   "detail": "Laks; estimated 1-10 fish; Del 1.",
-   "severity": "notable",
-   "company": false,
-   "value": null,
-   "delta_pct": null
-  },
-  {
-   "category": "escapes",
-   "title": "Recent escape report 2026-07-19: HAMNEFJORD (CERMAQ NORWAY SALMON AS)",
-   "detail": "Laks; estimated 1-10 fish; Del 1. Under bytte av notpose ble ikke den nye posen inspisert før gammel pose ble fjernet. Det er standard prosedyre at posen skal bekreftes uskadd før gammel not fjernes og fisken dermed tilføres ny pose.",
-   "severity": "notable",
-   "company": false,
-   "value": null,
-   "delta_pct": null
-  },
-  {
-   "category": "escapes",
-   "title": "Recent escape report 2026-07-14: Stasøya (EMILSEN HAVBRUK AS)",
-   "detail": "Laks; estimated 1-10 fish; Del 1. Heving av not",
-   "severity": "notable",
-   "company": false,
-   "value": null,
-   "delta_pct": null
-  },
-  {
-   "category": "escapes",
-   "title": "Recent escape report 2026-07-12: DJUPEVIKA (SJØTROLL HAVBRUK SJØ AS)",
-   "detail": "Regnbueørret; estimated 1-10 fish; Del 2. Det fåregår utfiske av berggylte med teiner på lokalitet, og vi mistenker at denne fisken kan ha kommet inn i teine og har havnet på sjøen i forbindelse med tømming av teiner.\nAlle merder inspiseres i forbindelse med behandling som skal startes, ingen notskader rapportert.",
-   "severity": "notable",
-   "company": false,
-   "value": null,
-   "delta_pct": null
-  },
-  {
-   "category": "escapes",
-   "title": "Recent escape report 2026-07-05: FLATØYFJORDEN (MOWI SEAWATER NORWAY AS)",
-   "detail": "Laks; estimated 1-10 fish; Del 1 oppdatert. Foreløpig ikke helt klart, men det kan virke som at det har skjedd ifm. at not har hengt på nokroker på ringen.",
-   "severity": "alert",
-   "company": true,
-   "value": null,
-   "delta_pct": null
+   "value": 71.41,
+   "delta_pct": 1.8
   },
   {
    "category": "fx",
-   "title": "EUR/NOK 10.809 (2026-09-18)",
-   "detail": "Weekly average 10.795, +0.4% w/w",
+   "title": "EUR/NOK 10.801 (2026-09-22)",
+   "detail": "Weekly average 10.807, +0.1% w/w",
    "severity": "info",
    "company": false,
-   "value": 10.8095,
-   "delta_pct": 0.4
-  },
-  {
-   "category": "regulation",
-   "title": "Traffic light decision 2026-06-19: green PO1, PO12, PO13; red PO3",
-   "detail": "6% growth offered in green areas, -6% in red. Next decision expected 2028.",
-   "severity": "notable",
-   "company": false,
-   "value": null,
-   "delta_pct": null
+   "value": 10.801,
+   "delta_pct": 0.1
   }
  ]
 }
