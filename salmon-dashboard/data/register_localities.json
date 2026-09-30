@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-23T13:46:54+00:00",
+ "generated_at": "2026-09-30T15:08:02+00:00",
  "localities": [
   {
    "n": 10029,
@@ -1442,8 +1442,8 @@
    "n": 10974,
    "name": "STORE BUKKØY N",
    "pa": "8",
-   "lat": 66.40072,
-   "lon": 12.4117,
+   "lat": 66.40075,
+   "lon": 12.4124,
    "cap": 3120.0,
    "mowi": false,
    "sole": false,
@@ -3334,7 +3334,7 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
-    "GRIEG SEAFOOD FARMING AS",
+    "NORDSJØ FJORDBRUK AS",
     "RYFISH AS"
    ]
   },
@@ -6798,7 +6798,6 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
-    "LERØY AURORA AS",
     "LERØY AURORA SJØ AS"
    ]
   },
@@ -6943,6 +6942,7 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
+    "LERØY AURORA AS",
     "LERØY AURORA SJØ AS",
     "LERØY MIDT AS",
     "TROMS FYLKESKOMMUNE"
@@ -10165,7 +10165,6 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
-    "LERØY AURORA AS",
     "LERØY AURORA SJØ AS",
     "TROMS FYLKESKOMMUNE"
    ]
@@ -10893,8 +10892,8 @@
    "n": 33097,
    "name": "SKJERVØY V",
    "pa": "11",
-   "lat": 70.04375,
-   "lon": 20.94965,
+   "lat": 70.04383,
+   "lon": 20.9501,
    "cap": 3600.0,
    "mowi": false,
    "sole": false,
@@ -11327,10 +11326,10 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
+    "EIDE FJORDBRUK AS",
     "LANGØYLAKS AS",
     "QUATRO LAKS AS",
-    "TELAVÅG FISKEOPPDRETT AS",
-    "TOMBRE FISKEANLEGG AS"
+    "TELAVÅG FISKEOPPDRETT AS"
    ]
   },
   {
@@ -13451,7 +13450,7 @@
    "pa": "8",
    "lat": 67.17497,
    "lon": 14.2901,
-   "cap": 780.0,
+   "cap": 2576.0,
    "mowi": false,
    "sole": false,
    "status": "AKTIV",
@@ -13691,6 +13690,7 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
+    "LERØY AURORA AS",
     "LERØY AURORA SJØ AS",
     "TROMS FYLKESKOMMUNE"
    ]
@@ -13870,8 +13870,8 @@
    "n": 45140,
    "name": "NORDSKAFTET",
    "pa": "8",
-   "lat": 66.62968,
-   "lon": 13.10985,
+   "lat": 66.62948,
+   "lon": 13.11007,
    "cap": 3120.0,
    "mowi": false,
    "sole": false,
