@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-30T15:08:02+00:00",
+ "generated_at": "2026-10-07T15:41:39+00:00",
  "localities": [
   {
    "n": 10029,
@@ -3920,8 +3920,8 @@
    "n": 12237,
    "name": "BRUDEVIKA",
    "pa": "5",
-   "lat": 62.11657,
-   "lon": 5.42072,
+   "lat": 62.11595,
+   "lon": 5.4173,
    "cap": 5460.0,
    "mowi": true,
    "sole": true,
@@ -12601,7 +12601,7 @@
    "name": "SKJORTNESET II",
    "pa": "5",
    "lat": 62.37937,
-   "lon": 6.88943,
+   "lon": 6.88967,
    "cap": 3120.0,
    "mowi": false,
    "sole": false,
@@ -13419,8 +13419,8 @@
    "n": 45029,
    "name": "Ramnøya N",
    "pa": "8",
-   "lat": 66.24348,
-   "lon": 12.29418,
+   "lat": 66.2433,
+   "lon": 12.29397,
    "cap": 4680.0,
    "mowi": true,
    "sole": true,
