@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-07T15:41:39+00:00",
+ "generated_at": "2026-10-14T13:56:00+00:00",
  "localities": [
   {
    "n": 10029,
@@ -12748,20 +12748,6 @@
    "holders": [
     "ENGESUND FISKEOPPDRETT AS",
     "ERKO SEAFOOD AS"
-   ]
-  },
-  {
-   "n": 38677,
-   "name": "KOLLSVIKA",
-   "pa": "7",
-   "lat": 65.20887,
-   "lon": 12.7518,
-   "cap": 1560.0,
-   "mowi": false,
-   "sole": false,
-   "status": "AKTIV",
-   "holders": [
-    "SALMAR OPPDRETT AS"
    ]
   },
   {
