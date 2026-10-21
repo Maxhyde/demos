@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-14T13:56:00+00:00",
+ "generated_at": "2026-10-21T14:01:30+00:00",
  "localities": [
   {
    "n": 10029,
@@ -3029,6 +3029,7 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
+    "FLOKENES FISKEFARM AS",
     "STEINVIK FISKEFARM AS"
    ]
   },
@@ -10385,10 +10386,10 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
+    "AKVAFUTURE AS",
     "EGIL KRISTOFFERSEN & SØNNER AS",
     "HELGELAND LAKS AS",
-    "KVARØY FISKEOPPDRETT A/S",
-    "LOVUNDLAKS SJØ AS"
+    "KVARØY FISKEOPPDRETT A/S"
    ]
   },
   {
@@ -13235,10 +13236,10 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
+    "AKVAFUTURE AS",
     "KOBBVÅGLAKS AS",
     "LOVUNDLAKS SJØ AS",
-    "MOWI SEAWATER NORWAY AS",
-    "ORGANIC SEAFARM AS"
+    "MOWI SEAWATER NORWAY AS"
    ]
   },
   {
@@ -14210,10 +14211,10 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
+    "AKVAFUTURE AS",
     "EGIL KRISTOFFERSEN & SØNNER AS",
     "KOBBVÅGLAKS AS",
-    "LOVUNDLAKS SJØ AS",
-    "ORGANIC SEAFARM AS"
+    "LOVUNDLAKS SJØ AS"
    ]
   },
   {
@@ -14442,6 +14443,20 @@
    "status": "AKTIV",
    "holders": [
     "HOLMØY HAVBRUK AS"
+   ]
+  },
+  {
+   "n": 45311,
+   "name": "BREIVIK",
+   "pa": "2",
+   "lat": 59.22632,
+   "lon": 6.04682,
+   "cap": 3600.0,
+   "mowi": true,
+   "sole": true,
+   "status": "AKTIV",
+   "holders": [
+    "MOWI SEAWATER NORWAY AS"
    ]
   }
  ]
