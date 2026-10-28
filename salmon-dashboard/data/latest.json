@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-10-21T14:01:30+00:00",
- "run_date": "2026-10-21",
+ "generated_at": "2026-10-28T15:19:45+00:00",
+ "run_date": "2026-10-28",
  "company": "Mowi",
  "production_areas": {
   "1": "Svenskegrensen til Jæren",
@@ -63,8 +63,8 @@
    "table_url": "https://www.ssb.no/en/statbank/table/03024",
    "frequency": "Weekly, Wednesdays 08:00 (covers the previous week)",
    "status": "ok",
-   "fetched_at": "2026-10-21T14:01:30+00:00",
-   "seconds": 1.5,
+   "fetched_at": "2026-10-28T15:19:45+00:00",
+   "seconds": 1.6,
    "critical": true
   },
   "ssb_markets": {
@@ -73,8 +73,8 @@
    "url": "https://www.ssb.no/en/utenriksokonomi/utenrikshandel/statistikk/utenrikshandel-med-varer",
    "frequency": "Monthly, around the 15th (previous month)",
    "status": "ok",
-   "fetched_at": "2026-10-21T14:01:30+00:00",
-   "seconds": 5.1,
+   "fetched_at": "2026-10-28T15:19:45+00:00",
+   "seconds": 5.4,
    "critical": false
   },
   "ssb_annual": {
@@ -83,8 +83,8 @@
    "url": "https://www.ssb.no/en/jord-skog-jakt-og-fiskeri/fiske-og-fangst/statistikk/akvakultur",
    "frequency": "Annual (preliminary in June, final in October)",
    "status": "ok",
-   "fetched_at": "2026-10-21T14:01:30+00:00",
-   "seconds": 3.5,
+   "fetched_at": "2026-10-28T15:19:45+00:00",
+   "seconds": 2.7,
    "critical": false
   },
   "fdir_biomass": {
@@ -93,8 +93,8 @@
    "url": "https://www.fiskeridir.no/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-produksjonsomrade",
    "frequency": "Monthly, around the 20th (previous month)",
    "status": "ok",
-   "fetched_at": "2026-10-21T14:01:30+00:00",
-   "seconds": 3.5,
+   "fetched_at": "2026-10-28T15:19:45+00:00",
+   "seconds": 3.9,
    "critical": false
   },
   "fdir_register": {
@@ -103,8 +103,8 @@
    "url": "https://www.fiskeridir.no/Akvakultur/Registre-og-skjema/Akvakulturregisteret",
    "frequency": "Continuously updated",
    "status": "ok",
-   "fetched_at": "2026-10-21T14:01:30+00:00",
-   "seconds": 1.8,
+   "fetched_at": "2026-10-28T15:19:45+00:00",
+   "seconds": 2.0,
    "critical": false
   },
   "fdir_escapes": {
@@ -113,8 +113,8 @@
    "url": "https://www.fiskeridir.no/Akvakultur/Tall-og-analyse/Roemmingsstatistikk",
    "frequency": "Continuously updated as incidents are reported",
    "status": "ok",
-   "fetched_at": "2026-10-21T14:01:30+00:00",
-   "seconds": 0.8,
+   "fetched_at": "2026-10-28T15:19:45+00:00",
+   "seconds": 1.0,
    "critical": false
   },
   "barentswatch_lice": {
@@ -132,8 +132,8 @@
    "url": "https://www.norges-bank.no/en/topics/Statistics/exchange_rates/",
    "frequency": "Daily (business days)",
    "status": "ok",
-   "fetched_at": "2026-10-21T14:01:30+00:00",
-   "seconds": 0.9,
+   "fetched_at": "2026-10-28T15:19:45+00:00",
+   "seconds": 17.9,
    "critical": false
   },
   "traffic_lights": {
@@ -159,21 +159,8 @@
    "tonnes": "tonnes (product weight)",
    "nok_kg": "NOK per kg, average export price"
   },
-  "latest_week": "2026U42",
+  "latest_week": "2026U43",
   "series": [
-   {
-    "week": "2020U36",
-    "fresh_tonnes": 21788,
-    "fresh_nok_kg": 48.9,
-    "frozen_tonnes": 235,
-    "frozen_nok_kg": 53.19,
-    "year": 2020,
-    "week_no": 36,
-    "week_start": "2020-08-31",
-    "fresh_value_mnok": 1065.4,
-    "fresh_nok_kg_yoy_pct": null,
-    "fresh_tonnes_yoy_pct": null
-   },
    {
     "week": "2020U37",
     "fresh_tonnes": 21188,
@@ -860,8 +847,8 @@
     "week_no": 36,
     "week_start": "2021-09-06",
     "fresh_value_mnok": 1381.9,
-    "fresh_nok_kg_yoy_pct": 7.0,
-    "fresh_tonnes_yoy_pct": 21.3
+    "fresh_nok_kg_yoy_pct": null,
+    "fresh_tonnes_yoy_pct": null
    },
    {
     "week": "2021U37",
@@ -4320,6 +4307,19 @@
     "fresh_value_mnok": 2050.4,
     "fresh_nok_kg_yoy_pct": 0.4,
     "fresh_tonnes_yoy_pct": 4.7
+   },
+   {
+    "week": "2026U43",
+    "fresh_tonnes": 28518,
+    "fresh_nok_kg": 76.04,
+    "frozen_tonnes": 826,
+    "frozen_nok_kg": 76.14,
+    "year": 2026,
+    "week_no": 43,
+    "week_start": "2026-10-19",
+    "fresh_value_mnok": 2168.5,
+    "fresh_nok_kg_yoy_pct": -2.8,
+    "fresh_tonnes_yoy_pct": 10.2
    }
   ]
  },
@@ -15332,7 +15332,7 @@
    "til_produksjonsform",
    "shape"
   ],
-  "row_count": 1783,
+  "row_count": 1784,
   "industry_sea_foodfish": {
    "localities": 981,
    "active": 981,
@@ -15765,16 +15765,16 @@
      ],
      "company_sole": false,
      "licences": [
-      "VA-FS-0011",
-      "R-V-0018",
-      "R-V-0016",
-      "AG-F-0003",
-      "VA-F-0023",
-      "R-HM-0005",
-      "R-HM-0007",
       "R-V-0017",
-      "VA-FS-0014",
-      "VA-FS-0010"
+      "R-HM-0007",
+      "R-HM-0005",
+      "R-V-0018",
+      "VA-F-0023",
+      "AG-F-0003",
+      "VA-FS-0011",
+      "R-V-0016",
+      "VA-FS-0010",
+      "VA-FS-0014"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11857"
     },
@@ -15802,11 +15802,11 @@
      ],
      "company_sole": true,
      "licences": [
-      "R-V-0018",
-      "R-V-0016",
-      "R-HM-0005",
+      "R-V-0017",
       "R-HM-0007",
-      "R-V-0017"
+      "R-HM-0005",
+      "R-V-0018",
+      "R-V-0016"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11864"
     },
@@ -15834,15 +15834,15 @@
      ],
      "company_sole": true,
      "licences": [
-      "VA-LD-0004",
+      "R-V-0017",
+      "R-HM-0007",
       "VA-LD-0008",
+      "R-HM-0005",
       "R-V-0018",
       "VA-F-0017",
       "VA-F-0018",
+      "VA-LD-0004",
       "R-V-0016",
-      "R-HM-0005",
-      "R-HM-0007",
-      "R-V-0017",
       "VA-FS-0010"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11854"
@@ -15871,16 +15871,16 @@
      ],
      "company_sole": true,
      "licences": [
-      "VA-F-0010",
+      "R-V-0017",
+      "AG-F-0006",
+      "R-HM-0007",
+      "R-HM-0005",
       "R-V-0018",
-      "R-V-0016",
+      "VA-F-0015",
       "VA-F-0013",
       "VA-F-0014",
-      "VA-F-0015",
-      "R-HM-0005",
-      "R-HM-0007",
-      "R-V-0017",
-      "AG-F-0006"
+      "R-V-0016",
+      "VA-F-0010"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11856"
     },
@@ -15909,17 +15909,17 @@
      ],
      "company_sole": false,
      "licences": [
-      "VA-F-0004",
-      "VA-F-0005",
-      "AG-F-0005",
-      "R-V-0018",
-      "VA-LD-0010",
-      "R-V-0016",
-      "AG-F-0003",
-      "VA-F-0003",
-      "R-HM-0005",
+      "R-V-0017",
       "R-HM-0007",
-      "R-V-0017"
+      "R-HM-0005",
+      "R-V-0018",
+      "AG-F-0005",
+      "VA-F-0003",
+      "AG-F-0003",
+      "VA-F-0005",
+      "VA-F-0004",
+      "R-V-0016",
+      "VA-LD-0010"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11861"
     },
@@ -15948,13 +15948,13 @@
      ],
      "company_sole": false,
      "licences": [
-      "R-V-0004",
-      "R-F-0003",
-      "R-HM-0003",
-      "R-HM-0008",
       "R-HM-0002",
-      "R-F-0030",
-      "R-F-0001"
+      "R-HM-0003",
+      "R-F-0003",
+      "R-F-0001",
+      "R-V-0004",
+      "R-HM-0008",
+      "R-F-0030"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/18235"
     },
@@ -15982,11 +15982,11 @@
      ],
      "company_sole": true,
      "licences": [
-      "R-V-0004",
-      "R-F-0003",
+      "R-HM-0002",
       "R-HM-0003",
+      "R-F-0003",
       "R-HM-0008",
-      "R-HM-0002"
+      "R-V-0004"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/45311"
     },
@@ -16015,12 +16015,12 @@
      ],
      "company_sole": false,
      "licences": [
-      "R-V-0011",
-      "R-F-0001",
       "R-HM-0001",
+      "R-F-0003",
       "R-F-0005",
-      "R-F-0030",
-      "R-F-0003"
+      "R-F-0001",
+      "R-V-0011",
+      "R-F-0030"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10110"
     },
@@ -16048,11 +16048,11 @@
      ],
      "company_sole": true,
      "licences": [
-      "R-F-0003",
+      "R-HM-0002",
       "R-HM-0003",
-      "R-HM-0008",
       "R-TV-0002",
-      "R-HM-0002"
+      "R-F-0003",
+      "R-HM-0008"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11893"
     },
@@ -16081,12 +16081,12 @@
      ],
      "company_sole": false,
      "licences": [
-      "R-V-0004",
-      "R-TV-0004",
       "R-TV-0002",
+      "R-TV-0004",
+      "R-F-0001",
       "R-V-0011",
-      "R-F-0030",
-      "R-F-0001"
+      "R-V-0004",
+      "R-F-0030"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/18639"
     },
@@ -16115,19 +16115,19 @@
      ],
      "company_sole": false,
      "licences": [
-      "R-V-0004",
-      "R-F-0003",
-      "R-HM-0003",
-      "R-TV-0004",
-      "R-F-0005",
-      "R-HM-0008",
-      "R-TV-0002",
+      "R-HM-0001",
       "R-ST-0001",
       "R-HM-0002",
+      "R-HM-0003",
       "R-V-0011",
-      "R-HM-0001",
-      "R-F-0030",
-      "R-F-0001"
+      "R-TV-0002",
+      "R-F-0003",
+      "R-F-0005",
+      "R-F-0001",
+      "R-TV-0004",
+      "R-V-0004",
+      "R-HM-0008",
+      "R-F-0030"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11920"
     },
@@ -16156,10 +16156,10 @@
      ],
      "company_sole": false,
      "licences": [
+      "R-ST-0001",
       "R-V-0004",
-      "R-F-0030",
       "R-F-0001",
-      "R-ST-0001"
+      "R-F-0030"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/26955"
     },
@@ -16188,18 +16188,18 @@
      ],
      "company_sole": false,
      "licences": [
-      "R-V-0004",
-      "R-F-0003",
-      "R-HM-0003",
-      "R-TV-0004",
-      "R-F-0005",
-      "R-HM-0008",
-      "R-TV-0002",
+      "R-HM-0001",
       "R-ST-0001",
       "R-HM-0002",
-      "R-HM-0001",
-      "R-F-0030",
-      "R-F-0001"
+      "R-HM-0003",
+      "R-TV-0002",
+      "R-F-0003",
+      "R-F-0005",
+      "R-F-0001",
+      "R-TV-0004",
+      "R-V-0004",
+      "R-HM-0008",
+      "R-F-0030"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11913"
     },
@@ -16227,10 +16227,10 @@
      ],
      "company_sole": true,
      "licences": [
-      "R-HM-0001",
-      "R-F-0003",
       "R-ST-0001",
-      "R-HM-0002"
+      "R-HM-0002",
+      "R-HM-0001",
+      "R-F-0003"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10113"
     },
@@ -16259,19 +16259,19 @@
      ],
      "company_sole": false,
      "licences": [
-      "R-V-0004",
-      "R-F-0003",
-      "R-HM-0003",
-      "R-TV-0004",
-      "R-F-0005",
-      "R-HM-0008",
-      "R-TV-0002",
+      "R-HM-0001",
       "R-ST-0001",
       "R-HM-0002",
+      "R-HM-0003",
       "R-V-0011",
-      "R-HM-0001",
-      "R-F-0030",
-      "R-F-0001"
+      "R-TV-0002",
+      "R-F-0003",
+      "R-F-0005",
+      "R-F-0001",
+      "R-TV-0004",
+      "R-V-0004",
+      "R-HM-0008",
+      "R-F-0030"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11928"
     },
@@ -16300,14 +16300,14 @@
      ],
      "company_sole": false,
      "licences": [
-      "R-V-0004",
+      "R-HM-0001",
+      "R-HM-0002",
       "R-HM-0003",
       "R-TV-0002",
-      "R-HM-0002",
+      "R-F-0001",
       "R-V-0011",
-      "R-HM-0001",
-      "R-F-0030",
-      "R-F-0001"
+      "R-V-0004",
+      "R-F-0030"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12966"
     },
@@ -16335,13 +16335,13 @@
      ],
      "company_sole": true,
      "licences": [
-      "R-V-0004",
+      "R-ST-0001",
+      "R-HM-0001",
+      "R-HM-0002",
+      "R-TV-0002",
       "R-F-0003",
       "R-TV-0004",
-      "R-TV-0002",
-      "R-ST-0001",
-      "R-HM-0002",
-      "R-HM-0001"
+      "R-V-0004"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13629"
     },
@@ -16370,12 +16370,12 @@
      ],
      "company_sole": false,
      "licences": [
-      "R-TV-0004",
-      "R-TV-0002",
-      "R-HM-0008",
       "R-HM-0001",
-      "R-F-0030",
-      "R-F-0001"
+      "R-TV-0002",
+      "R-TV-0004",
+      "R-F-0001",
+      "R-HM-0008",
+      "R-F-0030"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11964"
     },
@@ -16404,19 +16404,19 @@
      ],
      "company_sole": false,
      "licences": [
-      "R-V-0004",
-      "R-F-0003",
-      "R-HM-0003",
-      "R-TV-0004",
-      "R-F-0005",
-      "R-HM-0008",
-      "R-TV-0002",
+      "R-HM-0001",
       "R-ST-0001",
       "R-HM-0002",
+      "R-HM-0003",
       "R-V-0011",
-      "R-HM-0001",
-      "R-F-0030",
-      "R-F-0001"
+      "R-TV-0002",
+      "R-F-0003",
+      "R-F-0005",
+      "R-F-0001",
+      "R-TV-0004",
+      "R-V-0004",
+      "R-HM-0008",
+      "R-F-0030"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/40037"
     },
@@ -16444,9 +16444,9 @@
      ],
      "company_sole": true,
      "licences": [
+      "R-HM-0002",
       "R-HM-0003",
-      "R-HM-0008",
-      "R-HM-0002"
+      "R-HM-0008"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13226"
     },
@@ -16474,17 +16474,17 @@
      ],
      "company_sole": true,
      "licences": [
-      "H-F-0009",
-      "H-F-0007",
-      "H-F-0010",
-      "H-F-0008",
-      "H-J-0004",
       "H-E-0005",
-      "H-F-0011",
-      "H-K-0037",
-      "H-K-0028",
+      "H-J-0004",
+      "H-F-0009",
       "H-J-0005",
-      "H-K-0039"
+      "H-K-0039",
+      "H-F-0011",
+      "H-F-0007",
+      "H-K-0037",
+      "H-F-0008",
+      "H-F-0010",
+      "H-K-0028"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11740"
     },
@@ -16512,17 +16512,17 @@
      ],
      "company_sole": true,
      "licences": [
-      "H-F-0009",
-      "H-F-0007",
-      "H-F-0010",
-      "H-F-0008",
-      "H-J-0004",
       "H-E-0005",
-      "H-F-0011",
-      "H-K-0037",
-      "H-K-0028",
+      "H-J-0004",
+      "H-F-0009",
       "H-J-0005",
-      "H-K-0039"
+      "H-K-0039",
+      "H-F-0011",
+      "H-F-0007",
+      "H-K-0037",
+      "H-F-0008",
+      "H-F-0010",
+      "H-K-0028"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/19939"
     },
@@ -16550,17 +16550,17 @@
      ],
      "company_sole": true,
      "licences": [
-      "H-F-0009",
-      "H-F-0007",
-      "H-F-0010",
-      "H-F-0008",
-      "H-J-0004",
       "H-E-0005",
-      "H-F-0011",
-      "H-K-0037",
-      "H-K-0028",
+      "H-J-0004",
+      "H-F-0009",
       "H-J-0005",
-      "H-K-0039"
+      "H-K-0039",
+      "H-F-0011",
+      "H-F-0007",
+      "H-K-0037",
+      "H-F-0008",
+      "H-F-0010",
+      "H-K-0028"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/31697"
     },
@@ -16588,17 +16588,17 @@
      ],
      "company_sole": true,
      "licences": [
-      "H-F-0009",
-      "H-F-0007",
-      "H-F-0010",
-      "H-F-0008",
-      "H-J-0004",
       "H-E-0005",
-      "H-F-0011",
-      "H-K-0037",
-      "H-K-0028",
+      "H-J-0004",
+      "H-F-0009",
       "H-J-0005",
-      "H-K-0039"
+      "H-K-0039",
+      "H-F-0011",
+      "H-F-0007",
+      "H-K-0037",
+      "H-F-0008",
+      "H-F-0010",
+      "H-K-0028"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11640"
     },
@@ -16626,17 +16626,17 @@
      ],
      "company_sole": true,
      "licences": [
-      "H-F-0009",
-      "H-E-0029",
-      "H-F-0007",
-      "H-F-0010",
-      "H-F-0008",
       "H-J-0004",
-      "H-F-0011",
-      "H-K-0037",
-      "H-K-0028",
       "H-J-0005",
-      "H-K-0039"
+      "H-F-0009",
+      "H-K-0039",
+      "H-F-0011",
+      "H-F-0007",
+      "H-K-0037",
+      "H-E-0029",
+      "H-F-0008",
+      "H-F-0010",
+      "H-K-0028"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/28096"
     },
@@ -16664,17 +16664,17 @@
      ],
      "company_sole": true,
      "licences": [
-      "H-F-0009",
-      "H-F-0007",
-      "H-F-0010",
-      "H-F-0008",
-      "H-J-0004",
       "H-E-0005",
-      "H-F-0011",
-      "H-K-0037",
-      "H-K-0028",
+      "H-J-0004",
+      "H-F-0009",
       "H-J-0005",
-      "H-K-0039"
+      "H-K-0039",
+      "H-F-0011",
+      "H-F-0007",
+      "H-K-0037",
+      "H-F-0008",
+      "H-F-0010",
+      "H-K-0028"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12074"
     },
@@ -16702,17 +16702,17 @@
      ],
      "company_sole": true,
      "licences": [
-      "H-F-0009",
-      "H-F-0007",
-      "H-F-0010",
-      "H-F-0008",
-      "H-J-0004",
       "H-E-0005",
-      "H-F-0011",
-      "H-K-0037",
-      "H-K-0028",
+      "H-J-0004",
+      "H-F-0009",
       "H-J-0005",
-      "H-K-0039"
+      "H-K-0039",
+      "H-F-0011",
+      "H-F-0007",
+      "H-K-0037",
+      "H-F-0008",
+      "H-F-0010",
+      "H-K-0028"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13196"
     },
@@ -16740,17 +16740,17 @@
      ],
      "company_sole": true,
      "licences": [
-      "H-F-0009",
-      "H-F-0007",
-      "H-F-0010",
-      "H-F-0008",
-      "H-J-0004",
       "H-E-0005",
-      "H-F-0011",
-      "H-K-0037",
-      "H-K-0028",
+      "H-J-0004",
+      "H-F-0009",
       "H-J-0005",
-      "H-K-0039"
+      "H-K-0039",
+      "H-F-0011",
+      "H-F-0007",
+      "H-K-0037",
+      "H-F-0008",
+      "H-F-0010",
+      "H-K-0028"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/45141"
     },
@@ -16778,17 +16778,17 @@
      ],
      "company_sole": true,
      "licences": [
-      "H-F-0009",
-      "H-F-0007",
-      "H-F-0010",
-      "H-F-0008",
-      "H-J-0004",
       "H-E-0005",
-      "H-F-0011",
-      "H-K-0037",
-      "H-K-0028",
+      "H-J-0004",
+      "H-F-0009",
       "H-J-0005",
-      "H-K-0039"
+      "H-K-0039",
+      "H-F-0011",
+      "H-F-0007",
+      "H-K-0037",
+      "H-F-0008",
+      "H-F-0010",
+      "H-K-0028"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/21755"
     },
@@ -16816,17 +16816,17 @@
      ],
      "company_sole": true,
      "licences": [
-      "H-F-0009",
-      "H-F-0007",
-      "H-F-0010",
-      "H-F-0008",
-      "H-J-0004",
       "H-E-0005",
-      "H-F-0011",
-      "H-K-0037",
-      "H-K-0028",
+      "H-J-0004",
+      "H-F-0009",
       "H-J-0005",
-      "H-K-0039"
+      "H-K-0039",
+      "H-F-0011",
+      "H-F-0007",
+      "H-K-0037",
+      "H-F-0008",
+      "H-F-0010",
+      "H-K-0028"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10332"
     },
@@ -16854,17 +16854,17 @@
      ],
      "company_sole": true,
      "licences": [
-      "H-F-0009",
-      "H-F-0007",
-      "H-F-0010",
-      "H-F-0008",
-      "H-J-0004",
       "H-E-0005",
-      "H-F-0011",
-      "H-K-0037",
-      "H-K-0028",
+      "H-J-0004",
+      "H-F-0009",
       "H-J-0005",
-      "H-K-0039"
+      "H-K-0039",
+      "H-F-0011",
+      "H-F-0007",
+      "H-K-0037",
+      "H-F-0008",
+      "H-F-0010",
+      "H-K-0028"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/24135"
     },
@@ -16892,17 +16892,17 @@
      ],
      "company_sole": true,
      "licences": [
-      "H-F-0009",
-      "H-F-0007",
-      "H-F-0010",
-      "H-F-0008",
-      "H-J-0004",
       "H-E-0005",
-      "H-F-0011",
-      "H-K-0037",
-      "H-K-0028",
+      "H-J-0004",
+      "H-F-0009",
       "H-J-0005",
-      "H-K-0039"
+      "H-K-0039",
+      "H-F-0011",
+      "H-F-0007",
+      "H-K-0037",
+      "H-F-0008",
+      "H-F-0010",
+      "H-K-0028"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10331"
     },
@@ -16931,12 +16931,12 @@
      "company_sole": true,
      "licences": [
       "SF-H-0004",
-      "SF-G-0004",
-      "SF-H-0010",
-      "SF-H-0017",
+      "SF-G-0007",
       "SF-H-0020",
+      "SF-G-0004",
+      "SF-H-0017",
       "SF-G-0001",
-      "SF-G-0007"
+      "SF-H-0010"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/25055"
     },
@@ -16964,9 +16964,9 @@
      ],
      "company_sole": true,
      "licences": [
-      "SF-S-0023",
-      "SF-F-0005",
       "SF-S-0022",
+      "SF-F-0005",
+      "SF-S-0023",
       "SF-B-0009"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13205"
@@ -16996,16 +16996,16 @@
      ],
      "company_sole": false,
      "licences": [
-      "SF-S-0023",
-      "SF-V-0007",
-      "SF-S-0031",
-      "SF-G-0012",
-      "SF-F-0005",
-      "SF-S-0022",
-      "SF-V-0009",
       "SF-B-0009",
+      "SF-G-0012",
+      "SF-S-0022",
+      "SF-V-0004",
+      "SF-S-0023",
       "SF-V-0005",
-      "SF-V-0004"
+      "SF-V-0009",
+      "SF-F-0005",
+      "SF-S-0031",
+      "SF-V-0007"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13841"
     },
@@ -17033,9 +17033,9 @@
      ],
      "company_sole": true,
      "licences": [
+      "SF-B-0010",
       "SF-B-0002",
       "SF-B-0014",
-      "SF-B-0010",
       "SF-B-0041"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13241"
@@ -17064,13 +17064,13 @@
      ],
      "company_sole": true,
      "licences": [
-      "SF-S-0023",
       "SF-SU-0013",
-      "SF-SU-0027",
-      "SF-F-0005",
-      "SF-S-0022",
       "SF-B-0009",
-      "SF-SU-0007"
+      "SF-S-0022",
+      "SF-SU-0007",
+      "SF-SU-0027",
+      "SF-S-0023",
+      "SF-F-0005"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11833"
     },
@@ -17099,12 +17099,12 @@
      "company_sole": true,
      "licences": [
       "SF-H-0004",
-      "SF-G-0004",
-      "SF-H-0010",
-      "SF-H-0017",
+      "SF-G-0007",
       "SF-H-0020",
+      "SF-G-0004",
+      "SF-H-0017",
       "SF-G-0001",
-      "SF-G-0007"
+      "SF-H-0010"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/39917"
     },
@@ -17132,9 +17132,9 @@
      ],
      "company_sole": true,
      "licences": [
+      "SF-B-0010",
       "SF-B-0002",
       "SF-B-0014",
-      "SF-B-0010",
       "SF-B-0041"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/17177"
@@ -17163,16 +17163,16 @@
      ],
      "company_sole": true,
      "licences": [
-      "SF-B-0024",
-      "SF-B-0015",
-      "SF-G-0008",
-      "SF-G-0015",
-      "SF-F-0003",
-      "SF-G-0035",
       "SF-B-0028",
-      "SF-G-0013",
+      "SF-B-0024",
       "SF-B-0003",
-      "SF-B-0004"
+      "SF-G-0015",
+      "SF-G-0035",
+      "SF-G-0008",
+      "SF-B-0015",
+      "SF-B-0004",
+      "SF-F-0003",
+      "SF-G-0013"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10318"
     },
@@ -17229,9 +17229,9 @@
      ],
      "company_sole": true,
      "licences": [
+      "SF-G-0015",
       "SF-G-0035",
       "SF-G-0008",
-      "SF-G-0015",
       "SF-SU-0004",
       "SF-G-0013"
      ],
@@ -17261,14 +17261,14 @@
      ],
      "company_sole": true,
      "licences": [
-      "SF-G-0035",
-      "SF-G-0008",
-      "SF-G-0015",
-      "SF-SU-0004",
       "SF-SU-0013",
       "SF-SU-0027",
-      "SF-G-0013",
-      "SF-SU-0007"
+      "SF-SU-0007",
+      "SF-G-0015",
+      "SF-G-0035",
+      "SF-G-0008",
+      "SF-SU-0004",
+      "SF-G-0013"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13236"
     },
@@ -17297,16 +17297,16 @@
      ],
      "company_sole": false,
      "licences": [
-      "SF-S-0023",
-      "SF-B-0024",
-      "SF-B-0015",
-      "SF-S-0031",
       "SF-B-0028",
-      "SF-F-0005",
-      "SF-S-0022",
+      "SF-B-0024",
       "SF-B-0009",
+      "SF-S-0022",
       "SF-B-0003",
-      "SF-B-0004"
+      "SF-B-0015",
+      "SF-S-0023",
+      "SF-B-0004",
+      "SF-F-0005",
+      "SF-S-0031"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13242"
     },
@@ -17334,13 +17334,13 @@
      ],
      "company_sole": true,
      "licences": [
-      "SF-V-0007",
       "SF-G-0012",
-      "SF-V-0009",
-      "SF-SU-0002",
-      "SF-V-0005",
       "SF-SU-0006",
-      "SF-V-0004"
+      "SF-V-0004",
+      "SF-V-0005",
+      "SF-SU-0002",
+      "SF-V-0009",
+      "SF-V-0007"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11809"
     },
@@ -17369,12 +17369,12 @@
      "company_sole": true,
      "licences": [
       "SF-SU-0013",
-      "SF-SU-0027",
-      "SF-SU-0006",
       "SF-FL-0001",
-      "SF-FL-0007",
+      "SF-SU-0006",
+      "SF-SU-0027",
       "SF-SU-0007",
-      "SF-SU-0002"
+      "SF-SU-0002",
+      "SF-FL-0007"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11803"
     },
@@ -17402,13 +17402,13 @@
      ],
      "company_sole": true,
      "licences": [
-      "SF-B-0015",
-      "SF-B-0024",
       "SF-B-0010",
+      "SF-B-0002",
+      "SF-B-0014",
+      "SF-B-0024",
       "SF-B-0028",
       "SF-B-0041",
-      "SF-B-0002",
-      "SF-B-0014"
+      "SF-B-0015"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13549"
     },
@@ -17437,12 +17437,12 @@
      "company_sole": true,
      "licences": [
       "SF-H-0004",
-      "SF-G-0004",
-      "SF-H-0010",
-      "SF-H-0017",
+      "SF-G-0007",
       "SF-H-0020",
+      "SF-G-0004",
+      "SF-H-0017",
       "SF-G-0001",
-      "SF-G-0007"
+      "SF-H-0010"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/15403"
     },
@@ -17471,12 +17471,12 @@
      ],
      "company_sole": false,
      "licences": [
-      "SF-B-0024",
-      "SF-B-0015",
-      "SF-S-0031",
       "SF-B-0028",
+      "SF-B-0024",
       "SF-B-0003",
-      "SF-B-0004"
+      "SF-B-0015",
+      "SF-B-0004",
+      "SF-S-0031"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13612"
     },
@@ -17505,12 +17505,12 @@
      "company_sole": true,
      "licences": [
       "SF-H-0004",
-      "SF-G-0004",
-      "SF-H-0010",
-      "SF-H-0017",
+      "SF-G-0007",
       "SF-H-0020",
+      "SF-G-0004",
+      "SF-H-0017",
       "SF-G-0001",
-      "SF-G-0007"
+      "SF-H-0010"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/18657"
     },
@@ -17539,12 +17539,12 @@
      "company_sole": true,
      "licences": [
       "SF-H-0004",
-      "SF-G-0004",
-      "SF-H-0010",
-      "SF-H-0017",
+      "SF-G-0007",
       "SF-H-0020",
+      "SF-G-0004",
+      "SF-H-0017",
       "SF-G-0001",
-      "SF-G-0007"
+      "SF-H-0010"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/14081"
     },
@@ -17573,12 +17573,12 @@
      ],
      "company_sole": false,
      "licences": [
-      "SF-V-0007",
-      "SF-S-0031",
       "SF-G-0012",
-      "SF-V-0009",
+      "SF-V-0004",
       "SF-V-0005",
-      "SF-V-0004"
+      "SF-V-0009",
+      "SF-S-0031",
+      "SF-V-0007"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13837"
     },
@@ -17606,13 +17606,13 @@
      ],
      "company_sole": true,
      "licences": [
-      "M-F-0005",
-      "M-AK-0002",
-      "M-AK-0003",
-      "M-H-0004",
-      "M-AK-0009",
       "M-MD-0004",
-      "M-SØ-0004"
+      "M-AK-0002",
+      "M-F-0005",
+      "M-SØ-0004",
+      "M-AK-0003",
+      "M-AK-0009",
+      "M-H-0004"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12988"
     },
@@ -17640,14 +17640,14 @@
      ],
      "company_sole": true,
      "licences": [
+      "SF-S-0008",
+      "SF-S-0001",
       "SF-S-0002",
-      "M-VD-0001",
       "M-HØ-0002",
       "SF-S-0006",
-      "SF-S-0001",
-      "M-VD-0016",
+      "M-VD-0001",
       "SF-S-0021",
-      "SF-S-0008"
+      "M-VD-0016"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13845"
     },
@@ -17675,14 +17675,14 @@
      ],
      "company_sole": true,
      "licences": [
-      "M-S-0003",
-      "M-HØ-0002",
-      "M-VN-0014",
-      "M-H-0004",
       "M-MD-0004",
       "M-HØ-0001",
+      "M-HØ-0002",
       "M-S-0001",
-      "M-RA-0001"
+      "M-VN-0014",
+      "M-RA-0001",
+      "M-S-0003",
+      "M-H-0004"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/22455"
     },
@@ -17710,16 +17710,16 @@
      ],
      "company_sole": true,
      "licences": [
-      "M-S-0003",
+      "M-MD-0004",
+      "M-SM-0012",
+      "M-S-0001",
+      "M-HØ-0005",
+      "M-VN-0013",
+      "M-HØ-0003",
       "M-VN-0014",
       "M-ØG-0003",
-      "M-HØ-0003",
-      "M-VN-0013",
-      "M-SM-0012",
-      "M-MD-0004",
-      "M-HØ-0005",
-      "M-S-0001",
-      "M-RA-0001"
+      "M-RA-0001",
+      "M-S-0003"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12237"
     },
@@ -17747,14 +17747,14 @@
      ],
      "company_sole": true,
      "licences": [
-      "M-SM-0015",
-      "M-SØ-0001",
-      "M-H-0019",
+      "M-MD-0004",
       "M-H-0007",
+      "M-SØ-0004",
+      "M-H-0019",
+      "M-SM-0015",
       "M-G-0001",
       "M-H-0004",
-      "M-MD-0004",
-      "M-SØ-0004"
+      "M-SØ-0001"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/45155"
     },
@@ -17782,10 +17782,10 @@
      ],
      "company_sole": true,
      "licences": [
+      "M-AK-0002",
       "M-F-0005",
       "M-ØG-0003",
       "M-AK-0003",
-      "M-AK-0002",
       "M-AK-0009"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12239"
@@ -17814,12 +17814,12 @@
      ],
      "company_sole": true,
      "licences": [
-      "M-SM-0015",
       "M-S-0003",
-      "M-SM-0001",
       "M-HØ-0002",
-      "M-G-0001",
-      "M-S-0001"
+      "M-S-0001",
+      "M-SM-0001",
+      "M-SM-0015",
+      "M-G-0001"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10181"
     },
@@ -17847,14 +17847,14 @@
      ],
      "company_sole": true,
      "licences": [
-      "M-SM-0015",
-      "M-SØ-0001",
-      "M-H-0019",
+      "M-MD-0004",
       "M-H-0007",
+      "M-SØ-0004",
+      "M-H-0019",
+      "M-SM-0015",
       "M-G-0001",
       "M-H-0004",
-      "M-MD-0004",
-      "M-SØ-0004"
+      "M-SØ-0001"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12281"
     },
@@ -17882,11 +17882,11 @@
      ],
      "company_sole": true,
      "licences": [
-      "M-VA-0002",
+      "M-HØ-0001",
       "M-VN-0014",
       "M-VA-0018",
-      "M-HØ-0001",
-      "M-RA-0001"
+      "M-RA-0001",
+      "M-VA-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12209"
     },
@@ -17914,11 +17914,11 @@
      ],
      "company_sole": true,
      "licences": [
-      "M-SM-0015",
-      "M-SM-0001",
-      "M-VD-0001",
-      "M-H-0019",
       "M-AK-0002",
+      "M-SM-0001",
+      "M-H-0019",
+      "M-SM-0015",
+      "M-VD-0001",
       "M-G-0001"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12298"
@@ -17947,13 +17947,13 @@
      ],
      "company_sole": true,
      "licences": [
-      "M-VD-0001",
-      "M-H-0019",
-      "M-HØ-0002",
-      "M-ØG-0003",
-      "M-VD-0016",
       "M-SM-0012",
-      "M-HØ-0001"
+      "M-HØ-0001",
+      "M-HØ-0002",
+      "M-H-0019",
+      "M-ØG-0003",
+      "M-VD-0001",
+      "M-VD-0016"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13249"
     },
@@ -17981,13 +17981,13 @@
      ],
      "company_sole": true,
      "licences": [
-      "M-VN-0014",
-      "M-VA-0003",
-      "M-VN-0013",
-      "M-H-0004",
       "M-SM-0012",
+      "M-VN-0013",
       "M-HØ-0005",
-      "M-HØ-0003"
+      "M-HØ-0003",
+      "M-VN-0014",
+      "M-H-0004",
+      "M-VA-0003"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13243"
     },
@@ -18015,13 +18015,13 @@
      ],
      "company_sole": true,
      "licences": [
-      "M-F-0005",
-      "M-SØ-0001",
-      "M-AK-0002",
-      "M-AK-0003",
       "M-H-0007",
+      "M-AK-0002",
+      "M-F-0005",
+      "M-SØ-0004",
+      "M-AK-0003",
       "M-AK-0009",
-      "M-SØ-0004"
+      "M-SØ-0001"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/22335"
     },
@@ -18049,13 +18049,13 @@
      ],
      "company_sole": true,
      "licences": [
-      "M-SM-0001",
-      "M-VA-0003",
-      "M-VD-0016",
-      "M-VN-0013",
       "M-HØ-0001",
+      "M-VN-0013",
       "M-HØ-0005",
-      "M-HØ-0003"
+      "M-SM-0001",
+      "M-HØ-0003",
+      "M-VD-0016",
+      "M-VA-0003"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13246"
     },
@@ -18083,11 +18083,11 @@
      ],
      "company_sole": true,
      "licences": [
-      "M-VA-0002",
-      "M-VD-0001",
+      "M-HØ-0001",
       "M-HØ-0002",
       "M-VA-0018",
-      "M-HØ-0001"
+      "M-VD-0001",
+      "M-VA-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/45135"
     },
@@ -18143,13 +18143,13 @@
      ],
      "company_sole": true,
      "licences": [
+      "ST-O-0006",
       "ST-O-0005",
-      "ST-O-0001",
       "ST-B-0011",
       "ST-B-0003",
-      "ST-O-0002",
-      "ST-O-0006",
-      "ST-F-0033"
+      "ST-F-0033",
+      "ST-O-0001",
+      "ST-O-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12594"
     },
@@ -18177,16 +18177,16 @@
      ],
      "company_sole": true,
      "licences": [
-      "M-SM-0006",
-      "M-SM-0013",
-      "M-SM-0002",
-      "M-AV-0004",
-      "M-AV-0006",
-      "M-SM-0010",
-      "M-SM-0009",
       "M-AV-0018",
+      "M-AV-0004",
       "M-SM-0017",
-      "M-AV-0007"
+      "M-AV-0006",
+      "M-SM-0002",
+      "M-SM-0010",
+      "M-AV-0007",
+      "M-SM-0009",
+      "M-SM-0013",
+      "M-SM-0006"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10223"
     },
@@ -18214,14 +18214,14 @@
      ],
      "company_sole": true,
      "licences": [
-      "M-SM-0006",
-      "M-SM-0013",
-      "M-SM-0002",
       "M-AV-0004",
+      "M-SM-0017",
       "M-AV-0006",
+      "M-SM-0002",
       "M-SM-0010",
       "M-SM-0009",
-      "M-SM-0017"
+      "M-SM-0013",
+      "M-SM-0006"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12466"
     },
@@ -18250,9 +18250,9 @@
      "company_sole": true,
      "licences": [
       "ST-F-0024",
+      "ST-F-0032",
       "ST-F-0029",
-      "ST-F-0021",
-      "ST-F-0032"
+      "ST-F-0021"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/45289"
     },
@@ -18280,14 +18280,14 @@
      ],
      "company_sole": true,
      "licences": [
-      "ST-O-0005",
+      "ST-B-0002",
+      "ST-O-0006",
       "ST-B-0001",
-      "ST-O-0001",
+      "ST-O-0005",
       "ST-B-0011",
       "ST-B-0003",
-      "ST-O-0002",
-      "ST-O-0006",
-      "ST-B-0002"
+      "ST-O-0001",
+      "ST-O-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/36138"
     },
@@ -18315,18 +18315,18 @@
      ],
      "company_sole": true,
      "licences": [
-      "ST-F-0011",
-      "ST-F-0024",
-      "ST-B-0001",
-      "ST-F-0001",
+      "ST-B-0002",
       "ST-F-0002",
-      "ST-F-0009",
-      "ST-F-0021",
+      "ST-B-0001",
       "ST-F-0015",
+      "ST-F-0024",
+      "ST-F-0021",
+      "ST-F-0009",
+      "ST-F-0011",
+      "ST-H-0047",
       "NT-FA-0002",
       "ST-F-0012",
-      "ST-H-0047",
-      "ST-B-0002"
+      "ST-F-0001"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12435"
     },
@@ -18354,11 +18354,11 @@
      ],
      "company_sole": true,
      "licences": [
-      "ST-H-0020",
       "ST-H-0005",
-      "ST-F-0032",
-      "ST-H-0014",
       "ST-H-0025",
+      "ST-H-0020",
+      "ST-H-0014",
+      "ST-F-0032",
       "ST-F-0029"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13503"
@@ -18387,12 +18387,12 @@
      ],
      "company_sole": true,
      "licences": [
+      "ST-F-0002",
       "ST-F-0024",
-      "ST-F-0032",
       "ST-F-0021",
       "ST-F-0016",
+      "ST-F-0032",
       "ST-F-0001",
-      "ST-F-0002",
       "ST-F-0020",
       "ST-F-0029"
      ],
@@ -18422,15 +18422,15 @@
      ],
      "company_sole": true,
      "licences": [
+      "ST-B-0002",
+      "ST-O-0006",
+      "ST-B-0001",
       "ST-O-0005",
       "ST-F-0016",
-      "ST-B-0001",
+      "ST-H-0047",
       "ST-O-0001",
       "ST-F-0020",
-      "ST-O-0006",
-      "ST-O-0002",
-      "ST-H-0047",
-      "ST-B-0002"
+      "ST-O-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12599"
     },
@@ -18458,14 +18458,14 @@
      ],
      "company_sole": true,
      "licences": [
-      "M-SM-0006",
-      "M-SM-0013",
-      "M-SM-0002",
-      "M-AV-0004",
-      "M-AV-0006",
       "M-AV-0018",
+      "M-AV-0004",
       "M-SM-0017",
-      "M-AV-0007"
+      "M-AV-0006",
+      "M-SM-0002",
+      "M-AV-0007",
+      "M-SM-0013",
+      "M-SM-0006"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12855"
     },
@@ -18493,10 +18493,10 @@
      ],
      "company_sole": true,
      "licences": [
-      "ST-H-0047",
       "ST-H-0001",
       "ST-H-0005",
-      "ST-H-0025"
+      "ST-H-0025",
+      "ST-H-0047"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/19195"
     },
@@ -18525,17 +18525,17 @@
      ],
      "company_sole": false,
      "licences": [
-      "ST-F-0011",
+      "TR-F-0036",
       "ST-F-0024",
-      "TR-F-0037",
-      "TR-F-0038",
+      "ST-F-0015",
       "ST-F-0016",
       "ST-F-0009",
+      "ST-F-0011",
       "ST-F-0021",
-      "ST-F-0015",
+      "TR-F-0038",
       "ST-F-0012",
       "ST-F-0020",
-      "TR-F-0036"
+      "TR-F-0037"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/35377"
     },
@@ -18563,10 +18563,10 @@
      ],
      "company_sole": true,
      "licences": [
-      "ST-H-0014",
-      "ST-H-0020",
       "ST-H-0001",
-      "ST-H-0005"
+      "ST-H-0005",
+      "ST-H-0020",
+      "ST-H-0014"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12348"
     },
@@ -18594,14 +18594,14 @@
      ],
      "company_sole": true,
      "licences": [
-      "M-SM-0006",
-      "M-SM-0002",
+      "M-AV-0018",
       "M-AV-0004",
       "M-AV-0006",
+      "M-SM-0002",
       "M-SM-0010",
+      "M-AV-0007",
       "M-SM-0009",
-      "M-AV-0018",
-      "M-AV-0007"
+      "M-SM-0006"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12870"
     },
@@ -18629,14 +18629,14 @@
      ],
      "company_sole": true,
      "licences": [
-      "ST-F-0011",
-      "ST-H-0005",
-      "ST-F-0009",
-      "ST-F-0001",
       "ST-F-0002",
+      "ST-H-0005",
       "ST-F-0015",
+      "ST-F-0009",
+      "ST-F-0011",
+      "ST-H-0001",
       "ST-F-0012",
-      "ST-H-0001"
+      "ST-F-0001"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12392"
     },
@@ -18665,17 +18665,17 @@
      ],
      "company_sole": false,
      "licences": [
-      "ST-O-0005",
-      "ST-H-0020",
-      "ST-H-0014",
-      "TR-F-0037",
-      "TR-F-0038",
-      "ST-B-0001",
-      "ST-B-0011",
-      "ST-B-0003",
-      "ST-O-0006",
       "ST-B-0002",
-      "TR-F-0036"
+      "ST-O-0006",
+      "TR-F-0036",
+      "ST-H-0020",
+      "ST-B-0001",
+      "ST-O-0005",
+      "ST-B-0011",
+      "ST-H-0014",
+      "ST-B-0003",
+      "TR-F-0038",
+      "TR-F-0037"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/40137"
     },
@@ -18703,14 +18703,14 @@
      ],
      "company_sole": true,
      "licences": [
-      "ST-F-0011",
-      "ST-F-0032",
-      "ST-F-0009",
-      "ST-F-0001",
       "ST-F-0002",
       "ST-F-0015",
-      "ST-F-0012",
+      "ST-F-0009",
+      "ST-F-0011",
       "ST-H-0047",
+      "ST-F-0012",
+      "ST-F-0032",
+      "ST-F-0001",
       "ST-F-0029"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10232"
@@ -18740,13 +18740,13 @@
      ],
      "company_sole": false,
      "licences": [
-      "TR-F-0037",
-      "TR-F-0038",
+      "ST-B-0002",
+      "TR-F-0036",
       "ST-B-0001",
       "ST-B-0011",
       "ST-B-0003",
-      "ST-B-0002",
-      "TR-F-0036"
+      "TR-F-0038",
+      "TR-F-0037"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/36877"
     },
@@ -18774,14 +18774,14 @@
      ],
      "company_sole": true,
      "licences": [
-      "M-SM-0013",
+      "M-AV-0018",
       "M-AV-0004",
+      "M-SM-0017",
       "M-AV-0006",
       "M-SM-0010",
+      "M-AV-0007",
       "M-SM-0009",
-      "M-AV-0018",
-      "M-SM-0017",
-      "M-AV-0007"
+      "M-SM-0013"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/33937"
     },
@@ -18809,14 +18809,14 @@
      ],
      "company_sole": true,
      "licences": [
-      "ST-F-0024",
-      "ST-F-0032",
+      "ST-B-0002",
       "ST-B-0001",
-      "ST-F-0021",
+      "ST-F-0024",
       "ST-B-0011",
+      "ST-F-0021",
       "ST-B-0003",
-      "ST-F-0029",
-      "ST-B-0002"
+      "ST-F-0032",
+      "ST-F-0029"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/33417"
     },
@@ -18874,14 +18874,14 @@
      ],
      "company_sole": true,
      "licences": [
-      "ST-F-0011",
-      "ST-F-0024",
-      "ST-F-0009",
-      "ST-F-0001",
       "ST-F-0002",
-      "ST-F-0021",
+      "ST-F-0024",
       "ST-F-0015",
-      "ST-F-0012"
+      "ST-F-0021",
+      "ST-F-0009",
+      "ST-F-0011",
+      "ST-F-0012",
+      "ST-F-0001"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12449"
     },
@@ -18909,12 +18909,12 @@
      ],
      "company_sole": true,
      "licences": [
+      "ST-F-0002",
       "ST-F-0024",
-      "ST-F-0032",
       "ST-F-0021",
       "ST-F-0016",
+      "ST-F-0032",
       "ST-F-0001",
-      "ST-F-0002",
       "ST-F-0020",
       "ST-F-0029"
      ],
@@ -18944,15 +18944,15 @@
      ],
      "company_sole": true,
      "licences": [
-      "ST-H-0020",
-      "ST-F-0032",
-      "ST-H-0014",
-      "ST-F-0016",
       "ST-H-0025",
-      "ST-F-0020",
+      "ST-H-0020",
+      "ST-F-0016",
+      "ST-H-0014",
       "ST-H-0047",
-      "ST-F-0029",
-      "ST-F-0033"
+      "ST-F-0032",
+      "ST-F-0033",
+      "ST-F-0020",
+      "ST-F-0029"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/35657"
     },
@@ -18980,12 +18980,12 @@
      ],
      "company_sole": true,
      "licences": [
+      "NT-F-0013",
       "NT-F-0008",
-      "NT-F-0005",
       "NT-F-0001",
       "NT-F-0007",
-      "NT-F-0013",
-      "NT-F-0012"
+      "NT-F-0012",
+      "NT-F-0005"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13271"
     },
@@ -19013,11 +19013,11 @@
      ],
      "company_sole": true,
      "licences": [
+      "NT-F-0013",
       "NT-F-0008",
-      "NT-F-0005",
       "NT-F-0001",
       "NT-F-0007",
-      "NT-F-0013"
+      "NT-F-0005"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/26795"
     },
@@ -19045,9 +19045,9 @@
      ],
      "company_sole": true,
      "licences": [
+      "NT-F-0008",
       "NT-F-0001",
       "NT-F-0007",
-      "NT-F-0008",
       "NT-F-0005"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12625"
@@ -19076,9 +19076,9 @@
      ],
      "company_sole": true,
      "licences": [
+      "NT-F-0008",
       "NT-F-0001",
       "NT-F-0007",
-      "NT-F-0008",
       "NT-F-0005"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12624"
@@ -19107,12 +19107,12 @@
      ],
      "company_sole": true,
      "licences": [
-      "NT-LA-0002",
-      "NT-NR-0009",
-      "NT-LA-0005",
-      "NT-NR-0004",
       "NT-NR-0040",
-      "NT-LA-0003"
+      "NT-LA-0005",
+      "NT-LA-0002",
+      "NT-LA-0003",
+      "NT-NR-0009",
+      "NT-NR-0004"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/31357"
     },
@@ -19141,12 +19141,12 @@
      "company_sole": true,
      "licences": [
       "NT-FS-0001",
-      "NT-FS-0004",
-      "NT-FS-0003",
-      "NT-FS-0007",
-      "NT-FS-0005",
       "NT-F-0013",
-      "NT-F-0012"
+      "NT-F-0012",
+      "NT-FS-0004",
+      "NT-FS-0005",
+      "NT-FS-0003",
+      "NT-FS-0007"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/39537"
     },
@@ -19174,16 +19174,16 @@
      ],
      "company_sole": true,
      "licences": [
-      "NT-LA-0002",
-      "NT-LA-0005",
-      "NT-NR-0003",
-      "NT-LA-0003",
-      "NT-NR-0001",
       "NT-NR-0040",
-      "NT-NR-0013",
       "NT-NR-0011",
+      "NT-NR-0001",
+      "NT-NR-0013",
+      "NT-LA-0007",
+      "NT-LA-0005",
       "NT-LA-0006",
-      "NT-LA-0007"
+      "NT-LA-0002",
+      "NT-LA-0003",
+      "NT-NR-0003"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/14245"
     },
@@ -19211,11 +19211,11 @@
      ],
      "company_sole": true,
      "licences": [
-      "NT-LA-0005",
-      "NT-LA-0003",
       "NT-NR-0040",
+      "NT-LA-0007",
+      "NT-LA-0005",
       "NT-LA-0006",
-      "NT-LA-0007"
+      "NT-LA-0003"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/34797"
     },
@@ -19244,12 +19244,12 @@
      "company_sole": true,
      "licences": [
       "NT-FS-0001",
-      "NT-FS-0004",
-      "NT-FS-0003",
-      "NT-FS-0007",
-      "NT-FS-0005",
       "NT-F-0013",
-      "NT-F-0012"
+      "NT-F-0012",
+      "NT-FS-0004",
+      "NT-FS-0005",
+      "NT-FS-0003",
+      "NT-FS-0007"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10409"
     },
@@ -19277,10 +19277,10 @@
      ],
      "company_sole": true,
      "licences": [
-      "NT-LA-0002",
-      "NT-LA-0006",
+      "NT-LA-0005",
       "NT-LA-0003",
-      "NT-LA-0005"
+      "NT-LA-0006",
+      "NT-LA-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/19755"
     },
@@ -19308,11 +19308,11 @@
      ],
      "company_sole": true,
      "licences": [
-      "NT-LA-0002",
+      "NT-LA-0007",
       "NT-LA-0005",
-      "NT-LA-0003",
       "NT-LA-0006",
-      "NT-LA-0007"
+      "NT-LA-0002",
+      "NT-LA-0003"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/45282"
     },
@@ -19340,10 +19340,10 @@
      ],
      "company_sole": true,
      "licences": [
-      "NT-LA-0002",
-      "NT-LA-0006",
+      "NT-LA-0005",
       "NT-LA-0003",
-      "NT-LA-0005"
+      "NT-LA-0006",
+      "NT-LA-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/27876"
     },
@@ -19372,11 +19372,11 @@
      "company_sole": true,
      "licences": [
       "NT-NR-0009",
-      "NT-NR-0003",
-      "NT-NR-0004",
-      "NT-NR-0001",
+      "NT-NR-0011",
       "NT-NR-0013",
-      "NT-NR-0011"
+      "NT-NR-0001",
+      "NT-NR-0003",
+      "NT-NR-0004"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13581"
     },
@@ -19404,14 +19404,14 @@
      ],
      "company_sole": true,
      "licences": [
-      "NT-LA-0002",
-      "NT-NR-0003",
-      "NT-NR-0001",
       "NT-NR-0040",
-      "NT-NR-0013",
       "NT-NR-0011",
+      "NT-NR-0013",
+      "NT-LA-0007",
       "NT-LA-0006",
-      "NT-LA-0007"
+      "NT-LA-0002",
+      "NT-NR-0001",
+      "NT-NR-0003"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12712"
     },
@@ -19439,16 +19439,16 @@
      ],
      "company_sole": true,
      "licences": [
-      "NT-LA-0002",
-      "NT-LA-0005",
-      "NT-NR-0003",
-      "NT-LA-0003",
-      "NT-NR-0001",
       "NT-NR-0040",
-      "NT-NR-0013",
       "NT-NR-0011",
+      "NT-NR-0001",
+      "NT-NR-0013",
+      "NT-LA-0007",
+      "NT-LA-0005",
       "NT-LA-0006",
-      "NT-LA-0007"
+      "NT-LA-0002",
+      "NT-LA-0003",
+      "NT-NR-0003"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/30537"
     },
@@ -19476,10 +19476,10 @@
      ],
      "company_sole": true,
      "licences": [
-      "NT-NR-0003",
+      "NT-NR-0001",
       "NT-NR-0009",
-      "NT-NR-0004",
-      "NT-NR-0001"
+      "NT-NR-0003",
+      "NT-NR-0004"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10421"
     },
@@ -19507,11 +19507,11 @@
      ],
      "company_sole": true,
      "licences": [
-      "NT-LA-0002",
+      "NT-LA-0007",
       "NT-LA-0005",
-      "NT-LA-0003",
       "NT-LA-0006",
-      "NT-LA-0007"
+      "NT-LA-0002",
+      "NT-LA-0003"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/45013"
     },
@@ -19539,12 +19539,12 @@
      ],
      "company_sole": true,
      "licences": [
-      "NT-LA-0002",
-      "NT-LA-0005",
-      "NT-LA-0003",
       "NT-NR-0040",
+      "NT-LA-0007",
+      "NT-LA-0005",
       "NT-LA-0006",
-      "NT-LA-0007"
+      "NT-LA-0002",
+      "NT-LA-0003"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/30177"
     },
@@ -19572,13 +19572,13 @@
      ],
      "company_sole": true,
      "licences": [
-      "NT-F-0008",
       "NT-FS-0001",
-      "NT-FS-0004",
-      "NT-FS-0003",
-      "NT-FS-0007",
+      "NT-F-0008",
       "NT-F-0007",
-      "NT-FS-0005"
+      "NT-FS-0004",
+      "NT-FS-0005",
+      "NT-FS-0003",
+      "NT-FS-0007"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/12678"
     },
@@ -19606,10 +19606,10 @@
      ],
      "company_sole": true,
      "licences": [
-      "N-HR-0004",
       "N-HR-0006",
-      "N-HR-0012",
-      "N-HR-0010"
+      "N-HR-0004",
+      "N-HR-0010",
+      "N-HR-0012"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/31857"
     },
@@ -19638,15 +19638,15 @@
      ],
      "company_sole": false,
      "licences": [
-      "N-HR-0004",
       "N-HR-0006",
+      "N-HR-0004",
+      "N-HR-0010",
       "N-HR-0016",
-      "N-HR-0012",
-      "N-HR-0002",
-      "N-DA-0077",
       "N-HR-0014",
+      "N-HR-0012",
+      "N-DA-0077",
       "N-HR-0003",
-      "N-HR-0010"
+      "N-HR-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11015"
     },
@@ -19674,12 +19674,12 @@
      ],
      "company_sole": true,
      "licences": [
-      "N-SA-0005",
-      "N-DA-0003",
       "N-HR-0016",
+      "N-DA-0003",
       "N-HR-0001",
-      "N-HR-0014",
-      "N-DA-0024"
+      "N-DA-0024",
+      "N-SA-0005",
+      "N-HR-0014"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/28336"
     },
@@ -19739,12 +19739,12 @@
      ],
      "company_sole": true,
      "licences": [
-      "N-HR-0004",
       "N-HR-0006",
+      "N-HR-0004",
+      "N-HR-0010",
       "N-HR-0012",
-      "N-HR-0002",
       "N-HR-0003",
-      "N-HR-0010"
+      "N-HR-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/27976"
     },
@@ -19772,12 +19772,12 @@
      ],
      "company_sole": true,
      "licences": [
+      "N-L-0010",
       "N-R-0004",
       "N-R-0029",
-      "N-BR-0002",
       "N-R-0009",
       "N-L-0007",
-      "N-L-0010"
+      "N-BR-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11076"
     },
@@ -19805,16 +19805,16 @@
      ],
      "company_sole": true,
      "licences": [
-      "N-SA-0005",
-      "N-DA-0003",
+      "N-AH-0003",
       "N-BR-0003",
+      "N-L-0010",
       "N-DA-0004",
       "N-DA-0005",
-      "N-BR-0004",
-      "N-AH-0003",
-      "N-BR-0002",
+      "N-DA-0003",
       "N-BR-0017",
-      "N-L-0010"
+      "N-BR-0004",
+      "N-SA-0005",
+      "N-BR-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/29296"
     },
@@ -19850,33 +19850,33 @@
      ],
      "company_sole": false,
      "licences": [
-      "N-DA-0003",
-      "N-L-0061",
-      "N-R-0048",
-      "N-G-0063",
-      "N-VS-0013",
-      "N-L-0075",
-      "N-L-0072",
-      "N-R-0002",
-      "N-G-0067",
-      "N-DA-0005",
-      "N-L-0045",
-      "N-L-0071",
-      "N-BØ-0002",
-      "N-L-0011",
-      "N-G-0066",
-      "N-L-0008",
-      "N-DA-0004",
-      "N-L-0005",
-      "N-L-0060",
       "N-L-0069",
+      "N-L-0045",
+      "N-DA-0005",
+      "N-VS-0013",
       "N-DA-0024",
-      "N-R-0013",
       "N-R-0049",
-      "N-G-0064",
       "N-L-0059",
+      "N-DA-0003",
       "N-L-0003",
-      "N-L-0074"
+      "N-L-0061",
+      "N-L-0060",
+      "N-G-0067",
+      "N-L-0072",
+      "N-R-0048",
+      "N-DA-0004",
+      "N-L-0008",
+      "N-L-0011",
+      "N-BØ-0002",
+      "N-L-0071",
+      "N-R-0013",
+      "N-G-0064",
+      "N-G-0063",
+      "N-R-0002",
+      "N-G-0066",
+      "N-L-0005",
+      "N-L-0074",
+      "N-L-0075"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/32037"
     },
@@ -19905,17 +19905,17 @@
      ],
      "company_sole": false,
      "licences": [
-      "N-R-0030",
-      "N-R-0004",
       "N-R-0001",
-      "N-ME-0028",
-      "N-R-0029",
-      "N-R-0008",
-      "N-L-0007",
-      "N-R-0009",
-      "N-R-0006",
       "N-L-0010",
-      "N-ME-0005"
+      "N-R-0004",
+      "N-R-0006",
+      "N-R-0029",
+      "N-ME-0028",
+      "N-R-0009",
+      "N-ME-0005",
+      "N-L-0007",
+      "N-R-0008",
+      "N-R-0030"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/45080"
     },
@@ -19945,14 +19945,14 @@
      ],
      "company_sole": false,
      "licences": [
-      "N-G-0001",
       "N-L-0009",
-      "N-R-0004",
-      "N-ME-0039",
       "N-NA-0007",
+      "N-R-0004",
+      "N-G-0001",
+      "N-NA-0001",
       "N-R-0009",
       "N-G-0032",
-      "N-NA-0001"
+      "N-ME-0039"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/15655"
     },
@@ -19981,18 +19981,18 @@
      ],
      "company_sole": false,
      "licences": [
-      "N-BR-0003",
-      "N-R-0030",
       "N-R-0001",
-      "N-ME-0028",
-      "N-BR-0004",
       "N-AH-0003",
-      "N-BR-0002",
-      "N-R-0008",
-      "N-BR-0017",
-      "N-R-0006",
+      "N-BR-0003",
       "N-L-0010",
-      "N-ME-0005"
+      "N-R-0006",
+      "N-BR-0017",
+      "N-ME-0028",
+      "N-ME-0005",
+      "N-R-0008",
+      "N-R-0030",
+      "N-BR-0004",
+      "N-BR-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10876"
     },
@@ -20020,12 +20020,12 @@
      ],
      "company_sole": true,
      "licences": [
+      "N-L-0010",
       "N-R-0004",
       "N-R-0029",
-      "N-BR-0002",
       "N-R-0009",
       "N-L-0007",
-      "N-L-0010"
+      "N-BR-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11074"
     },
@@ -20053,12 +20053,12 @@
      ],
      "company_sole": true,
      "licences": [
+      "N-AH-0003",
       "N-BR-0003",
       "N-DA-0005",
+      "N-BR-0017",
       "N-HR-0001",
-      "N-BR-0004",
-      "N-AH-0003",
-      "N-BR-0017"
+      "N-BR-0004"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/45016"
     },
@@ -20093,31 +20093,31 @@
      ],
      "company_sole": false,
      "licences": [
-      "N-HR-0070",
-      "N-DA-0003",
-      "N-L-0061",
-      "N-R-0048",
-      "N-G-0063",
-      "N-VS-0013",
-      "N-L-0075",
-      "N-L-0072",
-      "N-HR-0017",
-      "N-R-0002",
-      "N-DA-0005",
-      "N-L-0045",
-      "N-L-0071",
-      "N-L-0011",
-      "N-L-0008",
-      "N-DA-0004",
-      "N-L-0060",
       "N-L-0069",
+      "N-L-0045",
+      "N-DA-0005",
+      "N-VS-0013",
+      "N-HR-0017",
       "N-DA-0024",
-      "N-HR-0019",
-      "N-R-0013",
       "N-R-0049",
-      "N-G-0064",
       "N-L-0059",
-      "N-L-0074"
+      "N-DA-0003",
+      "N-HR-0019",
+      "N-L-0061",
+      "N-L-0060",
+      "N-HR-0070",
+      "N-L-0072",
+      "N-DA-0004",
+      "N-L-0008",
+      "N-L-0011",
+      "N-R-0048",
+      "N-L-0071",
+      "N-R-0013",
+      "N-G-0064",
+      "N-G-0063",
+      "N-R-0002",
+      "N-L-0074",
+      "N-L-0075"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/45002"
     },
@@ -20145,16 +20145,16 @@
      ],
      "company_sole": true,
      "licences": [
-      "N-SA-0005",
-      "N-DA-0003",
+      "N-AH-0003",
       "N-BR-0003",
+      "N-L-0010",
       "N-DA-0004",
       "N-DA-0005",
-      "N-BR-0004",
-      "N-AH-0003",
-      "N-BR-0002",
+      "N-DA-0003",
       "N-BR-0017",
-      "N-L-0010"
+      "N-BR-0004",
+      "N-SA-0005",
+      "N-BR-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/28036"
     },
@@ -20182,12 +20182,12 @@
      ],
      "company_sole": true,
      "licences": [
+      "N-L-0010",
       "N-R-0004",
       "N-R-0029",
-      "N-BR-0002",
       "N-R-0009",
       "N-L-0007",
-      "N-L-0010"
+      "N-BR-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/35977"
     },
@@ -20216,15 +20216,15 @@
      ],
      "company_sole": false,
      "licences": [
-      "N-SA-0005",
-      "N-DA-0003",
-      "N-HR-0016",
       "N-DA-0004",
+      "N-HR-0016",
       "N-DA-0005",
+      "N-DA-0003",
       "N-HR-0001",
       "N-DA-0077",
-      "N-HR-0014",
-      "N-DA-0024"
+      "N-DA-0024",
+      "N-SA-0005",
+      "N-HR-0014"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10990"
     },
@@ -20252,11 +20252,11 @@
      ],
      "company_sole": true,
      "licences": [
+      "N-L-0010",
       "N-R-0004",
       "N-R-0029",
-      "N-L-0007",
       "N-R-0009",
-      "N-L-0010"
+      "N-L-0007"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/45229"
     },
@@ -20285,9 +20285,9 @@
      "company_sole": true,
      "licences": [
       "N-R-0009",
+      "N-BR-0002",
       "N-R-0004",
-      "N-L-0007",
-      "N-BR-0002"
+      "N-L-0007"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/45044"
     },
@@ -20315,14 +20315,14 @@
      ],
      "company_sole": true,
      "licences": [
-      "N-HR-0004",
       "N-HR-0006",
+      "N-HR-0004",
+      "N-HR-0010",
       "N-HR-0016",
-      "N-HR-0012",
-      "N-HR-0002",
       "N-HR-0014",
+      "N-HR-0012",
       "N-HR-0003",
-      "N-HR-0010"
+      "N-HR-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10447"
     },
@@ -20381,16 +20381,16 @@
      ],
      "company_sole": true,
      "licences": [
-      "N-SA-0005",
-      "N-DA-0003",
+      "N-AH-0003",
       "N-BR-0003",
+      "N-L-0010",
       "N-DA-0004",
       "N-DA-0005",
-      "N-BR-0004",
-      "N-AH-0003",
-      "N-BR-0002",
+      "N-DA-0003",
       "N-BR-0017",
-      "N-L-0010"
+      "N-BR-0004",
+      "N-SA-0005",
+      "N-BR-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/35617"
     },
@@ -20418,16 +20418,16 @@
      ],
      "company_sole": true,
      "licences": [
-      "N-SA-0005",
-      "N-DA-0003",
+      "N-AH-0003",
       "N-BR-0003",
+      "N-L-0010",
       "N-DA-0004",
       "N-DA-0005",
-      "N-BR-0004",
-      "N-AH-0003",
-      "N-BR-0002",
+      "N-DA-0003",
       "N-BR-0017",
-      "N-L-0010"
+      "N-BR-0004",
+      "N-SA-0005",
+      "N-BR-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11129"
     },
@@ -20455,14 +20455,14 @@
      ],
      "company_sole": true,
      "licences": [
-      "N-SA-0005",
-      "N-DA-0003",
-      "N-HR-0016",
       "N-DA-0004",
+      "N-HR-0016",
       "N-DA-0005",
+      "N-DA-0003",
       "N-HR-0001",
-      "N-HR-0014",
-      "N-DA-0024"
+      "N-DA-0024",
+      "N-SA-0005",
+      "N-HR-0014"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/45029"
     },
@@ -20490,10 +20490,10 @@
      ],
      "company_sole": true,
      "licences": [
-      "N-DA-0003",
       "N-BR-0003",
-      "N-DA-0005",
       "N-DA-0004",
+      "N-DA-0005",
+      "N-DA-0003",
       "N-BR-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/45173"
@@ -20524,16 +20524,16 @@
      ],
      "company_sole": false,
      "licences": [
-      "N-HR-0004",
       "N-HR-0006",
-      "N-ME-0008",
-      "N-SA-0007",
-      "N-SG-0037",
-      "N-HR-0002",
-      "N-SG-0038",
       "N-SG-0039",
+      "N-HR-0004",
+      "N-ME-0008",
+      "N-SG-0038",
       "N-SA-0006",
-      "N-HR-0013"
+      "N-SG-0037",
+      "N-HR-0013",
+      "N-SA-0007",
+      "N-HR-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10961"
     },
@@ -20561,13 +20561,13 @@
      ],
      "company_sole": true,
      "licences": [
-      "N-DA-0003",
-      "N-BR-0003",
-      "N-BR-0004",
       "N-AH-0003",
-      "N-BR-0002",
+      "N-BR-0003",
+      "N-L-0010",
+      "N-DA-0003",
       "N-BR-0017",
-      "N-L-0010"
+      "N-BR-0004",
+      "N-BR-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13000"
     },
@@ -20596,18 +20596,18 @@
      ],
      "company_sole": false,
      "licences": [
-      "N-R-0030",
-      "N-R-0004",
       "N-R-0001",
-      "N-ME-0028",
-      "N-R-0029",
-      "N-R-0008",
-      "N-L-0007",
-      "N-BR-0002",
-      "N-R-0009",
-      "N-R-0006",
       "N-L-0010",
-      "N-ME-0005"
+      "N-R-0004",
+      "N-R-0006",
+      "N-R-0029",
+      "N-ME-0028",
+      "N-R-0009",
+      "N-ME-0005",
+      "N-L-0007",
+      "N-R-0008",
+      "N-BR-0002",
+      "N-R-0030"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13124"
     },
@@ -20636,18 +20636,18 @@
      ],
      "company_sole": false,
      "licences": [
-      "N-DA-0003",
-      "N-R-0030",
       "N-R-0001",
+      "N-HR-0010",
+      "N-VV-0060",
+      "N-R-0006",
+      "N-DA-0003",
       "N-HR-0001",
       "N-ME-0028",
-      "N-VV-0060",
-      "N-HR-0014",
-      "N-R-0008",
-      "N-R-0006",
       "N-ME-0005",
+      "N-R-0008",
       "N-DA-0024",
-      "N-HR-0010"
+      "N-R-0030",
+      "N-HR-0014"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/45166"
     },
@@ -20707,11 +20707,11 @@
      "company_sole": false,
      "licences": [
       "N-ME-0001",
+      "N-L-0010",
+      "N-ME-0068",
       "N-R-0004",
       "N-R-0029",
-      "N-R-0009",
-      "N-ME-0068",
-      "N-L-0010"
+      "N-R-0009"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/29776"
     },
@@ -20739,10 +20739,10 @@
      ],
      "company_sole": true,
      "licences": [
-      "N-G-0002",
+      "N-HR-0021",
       "N-G-0008",
       "N-G-0005",
-      "N-HR-0021"
+      "N-G-0002"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11269"
     },
@@ -20770,13 +20770,13 @@
      ],
      "company_sole": true,
      "licences": [
-      "N-SF-0009",
+      "N-SF-0011",
+      "N-G-0002",
       "N-SF-0012",
       "N-SF-0008",
-      "N-G-0002",
-      "N-SF-0011",
       "N-SF-0013",
-      "N-SF-0014"
+      "N-SF-0014",
+      "N-SF-0009"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/29576"
     },
@@ -20804,12 +20804,12 @@
      ],
      "company_sole": true,
      "licences": [
-      "N-SF-0009",
+      "N-SF-0011",
       "N-SF-0012",
       "N-SF-0008",
       "N-SF-0013",
-      "N-SF-0011",
-      "N-SF-0014"
+      "N-SF-0014",
+      "N-SF-0009"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/13297"
     },
@@ -20838,15 +20838,15 @@
      ],
      "company_sole": false,
      "licences": [
-      "N-SF-0009",
-      "N-HR-0018",
+      "N-SF-0011",
       "N-HR-0020",
       "N-SF-0012",
       "N-SF-0008",
-      "N-L-0004",
       "N-SF-0013",
-      "N-SF-0011",
-      "N-SF-0014"
+      "N-SF-0014",
+      "N-L-0004",
+      "N-HR-0018",
+      "N-SF-0009"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/36117"
     },
@@ -20874,14 +20874,14 @@
      ],
      "company_sole": true,
      "licences": [
-      "N-SF-0009",
-      "N-HR-0018",
+      "N-SF-0011",
       "N-HR-0020",
       "N-SF-0012",
       "N-SF-0008",
       "N-SF-0013",
-      "N-SF-0011",
-      "N-SF-0014"
+      "N-SF-0014",
+      "N-HR-0018",
+      "N-SF-0009"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10513"
     },
@@ -20909,11 +20909,11 @@
      ],
      "company_sole": true,
      "licences": [
-      "N-SF-0009",
+      "N-SF-0011",
       "N-SF-0012",
       "N-SF-0008",
       "N-SF-0013",
-      "N-SF-0011"
+      "N-SF-0009"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/19235"
     },
@@ -20943,13 +20943,13 @@
      ],
      "company_sole": false,
      "licences": [
+      "T-BG-0006",
+      "T-I-0001",
+      "T-I-0019",
       "T-D-0014",
       "T-B-0020",
-      "T-I-0018",
-      "T-I-0001",
       "T-I-0005",
-      "T-I-0019",
-      "T-BG-0006"
+      "T-I-0018"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/11340"
     },
@@ -20978,11 +20978,11 @@
      ],
      "company_sole": false,
      "licences": [
-      "T-D-0014",
-      "T-BG-0003",
       "T-TK-0019",
-      "T-TK-0007",
-      "T-TK-0001"
+      "T-D-0014",
+      "T-TK-0001",
+      "T-BG-0003",
+      "T-TK-0007"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/32777"
     },
@@ -21010,11 +21010,11 @@
      ],
      "company_sole": true,
      "licences": [
-      "T-KN-0019",
-      "T-KN-0012",
       "T-KN-0005",
+      "T-KN-0015",
       "T-KN-0006",
-      "T-KN-0015"
+      "T-KN-0012",
+      "T-KN-0019"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10803"
     },
@@ -21042,11 +21042,11 @@
      ],
      "company_sole": true,
      "licences": [
-      "T-KN-0019",
-      "T-KN-0012",
-      "T-KN-0006",
+      "T-KN-0003",
       "T-KN-0015",
-      "T-KN-0003"
+      "T-KN-0006",
+      "T-KN-0012",
+      "T-KN-0019"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10808"
     },
@@ -21074,8 +21074,8 @@
      ],
      "company_sole": true,
      "licences": [
-      "T-KN-0015",
       "T-KN-0012",
+      "T-KN-0015",
       "T-KN-0006"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10804"
@@ -21104,10 +21104,10 @@
      ],
      "company_sole": true,
      "licences": [
-      "T-KN-0015",
       "T-KN-0012",
-      "T-KN-0006",
-      "T-KN-0019"
+      "T-KN-0019",
+      "T-KN-0015",
+      "T-KN-0006"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/35997"
     },
@@ -21164,11 +21164,11 @@
      ],
      "company_sole": true,
      "licences": [
-      "T-KN-0019",
-      "T-KN-0012",
       "T-KN-0005",
+      "T-KN-0015",
       "T-KN-0006",
-      "T-KN-0015"
+      "T-KN-0012",
+      "T-KN-0019"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/10806"
     },
@@ -21197,12 +21197,12 @@
      ],
      "company_sole": false,
      "licences": [
-      "T-S-0011",
-      "T-S-0007",
-      "T-S-0017",
       "T-KN-0005",
       "T-KN-0006",
-      "T-S-0003"
+      "T-S-0003",
+      "T-S-0011",
+      "T-S-0017",
+      "T-S-0007"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/30217"
     },
@@ -21231,8 +21231,8 @@
      ],
      "company_sole": false,
      "licences": [
-      "T-KN-0020",
       "T-KN-0012",
+      "T-KN-0020",
       "T-KN-0006",
       "T-KN-0001"
      ],
@@ -21263,10 +21263,10 @@
      ],
      "company_sole": false,
      "licences": [
-      "F-LB-0011",
       "TF-H-0003",
-      "F-LB-0010",
-      "F-H-0036"
+      "F-H-0036",
+      "F-LB-0011",
+      "F-LB-0010"
      ],
      "url": "https://sikker.fiskeridir.no/akvakulturregisteret/web/sites/36417"
     }
@@ -24809,81 +24809,6 @@
     "lon": 11.63378,
     "locality_capacity_t": 4680.0,
     "is_company": false
-   },
-   {
-    "id": "{4C78469C-7308-4B3F-917C-8CC271BBCFB2}",
-    "date": "2024-10-26",
-    "date_assumed": "2024-10-26",
-    "locality_no": 24315,
-    "locality_name": "GJÆSINGEN",
-    "company": "SALMAR OPPDRETT AS",
-    "species": "Laks",
-    "description": "Det skjedde under løfting av not",
-    "report_stage": "Del 2",
-    "estimated_range": "10-100",
-    "estimated_max": 100.0,
-    "escaped_fish": 2307.0,
-    "size_g": 3820.0,
-    "recapture_started": "yes",
-    "recaptured": 1.0,
-    "recapture_note": "Det vil bli satt ut garn så fort det mulig.",
-    "cleanerfish": "no",
-    "county": "TRØNDELAG",
-    "municipality": "ÅFJORD",
-    "lat": 64.11762,
-    "lon": 9.98142,
-    "locality_capacity_t": 3120.0,
-    "is_company": false
-   },
-   {
-    "id": "{ACA2252A-555C-4587-9FB3-C2E30EA0E670}",
-    "date": "2024-10-24",
-    "date_assumed": "2024-10-24",
-    "locality_no": 10837,
-    "locality_name": "KRAKEN",
-    "company": "CERMAQ NORWAY SALMON AS",
-    "species": "Laks",
-    "description": null,
-    "report_stage": "Del 2",
-    "estimated_range": "1-10",
-    "estimated_max": 10.0,
-    "escaped_fish": 150.0,
-    "size_g": 600.0,
-    "recapture_started": "yes",
-    "recaptured": 1.0,
-    "recapture_note": "Foreløpig satt ut rundt båten da det er her fisken kommer ut. ROV har sjekket merd som er under operasjon, men det er ikke avdekket hull. Oppdaget ristskadet fisk bak brønnbåt - derfor er gjenfangst k",
-    "cleanerfish": "no",
-    "county": "FINNMARK",
-    "municipality": "HAMMERFEST",
-    "lat": 70.66655,
-    "lon": 23.18493,
-    "locality_capacity_t": 5999.0,
-    "is_company": false
-   },
-   {
-    "id": "{A087CCB8-52A2-48E4-9212-0E30766B9570}",
-    "date": "2024-10-21",
-    "date_assumed": "2024-10-21",
-    "locality_no": 10317,
-    "locality_name": "GARVIK",
-    "company": "SVANØY HAVBRUK AS",
-    "species": "Regnbueørret",
-    "description": "Liftup gjennom not",
-    "report_stage": "Del 1",
-    "estimated_range": "0",
-    "estimated_max": 0.0,
-    "escaped_fish": null,
-    "size_g": 3300.0,
-    "recapture_started": "no",
-    "recaptured": 0.0,
-    "recapture_note": null,
-    "cleanerfish": "no",
-    "county": "VESTLAND",
-    "municipality": "ASKVOLL",
-    "lat": 61.31663,
-    "lon": 4.97933,
-    "locality_capacity_t": 1560.0,
-    "is_company": false
    }
   ],
   "company_recent": [
@@ -25617,30 +25542,10 @@
  "lice": null,
  "fx": {
   "latest": {
-   "date": "2026-10-21",
-   "eurnok": 10.512
+   "date": "2026-10-28",
+   "eurnok": 10.3475
   },
   "daily": [
-   {
-    "date": "2025-10-09",
-    "eurnok": 11.624
-   },
-   {
-    "date": "2025-10-10",
-    "eurnok": 11.6775
-   },
-   {
-    "date": "2025-10-13",
-    "eurnok": 11.679
-   },
-   {
-    "date": "2025-10-14",
-    "eurnok": 11.7725
-   },
-   {
-    "date": "2025-10-15",
-    "eurnok": 11.7225
-   },
    {
     "date": "2025-10-16",
     "eurnok": 11.734
@@ -26660,13 +26565,29 @@
    {
     "date": "2026-10-21",
     "eurnok": 10.512
+   },
+   {
+    "date": "2026-10-22",
+    "eurnok": 10.488
+   },
+   {
+    "date": "2026-10-23",
+    "eurnok": 10.4665
+   },
+   {
+    "date": "2026-10-26",
+    "eurnok": 10.4545
+   },
+   {
+    "date": "2026-10-27",
+    "eurnok": 10.3885
+   },
+   {
+    "date": "2026-10-28",
+    "eurnok": 10.3475
    }
   ],
   "weekly": [
-   {
-    "week": "2024-W43",
-    "eurnok": 11.8297
-   },
    {
     "week": "2024-W44",
     "eurnok": 11.9061
@@ -27081,9 +27002,13 @@
    },
    {
     "week": "2026-W43",
-    "eurnok": 10.5307
+    "eurnok": 10.5093
+   },
+   {
+    "week": "2026-W44",
+    "eurnok": 10.3968
    }
   ]
  },
- "change_count": 7
+ "change_count": 2
 }

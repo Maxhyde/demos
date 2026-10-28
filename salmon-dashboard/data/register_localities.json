@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-21T14:01:30+00:00",
+ "generated_at": "2026-10-28T15:19:45+00:00",
  "localities": [
   {
    "n": 10029,
@@ -30,7 +30,7 @@
    "status": "AKTIV",
    "holders": [
     "AUSTEVOLL MELAKS AS",
-    "BOLAKS SJØ AS",
+    "BOLAKS FJORDBRUK AS",
     "ENGESUND FISKEOPPDRETT AS",
     "FREMSKRIDT LAKS AS"
    ]
@@ -520,7 +520,7 @@
    "status": "AKTIV",
    "holders": [
     "AS BOLAKS",
-    "BOLAKS SJØ AS"
+    "BOLAKS FJORDBRUK AS"
    ]
   },
   {
@@ -2500,7 +2500,7 @@
    "status": "AKTIV",
    "holders": [
     "AUSTEVOLL MELAKS AS",
-    "BOLAKS SJØ AS",
+    "BOLAKS FJORDBRUK AS",
     "SEASHORE SJØ AS",
     "VESTLAND FYLKESKOMMUNE"
    ]
@@ -2573,7 +2573,7 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
-    "BOLAKS SJØ AS",
+    "BOLAKS FJORDBRUK AS",
     "SEASHORE SJØ AS"
    ]
   },
@@ -3625,7 +3625,7 @@
    "status": "AKTIV",
    "holders": [
     "AS BOLAKS",
-    "BOLAKS SJØ AS"
+    "BOLAKS FJORDBRUK AS"
    ]
   },
   {
@@ -3640,7 +3640,7 @@
    "status": "AKTIV",
    "holders": [
     "AS BOLAKS",
-    "BOLAKS SJØ AS"
+    "BOLAKS FJORDBRUK AS"
    ]
   },
   {
@@ -3655,7 +3655,7 @@
    "status": "AKTIV",
    "holders": [
     "AS BOLAKS",
-    "BOLAKS SJØ AS"
+    "BOLAKS FJORDBRUK AS"
    ]
   },
   {
@@ -4890,7 +4890,7 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
-    "BOLAKS SJØ AS",
+    "BOLAKS FJORDBRUK AS",
     "FREMSKRIDT LAKS AS",
     "SEASHORE SJØ AS"
    ]
@@ -4983,7 +4983,7 @@
    "status": "AKTIV",
    "holders": [
     "AS BOLAKS",
-    "BOLAKS SJØ AS"
+    "BOLAKS FJORDBRUK AS"
    ]
   },
   {
@@ -5167,7 +5167,7 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
-    "BOLAKS SJØ AS"
+    "BOLAKS FJORDBRUK AS"
    ]
   },
   {
@@ -5182,7 +5182,7 @@
    "status": "AKTIV",
    "holders": [
     "AS BOLAKS",
-    "BOLAKS SJØ AS"
+    "BOLAKS FJORDBRUK AS"
    ]
   },
   {
@@ -5504,7 +5504,7 @@
    "status": "AKTIV",
    "holders": [
     "AS BOLAKS",
-    "BOLAKS SJØ AS"
+    "BOLAKS FJORDBRUK AS"
    ]
   },
   {
@@ -7953,7 +7953,7 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
-    "BOLAKS SJØ AS"
+    "BOLAKS FJORDBRUK AS"
    ]
   },
   {
@@ -8179,7 +8179,7 @@
    "status": "AKTIV",
    "holders": [
     "AS BOLAKS",
-    "BOLAKS SJØ AS"
+    "BOLAKS FJORDBRUK AS"
    ]
   },
   {
@@ -9428,7 +9428,7 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
-    "BOLAKS SJØ AS",
+    "BOLAKS FJORDBRUK AS",
     "FREMSKRIDT LAKS AS",
     "SEASHORE SJØ AS"
    ]
@@ -9989,7 +9989,7 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
-    "BOLAKS SJØ AS"
+    "BOLAKS FJORDBRUK AS"
    ]
   },
   {
@@ -10782,7 +10782,7 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
-    "BOLAKS SJØ AS",
+    "BOLAKS FJORDBRUK AS",
     "SEASHORE SJØ AS"
    ]
   },
@@ -10991,7 +10991,7 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
-    "BOLAKS SJØ AS"
+    "BOLAKS FJORDBRUK AS"
    ]
   },
   {
@@ -11943,7 +11943,7 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
-    "BOLAKS SJØ AS",
+    "BOLAKS FJORDBRUK AS",
     "SEASHORE SJØ AS"
    ]
   },

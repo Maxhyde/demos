@@ -1,68 +1,23 @@
 {
- "generated_at": "2026-10-21T14:01:30+00:00",
- "compared_to": "2026-10-14T13:56:00+00:00",
+ "generated_at": "2026-10-28T15:19:45+00:00",
+ "compared_to": "2026-10-21T14:01:30+00:00",
  "items": [
   {
    "category": "export",
-   "title": "New week 2026 W42: fresh salmon 74.05 NOK/kg",
-   "detail": "Price +2.1% w/w, +0.4% y/y. Volume 27,689 t (-1.0% w/w, +4.7% y/y).",
+   "title": "New week 2026 W43: fresh salmon 76.04 NOK/kg",
+   "detail": "Price +2.7% w/w, -2.8% y/y. Volume 28,518 t (+3.0% w/w, +10.2% y/y).",
    "severity": "info",
    "company": false,
-   "value": 74.05,
-   "delta_pct": 2.1
-  },
-  {
-   "category": "markets",
-   "title": "New month 2026M09: salmon exports 136,534 t, 9,777 MNOK",
-   "detail": "Top markets: Poland 29,831 t (+31% y/y), Netherlands 13,538 t (+41% y/y), China 10,764 t (+42% y/y), France 9,120 t (+14% y/y), Spain 8,679 t (+31% y/y)",
-   "severity": "info",
-   "company": false,
-   "value": null,
-   "delta_pct": null
-  },
-  {
-   "category": "biomass",
-   "title": "New biomass month 2026-09: 887,558 t salmon standing biomass (-0.2% y/y)",
-   "detail": "Harvest 193,752 t WFE (+15.3% y/y); 5.0 million fish dead (1.11% of stock); feed 231,763 t; smolt released 34.9 million.",
-   "severity": "notable",
-   "company": false,
-   "value": null,
-   "delta_pct": null
-  },
-  {
-   "category": "company",
-   "title": "New Mowi locality in register: BREIVIK (45311)",
-   "detail": "PO2 HJELMELAND; capacity 3,600 t",
-   "severity": "notable",
-   "company": true,
-   "value": null,
-   "delta_pct": null
-  },
-  {
-   "category": "company",
-   "title": "Mowi locality capacity 700,989 → 704,589 t",
-   "detail": "",
-   "severity": "info",
-   "company": true,
-   "value": null,
-   "delta_pct": 0.5
-  },
-  {
-   "category": "industry",
-   "title": "Industry sea localities in register 980 → 981",
-   "detail": "",
-   "severity": "info",
-   "company": false,
-   "value": null,
-   "delta_pct": null
+   "value": 76.04,
+   "delta_pct": 2.7
   },
   {
    "category": "fx",
-   "title": "EUR/NOK 10.512 (2026-10-21)",
-   "detail": "Weekly average 10.531, -1.1% w/w",
+   "title": "EUR/NOK 10.348 (2026-10-28)",
+   "detail": "Weekly average 10.397, -1.1% w/w",
    "severity": "info",
    "company": false,
-   "value": 10.512,
+   "value": 10.3475,
    "delta_pct": -1.1
   }
  ]
