@@ -1,24 +1,24 @@
 {
- "generated_at": "2026-10-28T15:19:45+00:00",
- "compared_to": "2026-10-21T14:01:30+00:00",
+ "generated_at": "2026-11-04T16:28:46+00:00",
+ "compared_to": "2026-10-28T15:19:45+00:00",
  "items": [
   {
    "category": "export",
-   "title": "New week 2026 W43: fresh salmon 76.04 NOK/kg",
-   "detail": "Price +2.7% w/w, -2.8% y/y. Volume 28,518 t (+3.0% w/w, +10.2% y/y).",
+   "title": "New week 2026 W44: fresh salmon 74.98 NOK/kg",
+   "detail": "Price -1.4% w/w, -6.9% y/y. Volume 28,444 t (-0.3% w/w, +14.3% y/y).",
    "severity": "info",
    "company": false,
-   "value": 76.04,
-   "delta_pct": 2.7
+   "value": 74.98,
+   "delta_pct": -1.4
   },
   {
    "category": "fx",
-   "title": "EUR/NOK 10.348 (2026-10-28)",
-   "detail": "Weekly average 10.397, -1.1% w/w",
+   "title": "EUR/NOK 10.397 (2026-11-04)",
+   "detail": "Weekly average 10.364, -0.0% w/w",
    "severity": "info",
    "company": false,
-   "value": 10.3475,
-   "delta_pct": -1.1
+   "value": 10.397,
+   "delta_pct": -0.0
   }
  ]
 }
