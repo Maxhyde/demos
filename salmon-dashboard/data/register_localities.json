@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-04T16:28:46+00:00",
+ "generated_at": "2026-11-18T17:27:09+00:00",
  "localities": [
   {
    "n": 10029,
@@ -1136,8 +1136,8 @@
    "n": 10806,
    "name": "RAKKENES",
    "pa": "11",
-   "lat": 69.88507,
-   "lon": 21.72998,
+   "lat": 69.88643,
+   "lon": 21.72712,
    "cap": 5400.0,
    "mowi": true,
    "sole": true,
@@ -2987,6 +2987,7 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
+    "AUSTEVOLL MELAKS AS",
     "TOMBRE FISKEANLEGG AS"
    ]
   },
@@ -3001,6 +3002,7 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
+    "AUSTEVOLL MELAKS AS",
     "TOMBRE FISKEANLEGG AS"
    ]
   },
@@ -5889,8 +5891,8 @@
    "n": 13669,
    "name": "FURNESET",
    "pa": "5",
-   "lat": 62.6461,
-   "lon": 7.10118,
+   "lat": 62.647,
+   "lon": 7.1041,
    "cap": 4680.0,
    "mowi": false,
    "sole": false,
@@ -7212,7 +7214,8 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
-    "ORGANIC SEAFARM AS"
+    "ORGANIC SEAFARM AS",
+    "SALTEN STAMFISK AS"
    ]
   },
   {
@@ -8577,7 +8580,7 @@
    "n": 26155,
    "name": "SLÅTTHOLMEN",
    "pa": "6",
-   "lat": 63.44779,
+   "lat": 63.44778,
    "lon": 8.95817,
    "cap": 3120.0,
    "mowi": false,
@@ -9091,6 +9094,7 @@
    "sole": false,
    "status": "AKTIV",
    "holders": [
+    "EDELFARM AS",
     "LOVUNDLAKS SJØ AS",
     "SELSØYVIK HAVBRUK AS"
    ]
