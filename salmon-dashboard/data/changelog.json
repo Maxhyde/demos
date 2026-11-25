@@ -385,5 +385,40 @@
   ],
   "sources_ok": 8,
   "sources_failed": []
+ },
+ {
+  "run_date": "2026-11-25",
+  "generated_at": "2026-11-25T18:45:22+00:00",
+  "items": [
+   {
+    "category": "export",
+    "title": "New week 2026 W47: fresh salmon 76.15 NOK/kg",
+    "detail": "Price +3.7% w/w, -9.9% y/y. Volume 25,761 t (-3.4% w/w, +7.2% y/y).",
+    "severity": "info",
+    "company": false,
+    "value": 76.15,
+    "delta_pct": 3.7
+   },
+   {
+    "category": "biomass",
+    "title": "New biomass month 2026-10: 904,955 t salmon standing biomass (+1.4% y/y)",
+    "detail": "Harvest 188,712 t WFE (+6.0% y/y); 3.7 million fish dead (0.83% of stock); feed 229,061 t; smolt released 35.3 million.",
+    "severity": "notable",
+    "company": false,
+    "value": null,
+    "delta_pct": null
+   },
+   {
+    "category": "fx",
+    "title": "EUR/NOK 10.778 (2026-11-25)",
+    "detail": "Weekly average 10.747, +1.2% w/w",
+    "severity": "info",
+    "company": false,
+    "value": 10.7778,
+    "delta_pct": 1.2
+   }
+  ],
+  "sources_ok": 8,
+  "sources_failed": []
  }
 ]

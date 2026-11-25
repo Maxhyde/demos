@@ -1,42 +1,33 @@
 {
- "generated_at": "2026-11-18T17:27:09+00:00",
- "compared_to": "2026-11-04T16:28:46+00:00",
+ "generated_at": "2026-11-25T18:45:22+00:00",
+ "compared_to": "2026-11-18T17:27:09+00:00",
  "items": [
   {
    "category": "export",
-   "title": "New week 2026 W45: fresh salmon 73.35 NOK/kg",
-   "detail": "Price -2.2% w/w, -6.1% y/y. Volume 28,277 t (-0.6% w/w, +17.3% y/y).",
+   "title": "New week 2026 W47: fresh salmon 76.15 NOK/kg",
+   "detail": "Price +3.7% w/w, -9.9% y/y. Volume 25,761 t (-3.4% w/w, +7.2% y/y).",
    "severity": "info",
    "company": false,
-   "value": 73.35,
-   "delta_pct": -2.2
+   "value": 76.15,
+   "delta_pct": 3.7
   },
   {
-   "category": "export",
-   "title": "New week 2026 W46: fresh salmon 73.41 NOK/kg",
-   "detail": "Price +0.1% w/w, -8.4% y/y. Volume 26,669 t (-5.7% w/w, +13.5% y/y).",
-   "severity": "info",
-   "company": false,
-   "value": 73.41,
-   "delta_pct": 0.1
-  },
-  {
-   "category": "markets",
-   "title": "New month 2026M10: salmon exports 130,689 t, 9,699 MNOK",
-   "detail": "Top markets: Poland 30,127 t (+15% y/y), Netherlands 11,904 t (+13% y/y), France 9,543 t (+4% y/y), China 7,985 t (+11% y/y), Spain 8,757 t (+9% y/y)",
-   "severity": "info",
+   "category": "biomass",
+   "title": "New biomass month 2026-10: 904,955 t salmon standing biomass (+1.4% y/y)",
+   "detail": "Harvest 188,712 t WFE (+6.0% y/y); 3.7 million fish dead (0.83% of stock); feed 229,061 t; smolt released 35.3 million.",
+   "severity": "notable",
    "company": false,
    "value": null,
    "delta_pct": null
   },
   {
    "category": "fx",
-   "title": "EUR/NOK 10.604 (2026-11-18)",
-   "detail": "Weekly average 10.585, +0.1% w/w",
+   "title": "EUR/NOK 10.778 (2026-11-25)",
+   "detail": "Weekly average 10.747, +1.2% w/w",
    "severity": "info",
    "company": false,
-   "value": 10.6045,
-   "delta_pct": 0.1
+   "value": 10.7778,
+   "delta_pct": 1.2
   }
  ]
 }
